@@ -1,114 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <title>LifeLink Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
     body {
-      font-family: 'Arial', sans-serif;
+      background: #f7f7f7;
+      min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      width: 80vw;
+      max-width: 1080px;
       background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
     }
-    .Logo {
-      width: 100%;
-      text-align: center;
-      padding: 20px 0;
-      background-color: transparent;
-      position: fixed;
-      top: 0;
-      left: 0;
+
+    .left {
+      flex: 1;
+      background: linear-gradient(to bottom right, #b63232, #d95d5d);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
     }
-    .Logo img {
-      width: 250px;
+
+    .left img {
+      max-width: 100%;
       height: auto;
     }
-    form {
+
+    .right {
+      flex: 1;
+      padding: 80px 55px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
-    .input-container {
-      display: flex;
-      align-items: center;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 10px;
-      margin: 10px 0;
-      width: 280px;
+
+    .right .logo {
+      width: 150px;
+      margin-bottom: 25px;
     }
-    .input-container i {
-      margin-right: 10px;
-      color: #e07676;
+
+    .right h2 {
+      font-size: 26px;
+      color: #333;
+      margin-bottom: 35px;
     }
-    .input-container input {
-      border: none;
-      outline: none;
+
+    form {
       width: 100%;
-      font-size: 16px;
-      color: #a83832;
+      max-width: 350px;
     }
-    .login-btn {
-      background-color: #a83832;
+
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-group i {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      color: #c34848;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px 12px 38px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: border 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #a83232;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #a83232;
       color: white;
+      font-size: 15px;
+      font-weight: bold;
       border: none;
       border-radius: 25px;
-      padding: 10px 40px;
-      font-weight: bold;
-      font-size: 16px;
       cursor: pointer;
-      margin: 15px 0;
+      transition: background 0.3s;
+      margin-top: 10px;
     }
-    .login-btn:hover {
-      background-color: #852727;
+
+    .btn:hover {
+      background-color: #912b2b;
     }
-    .links {
+
+    .form-links {
       text-align: center;
+      margin-top: 20px;
       font-size: 14px;
+      color: #222;
     }
-    .links a {
-      color: black;
+
+    .form-links a {
       text-decoration: none;
       font-weight: bold;
+      color: #000;
     }
-    .forgot {
-      color: #333;
-      text-decoration: underline;
-      margin-bottom: 8px;
-      display: block;
+
+    .form-links a:hover {
+      color: #a83232;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        width: 95vw;
+        border-radius: 0;
+      }
+
+      .left, .right {
+        padding: 30px;
+      }
+
+      .right {
+        padding-top: 20px;
+      }
     }
   </style>
-  <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="Logo">
-        <header>
-            <img src="LL.jpg" alt="LifeLink-logo">
-        </header>
+
+  <div class="container">
+    <div class="left">
+      <img src="Assets/pic.png" alt="ALT">
     </div>
 
-  <form action="/login" method="POST">
-    <div class="input-container">
-      <i class="fa-solid fa-envelope"></i>
-      <input type="email" name="email" placeholder="Email" required />
+    <div class="right">
+      <img src="Assets/LL.jpg" alt="LifeLink Logo" class="logo">
+      <h2>Login</h2>
+      <form>
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" required>
+        </div>
+        <button class="btn" type="submit">LOGIN</button>
+      </form>
+      <div class="form-links">
+        <p><a href="#">Forgot Password?</a></p>
+        <p>Don’t have an account? <a href="SignUp.html">Sign Up</a></p>
+      </div>
     </div>
-
-    <div class="input-container">
-      <i class="fas fa-lock"></i>
-      <input type="password" name="password" placeholder="Password" required />
-    </div>
-
-    <button class="login-btn" type="submit">LOGIN</button>
-
-    <div class="links">
-      <a href="#" class="forgot">Forgot Password?</a>
-      <p>Don't have account? <a href="SignUp.html">Sign Up</a></p>
-    </div>
-  </form>
+  </div>
 
 </body>
 </html>
