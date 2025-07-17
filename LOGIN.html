@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #fff;
+    }
+    .Logo {
+      width: 100%;
+      text-align: center;
+      padding: 20px 0;
+      background-color: transparent;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    .Logo img {
+      width: 250px;
+      height: auto;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .input-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px 0;
+      width: 280px;
+    }
+    .input-container i {
+      margin-right: 10px;
+      color: #e07676;
+    }
+    .input-container input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 16px;
+      color: #a83832;
+    }
+    .login-btn {
+      background-color: #a83832;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 40px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 15px 0;
+    }
+    .login-btn:hover {
+      background-color: #852727;
+    }
+    .links {
+      text-align: center;
+      font-size: 14px;
+    }
+    .links a {
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .forgot {
+      color: #333;
+      text-decoration: underline;
+      margin-bottom: 8px;
+      display: block;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="Logo">
+        <header>
+            <img src="LL.jpg" alt="LifeLink-logo">
+        </header>
+    </div>
+
+  <form action="/login" method="POST">
+    <div class="input-container">
+      <i class="fa-solid fa-envelope"></i>
+      <input type="email" name="email" placeholder="Email" required />
+    </div>
+
+    <div class="input-container">
+      <i class="fas fa-lock"></i>
+      <input type="password" name="password" placeholder="Password" required />
+    </div>
+
+    <button class="login-btn" type="submit">LOGIN</button>
+
+    <div class="links">
+      <a href="#" class="forgot">Forgot Password?</a>
+      <p>Don't have account? <a href="SignUp.html">Sign Up</a></p>
+    </div>
+  </form>
+
+</body>
+</html>
