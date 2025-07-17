@@ -3,162 +3,211 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>LifeLink Login</title>
+  <title>Login</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', Arial, sans-serif;
+}
 
-    body {
-      background: #f7f7f7;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      height: 85%;
-      display: flex;
-      background-color: #fff;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
+.container {
+  width: 90%;
+  max-width: 1200px;
+  height: 85%;
+  display: flex;
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
 
+.left {
+  width: 50%;
+  background: linear-gradient(to bottom, #e75d5d, rgba(214, 214, 214, 0.868));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 22px 0 0 22px;
+}
 
-    .left {
-      flex: 1;
-      background: linear-gradient(to bottom right, #b63232, #d95d5d);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px;
-    }
+.left img {
+  width: 70%;
+  height: 60%;
+  object-fit: cover;
+}
 
-    .left img {
-      max-width: 100%;
-      height: auto;
-    }
+.right {
+  width: 50%;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
 
-    .right {
-      flex: 1;
-      padding: 80px 55px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+.logo {
+  width: 30%;
+  height: auto;
+  align-self: center;
+}
 
-    .right .logo {
-      width: 150px;
-      margin-bottom: 25px;
-    }
+.right h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
 
-    .right h2 {
-      font-size: 26px;
-      color: #333;
-      margin-bottom: 35px;
-    }
+form {
+  width: 100%;
+  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
-    form {
-      width: 100%;
-      max-width: 350px;
-    }
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
 
-    .form-group {
-      position: relative;
-      margin-bottom: 20px;
-    }
+.form-group i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #f44336;
+}
 
-    .form-group i {
-      position: absolute;
-      top: 50%;
-      left: 12px;
-      transform: translateY(-50%);
-      color: #c34848;
-    }
+.form-group input {
+  width: 100%;
+  padding: 12px 14px 12px 38px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 28px;
+  transition: border 0.2s;
+  outline: none;
+}
 
-    .form-group input {
-      width: 100%;
-      padding: 12px 14px 12px 38px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 14px;
-      transition: border 0.2s;
-    }
+.form-group input:focus,
+.form-group input:hover {
+  border-color: #a23238;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+}
 
-    .form-group input:focus {
-      outline: none;
-      border-color: #a83232;
-    }
+.btn {
+  width: 100%;
+  max-width: 320px;
+  margin: 10px auto 0;
+  padding: 14px;
+  background-color: #a23238;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 28px;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: block;
+}
 
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background-color: #a83232;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 10px;
-    }
+.btn:hover {
+  background-color: #a83238;
+}
 
-    .btn:hover {
-      background-color: #912b2b;
-    }
+.form-links {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #222;
+}
 
-    .form-links {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #222;
-    }
+.form-links a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #000;
+}
 
-    .form-links a {
-      text-decoration: none;
-      font-weight: bold;
-      color: #000;
-    }
+.form-links a:hover {
+  color: #a23238;
+  border-bottom: 1px solid rgb(33, 15, 15);
+}
 
-    .form-links a:hover {
-      color: #a83232;
-    }
+#pass{
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+    width: 95%;
+    border-radius: 0;
+    box-shadow: none;
+  }
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        width: 95vw;
-        border-radius: 0;
-      }
+  .left {
+    width: 100%;
+    height: 250px;
+    border-radius: 22px 22px 0 0;
+  }
 
-      .left,
-      .right {
-        padding: 30px;
-      }
+  .left img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+  }
 
-      .right {
-        padding-top: 20px;
-      }
-    }
+  .right {
+    width: 100%;
+    padding: 30px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .right h2 {
+    font-size: 22px;
+  }
+
+  .form-group input {
+    font-size: 14px;
+    padding: 10px 12px 10px 36px;
+  }
+
+  .form-group i {
+    left: 10px;
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
   </style>
 </head>
 
 <body>
 
   <div class="container">
-    <div class="left">
-      <img src="Assets/pic.png" alt="ALT">
-    </div>
-
     <div class="right">
       <img src="Assets/LL.jpg" alt="LifeLink Logo" class="logo">
       <h2>Login</h2>
@@ -171,13 +220,18 @@
           <i class="fas fa-lock"></i>
           <input type="password" placeholder="Password" required>
         </div>
-        <button class="btn" type="submit">LOGIN</button>
+        <button class="btn" type="submit">Login</button>
       </form>
       <div class="form-links">
-        <p><a href="#">Forgot Password?</a></p>
-        <p>Don’t have an account? <a href="SignUp.html">Sign Up</a></p>
+        <p id="pass"><a href="#">Forgot Password ?</a></p>
+        <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
       </div>
     </div>
+    <div class="left">
+      <img src="Assets/pic.png" alt="ALT">
+    </div>
+
+    
   </div>
 
 </body>
