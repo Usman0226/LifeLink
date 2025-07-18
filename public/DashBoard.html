@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLink - Home</title>
+    <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle, #fddcdc, #f9f9f9);
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #a23238;
+            padding: 20px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 28px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            border-bottom: 2px solid #fff;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero-text h2 {
+            font-size: 36px;
+            color: #a23238;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .hero img {
+            max-width: 40%;
+            border-radius: 22px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .cta-btn {
+            padding: 14px 28px;
+            background-color: #a23238;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 60px 30px;
+            background: #fff;
+            border-radius: 20px;
+            margin: 40px auto;
+            max-width: 1100px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature {
+            text-align: center;
+            max-width: 250px;
+        }
+
+        .feature i {
+            font-size: 36px;
+            color: #a23238;
+            margin-bottom: 15px;
+        }
+
+        .feature h4 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        footer {
+            background-color: #a23238;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text, .hero img {
+                max-width: 100%;
+            }
+
+            .features {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>LifeLink</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Connecting Donors to Lives in Need</h2>
+            <p>LifeLink is your digital bridge between blood donors and those in urgent need. Join our community and make every drop count.</p>
+            <button class="cta-btn">Donate Now</button>
+        </div>
+        <img src="Assets/pic.png" alt="LifeLink Hero">
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <i class="fas fa-tint"></i>
+            <h4>Nearby Donor Alerts</h4>
+            <p>Receive real-time notifications when a nearby donor or recipient is in need.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-map-marked-alt"></i>
+            <h4>Smart Location Match</h4>
+            <p>Our system intelligently connects you to hospitals and people within your region.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-clock"></i>
+            <h4>Donation History</h4>
+            <p>Track your past donations and get reminders for future eligible dates.</p>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 LifeLink. All rights reserved.
+    </footer>
+</body>
+
+</html>
