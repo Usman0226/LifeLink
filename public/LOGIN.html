@@ -79,12 +79,12 @@
       flex-direction: column;
     }
 
-    .form-group {
+    .form-group, .form-group1 {
       position: relative;
       margin-bottom: 20px;
     }
 
-    .form-group i {
+    .form-group i,#lock{
       position: absolute;
       top: 50%;
       left: 12px;
@@ -92,7 +92,7 @@
       color: #f44336;
     }
 
-    .form-group input {
+    .form-group input, .form-group1 input {
       width: 100%;
       padding: 12px 14px 12px 38px;
       font-size: 15px;
@@ -103,7 +103,7 @@
     }
 
     .form-group input:focus,
-    .form-group input:hover {
+    .form-group input:hover , .form-group1 input:focus, .form-group1 input:hover{
       border-color: #a23238;
       box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
     }
@@ -188,7 +188,7 @@
         font-size: 22px;
       }
 
-      .form-group input {
+      .form-group input, .form-group1 {
         font-size: 14px;
         padding: 10px 12px 10px 36px;
       }
@@ -222,6 +222,8 @@
       outline: none;
       padding-right: 14px;
     }
+
+
   </style>
 </head>
 
@@ -239,10 +241,10 @@
           <i class="fas fa-envelope"></i>
           <input type="email" placeholder="Email" required>
         </div>
-        <div class="form-group">
-          <i class="fas fa-lock"></i>
+        <div class="form-group1">
           <div id="box">
-            <input type="password" placeholder="Password" required>
+            <i id="lock" class="fas fa-lock"></i> 
+            <input type="password" placeholder="Password" id="password" required style="border: none;width:100%">
             <button id="eye"><i id="icon" class="fa-solid fa-eye" style="color: #e31621;"></i></button>
           </div>
         </div>
@@ -257,7 +259,7 @@
 
 
 
-
+<script src="/js/login.js"></script>
 </body>
 
 </html>
