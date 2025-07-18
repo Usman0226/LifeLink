@@ -2,53 +2,155 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LifeLink - Home</title>
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
             background: radial-gradient(circle, #fddcdc, #f9f9f9);
             min-height: 100vh;
+            padding-top: 140px;
         }
 
         header {
-            background-color: #a23238;
-            padding: 20px;
-            color: #fff;
+            width: 90%;
+            background-color: rgba(185, 28, 28, 0.5);
+            color: white;
+            border-radius: 28px;
+            padding: 1rem 1.5rem;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        header h1 {
-            font-size: 28px;
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
         }
 
         nav a {
-            margin: 0 15px;
-            color: #fff;
+            color: white;
             text-decoration: none;
             font-weight: 600;
+            font-size: 16px;
         }
 
         nav a:hover {
-            border-bottom: 2px solid #fff;
+            border-bottom: 2px solid white;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: rgba(185, 28, 28, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                display: none;
+                border-radius: 0 0 16px 16px;
+            }
+
+            nav.show {
+                display: flex;
+            }
+
+            body {
+                padding-top: 170px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+
+            .hero-text,
+            .hero img {
+                max-width: 100%;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #emergencyRequestBtn {
+                top: 125px;
+                right: 0.5rem;
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+
+        #emergencyRequestBtn {
+            position: fixed;
+            top: 12%;
+            right: 5rem;
+            background-color: #a23238;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            z-index: 90;
+        }
+
+        #emergencyRequestBtn:hover {
+            background-color: #8b2a2f;
         }
 
         .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .hero-text {
@@ -64,6 +166,7 @@
         .hero-text p {
             font-size: 18px;
             color: #333;
+            margin-bottom: 30px;
             line-height: 1.6;
         }
 
@@ -72,31 +175,39 @@
             border-radius: 22px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
+
         .cta-btn {
-            padding: 14px 28px;
             background-color: #a23238;
             color: white;
+            padding: 14px 28px;
             border: none;
-            border-radius: 20px;
-            font-size: 16px;
+            border-radius: 28px;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
+        .cta-btn:hover {
+            background-color: #8b2a2f;
+        }
+
         .features {
             display: flex;
             justify-content: space-around;
-            padding: 60px 30px;
-            background: #fff;
+            flex-wrap: wrap;
+            background: white;
             border-radius: 20px;
-            margin: 40px auto;
+            padding: 60px 30px;
             max-width: 1100px;
+            margin: 40px auto;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
         }
 
         .feature {
-            text-align: center;
             max-width: 250px;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .feature i {
@@ -117,71 +228,139 @@
         }
 
         footer {
+            text-align: center;
+            padding: 20px;
             background-color: #a23238;
             color: white;
-            padding: 20px;
+        }
+
+        .request-form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .request-form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            width: 500px;
+            max-width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
             text-align: center;
         }
 
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
+        .request-form input,
+        .request-form select,
+        .request-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin-top: 6px;
+            margin-bottom: 1rem;
 
-            .hero-text, .hero img {
-                max-width: 100%;
-            }
+        }
 
-            .features {
-                flex-direction: column;
-                gap: 20px;
-            }
+        .request-form input:focus,
+        .request-form select:focus,
+        .request-form textarea:focus {
+            outline: none;
+            border-color: #a23238;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>LifeLink</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Profile</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </nav>
+        <div class="header-container">
+            <h1 class="logo">LifeLink</h1>
+            <button id="menuToggle" class="hamburger"><i class="fas fa-bars"></i></button>
+            <nav id="navMenu">
+                <a href="#">Home</a>
+                <a href="#">Profile</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </nav>
+        </div>
     </header>
+
+    <button id="emergencyRequestBtn">Emergency Request</button>
 
     <section class="hero">
         <div class="hero-text">
             <h2>Connecting Donors to Lives in Need</h2>
-            <p>LifeLink is your digital bridge between blood donors and those in urgent need. Join our community and make every drop count.</p>
-            <button class="cta-btn">Donate Now</button>
+            <p>LifeLink - Bridge the gap between donor and the people in need! Join our community and make every drop
+                count.</p>
+            <button id="donateNowBtn" class="cta-btn">Donate Now</button>
         </div>
-        <img src="Assets/pic.png" alt="LifeLink Hero">
+        <img src="/public/Assets/Mesh.png" alt="LifeLink Hero" />
     </section>
 
     <section class="features">
         <div class="feature">
             <i class="fas fa-tint"></i>
             <h4>Nearby Donor Alerts</h4>
-            <p>Receive real-time notifications when a nearby donor or recipient is in need.</p>
+            <p>Get notified when someone near you needs help.</p>
         </div>
         <div class="feature">
             <i class="fas fa-map-marked-alt"></i>
             <h4>Smart Location Match</h4>
-            <p>Our system intelligently connects you to hospitals and people within your region.</p>
+            <p>We intelligently connect donors with those in need.</p>
         </div>
         <div class="feature">
             <i class="fas fa-clock"></i>
             <h4>Donation History</h4>
-            <p>Track your past donations and get reminders for future eligible dates.</p>
+            <p>Track and plan your next donation session easily.</p>
         </div>
     </section>
 
     <footer>
         &copy; 2025 LifeLink. All rights reserved.
     </footer>
+
+    <div id="emergencyFormOverlay" class="request-form-overlay"></div>
+    <div id="emergencyFormModal" class="request-form">
+        <h2>Emergency Request Form</h2>
+        <form id="emergencyRequestForm">
+            <label for="bloodGroup">Blood Group</label>
+            <select id="bloodGroup" name="bloodGroup" required>
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+            <textarea name="description" rows="2" placeholder="Describe your emergency need..."></textarea>
+            <input type="text" name="location" placeholder="Location (e.g., Madanapalle)" />
+            <input type="text" name="contactName" placeholder="Your Full Name" />
+            <input type="text" name="contactInfo" placeholder="Contact (Phone)" />
+            <div style="display: flex; justify-content: center; gap: 1rem;">
+                <button type="button" id="closeEmergencyFormBtn" class="cta-btn"
+                    style="background: #1a1110; color: #fff;">Cancel</button>
+                <button type="submit" class="cta-btn">Submit Request</button>
+            </div>
+        </form>
+    </div>
+    <script src="/js/main.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,7 @@
 const eye = document.querySelector("#eye");
 const pass = document.querySelector("#password");
+const loginBtn = document.querySelector(".btn");
+const mail = document.querySelector("#email");
 
 eye.addEventListener("click", (e) => {
   e.preventDefault();
@@ -18,5 +20,12 @@ eye.addEventListener("click", (e) => {
     pass.setAttribute("type", "text");
   } else {
     pass.setAttribute("type", "password");
+  }
+});
+
+loginBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (mail.value !== "" && pass.value !== "") {
+    window.location.href = "/public/DashBoard.html";
   }
 });
