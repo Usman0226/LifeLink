@@ -20,5 +20,3 @@ eye.addEventListener("click", (e) => {
     pass.setAttribute("type", "password");
   }
 });
-
-//<i class="fa-solid fa-eye-slash" style="color: #e31621;"></i>
