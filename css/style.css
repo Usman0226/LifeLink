@@ -132,6 +132,29 @@ nav a:hover::after {
         padding: 8px 16px;
     }
 }
+/* Base style for icons */
+.feature i {
+  transition: transform 0.4s ease, color 0.4s ease;
+  display: inline-block;
+}
+
+/* Hover effect: bounce/fly up individually */
+.feature:hover i {
+  animation: hoverFloat 0.6s ease forwards;
+}
+
+/* Keyframes for hover animation */
+@keyframes hoverFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.2);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
 
 #emergencyRequestBtn {
     position: fixed;
