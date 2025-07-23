@@ -29,17 +29,17 @@
 
     <section class="hero">
         <div class="hero-text">
-            <h2>Connecting Donors to Lives in Need</h2>
+            <h2><span>Connecting Donors</span><br><span>to Lives in Need</span></h2>
             <p>LifeLink - Bridge the gap between donor and the people in need! Join our community and make every drop
                 count.</p>
-            <button id="donateNowBtn" class="cta-btn">Donate Now</button>
+            <button id="donateNowBtn" class="cta-btn" style="margin-bottom: 15px;">Donate Now</button>
         </div>
         <img src="/public/Assets/Mesh.png" alt="LifeLink Hero" />
     </section>
 
     <section class="features">
         <div class="feature">
-            <i class="fas fa-tint"></i>
+            <i class="fa-solid fa-heart-circle-plus"></i>
             <h4>Life's Saved</h4>
             <p>Get notified when someone near you needs help.</p>
         </div>
@@ -54,7 +54,7 @@
             <p>Track and plan your next donation session easily.</p>
         </div>
         <div class="feature">
-            <i class="fas fa-clock"></i>
+            <i class="fas fa-tint"></i>
             <h4>Active Donors</h4>
             <p>Track and plan your next donation session easily.</p>
         </div>
@@ -66,8 +66,8 @@
 
     <div id="emergencyFormOverlay" class="request-form-overlay"></div>
     <div id="emergencyFormModal" class="request-form">
-        <h2>Emergency Request Form</h2>
-        <form id="emergencyRequestForm">
+        <h2 style="margin-bottom:10px;">Emergency Request Form</h2>
+        <form id="emergencyRequestForm" >
             <label for="bloodGroup">Blood Group</label>
             <select id="bloodGroup" name="bloodGroup" required>
                 <option value="">Select Blood Group</option>
@@ -83,7 +83,7 @@
             <textarea name="description" rows="2" placeholder="Describe your emergency need..."></textarea>
             <input type="text" name="location" placeholder="Location (e.g., Madanapalle)" />
             <input type="text" name="contactName" placeholder="Your Full Name" />
-            <input type="text" name="contactInfo" placeholder="Contact (Phone)" />
+            <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
             <div style="display: flex; justify-content: center; gap: 1rem;">
                 <button type="button" id="closeEmergencyFormBtn" class="cta-btn"
                     style="background: #1a1110; color: #fff; max-height:50px">Cancel</button>
