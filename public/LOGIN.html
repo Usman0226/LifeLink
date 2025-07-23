@@ -33,6 +33,7 @@
       border-radius: 22px;
       overflow: hidden;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: background ease 1s;
     }
 
     .left {
@@ -261,7 +262,7 @@
           <label class="sub_title"><i class="fas fa-envelope"></i> Email</label>
           <input id="email" type="email" placeholder="Email" class="sty" required>
         </div>
-        <div class="details">
+        <div class="details password_input">
           <label class="sub_title"><i class="fas fa-lock"></i> Password</label>
           <div id="box">
             <input type="password" placeholder="Password" id="password" class="sty1" style="border: none;" required>
@@ -269,9 +270,10 @@
           </div>
         </div>
         <div id="btm">
-          <button class="btn" type="submit">Login</button>
+          <button  class="btn" type="submit" id="reset" style="display: none;">Next</button>
+          <button class="btn" type="submit" id="log">Login</button>
           <div class="form-links">
-            <p id="pass"><a href="#">Forgot Password?</a></p>
+            <p id="pass" ><a class="forget" href="#">Forgot Password?</a></p>
             <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
           </div>
         </div>
