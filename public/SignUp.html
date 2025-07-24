@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         body,
@@ -165,7 +165,7 @@
             border-color: #a23238;
             box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
         }
-        
+
         @media (max-width: 700px) {
             .container {
                 height: auto;
@@ -250,6 +250,18 @@
             outline: none;
             padding-right: 14px;
         }
+
+        .msg {
+            font-weight: 330;
+        }
+
+        .msgBox {
+            display: flex;
+            margin: 1.2rem;
+            flex-direction: column;
+            line-height: 1.3;
+
+        }
     </style>
 </head>
 
@@ -260,11 +272,11 @@
             <div id="pic">
                 <img src="Assets/pic.png" alt="Donation">
             </div>
-            <div class="form">
+            <div class="form" id="User_details">
                 <h2></h2>
                 <p class="title">SignUp</p>
                 <div class="inputs">
-                    <form action="">
+                    <form action="" >
                         <div class="details">
                             <label class="sub_title" for="name"><i class="fa-solid fa-user"></i>Name</label>
                             <input name="name" placeholder="Enter your full name" class="sty" type="text" id="name"
@@ -278,7 +290,7 @@
                             <label class="sub_title" for="password"> <i class="fas fa-lock"></i> Password</label>
                             <div id="box">
                                 <input placeholder="Enter your password" id="password" class="sty1" type="password"
-                                    style="border: none;" required>
+                                    autocomplete="current-password" style="border: none;" required>
                                 <button id="eye"><i id="icon" class="fa-solid fa-eye"
                                         style="color: #e31621;"></i></button>
                             </div>
@@ -293,6 +305,48 @@
                             <button class="btn">Sign Up</button>
                             <p>Have an Account? <a class="link" href="LOGIN.html">Login Here!</a>
                                 </a></p>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+            <div class="form" style="display: none;" id="Profile">
+                <div class="msgBox">
+                    <h2 class="msg">Welcome </h2>
+                    <h2 class="msg">Connecting Lives </h2>
+                    <h2 class="msg">One drop, at a time ! </h2>
+                </div>
+                <div class="inputs">
+                    <form action="">
+                        <div class="details">
+                            <label class="sub_title" for="name"> <i class="fas fa-tint"></i>Blood Group</label>
+                            <select class="sty" id="bloodGroup" name="bloodGroup" required>
+                                <option value="">Select Blood Group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="details">
+                            <label class="sub_title" for="aadhar"> <i class="fa-regular fa-address-card"></i>Your Aadhar No</label>
+                            <input placeholder="Aadhar No :" id="aadhar" class="sty" type="number" required>
+                        </div>
+                        <div class="details">
+                            <label class="sub_title" for="password">    <i class="fas fa-map-marked-alt"></i></i> Location</label>
+                            <div id="box">
+                                <input placeholder="Current Location" id="password" class="sty1" type="location "
+                                    autocomplete="current-password" style="border: none;" required>                           
+                            </div>
+
+                        </div>
+                        <div id="btm">
+                            <button class="btn" style="font-weight: 400;"><a href="/public/DashBoard.html" style="text-decoration: none; color : #fff">Started</a> </button>
+                           
                         </div>
 
                 </div>
