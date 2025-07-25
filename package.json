@@ -1,0 +1,25 @@
+{
+  "name": "lifelink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Usman0226/LifeLink.git"
+  },
+  "keywords": [],
+  "author": "Usman Gani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Usman0226/LifeLink/issues"
+  },
+  "homepage": "https://github.com/Usman0226/LifeLink#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^4.21.2"
+  }
+}

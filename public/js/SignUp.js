@@ -1,8 +1,8 @@
 const eye = document.querySelector("#eye");
 const pass = document.querySelector("#password");
-const signIn = document.querySelector('.btn');
-const profile = document.querySelector('#Profile');
-const inputs = document.querySelector('#User_details')
+const signIn = document.querySelector("#signIn");
+const profile = document.querySelector("#Profile");
+const inputs = document.querySelector('#SignUpForm');
 
 eye.addEventListener("click", (e) => {
   e.preventDefault();
@@ -24,8 +24,9 @@ eye.addEventListener("click", (e) => {
   }
 });
 
-signIn.addEventListener('click',()=>{
+signIn.addEventListener("click", (e) => {
+  // e.preventDefault();
+  inputs.style.display = "none";
+  profile.style.display = "inline-block";
 
-  inputs.style.display = 'none';
-    profile.style.display = 'inline-block'
-})
+});

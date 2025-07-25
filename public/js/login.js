@@ -2,13 +2,13 @@ const eye = document.querySelector("#eye");
 const pass = document.querySelector("#password");
 const loginBtn = document.querySelector("#log");
 const mail = document.querySelector("#email");
-const rst = document.querySelector('#reset');
+const rst = document.querySelector("#reset");
 const forget = document.querySelector(".forget");
-const passinput = document.querySelector('.password_input');
+const passinput = document.querySelector(".password_input");
 
 eye.addEventListener("click", (e) => {
   e.preventDefault();
-  e.defaultPrevented();
+  // e.defaultPrevented();
   const icon = document.getElementById("icon");
 
   if (icon.className === "fa-solid fa-eye-slash") {
@@ -33,10 +33,19 @@ loginBtn.addEventListener("click", (e) => {
   }
 });
 
+forget.addEventListener("click", () => {
+  passinput.style.display = "none";
+  rst.style.display = "inline-block";
+  loginBtn.style.display = "none";
+  forget.style.display = "none";
+});
 
-forget.addEventListener('click',()=>{
-    passinput.style.display = "none";
-    rst.style.display ="inline-block";
-    loginBtn.style.display = "none";
-    forget.style.display = "none";
-})
+rst.addEventListener("click", (e) => {
+    e.preventDefault();
+    if(mail.value != ""){
+      window.location.href = "./DashBoard.html"
+    }else{
+      alert('Input the mail please !')
+    }
+});
+ 
