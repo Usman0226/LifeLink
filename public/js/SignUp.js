@@ -1,6 +1,3 @@
-const { json } = require("body-parser");
-const { application } = require("express");
-
 const eye = document.querySelector("#eye");
 const pass = document.querySelector("#password");
 const signIn = document.querySelector("#signIn");
@@ -29,7 +26,7 @@ eye.addEventListener("click", (e) => {
 
 const form1 = document.querySelector("#form1");
 const form2 = document.querySelector("#form2");
-const formInput = {};
+let formInput = {};
 
 signIn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -39,7 +36,10 @@ signIn.addEventListener("click", (e) => {
 
   formInput ={
     username : form1_data.get('name'),
+    email : form1_data.get('email'),
     password : form1_data.get('password'),
+    DOB  : form1_data.get('dateOfBirth'),
+    
   }
   
   inputs.style.display = "none";
@@ -50,14 +50,15 @@ signIn.addEventListener("click", (e) => {
 form2.addEventListener('submit',async(e)=>{
     e.preventDefault();
 
-    const form2_data = new FormData(form2);
+    let form2_data = new FormData(form2);
     const dbData = {
       ...formInput,
       bloodGroup : form2_data.get('bloodGroup'),
       AadharNo : form2_data.get('AadharNo'),
       Location : form2_data.get('Location'),
     }
-
+      console.log(dbData);
+    
     try {
       const submission_data = await fetch('/SignUp',{
         method : "POST",
@@ -66,7 +67,7 @@ form2.addEventListener('submit',async(e)=>{
         },
         body : JSON.stringify(dbData)
       })
-
+      window.location.href = "/DashBoard";
       const finalData = await submission_data.json();
       console.log('data :',finalData);
       

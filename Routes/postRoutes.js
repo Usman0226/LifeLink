@@ -10,12 +10,14 @@ const fs = require("fs");
 postRouter.post("/SignUp", (req, res) => {
   console.log(req.body);
 
-  const userData = {
-    username: `${req.body.name}`,
-    email: `${req.body.email}`,
-    password: `${req.body.password}`,
+ const userData = {
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+    bloodGroup: req.body.bloodGroup,
+    AadharNo: req.body.AadharNo,
+    Location: req.body.Location,
   };
-
   console.log(userData);
 
   fs.appendFile("users.json", JSON.stringify(userData)+'\n', (err) => {
