@@ -33,51 +33,84 @@ signIn.addEventListener("click", (e) => {
 
   //manual submission
   let form1_data = new FormData(form1);
+  const password = form1_data.get("password");
 
-  formInput ={
-    username : form1_data.get('name'),
-    email : form1_data.get('email'),
-    password : form1_data.get('password'),
-    DOB  : form1_data.get('dateOfBirth'),
-    
+  if (!passvalidator(password)) {
+    console.log("At the validator !");
+    return;
   }
-  
+
+  formInput = {
+    username: form1_data.get("name"),
+    email: form1_data.get("email"),
+    password: form1_data.get("password"),
+    DOB: form1_data.get("dateOfBirth"),
+  };
+
   inputs.style.display = "none";
   profile.style.display = "flex";
 });
 
+form2.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-form2.addEventListener('submit',async(e)=>{
-    e.preventDefault();
+  let form2_data = new FormData(form2);
+  const dbData = {
+    ...formInput,
+    bloodGroup: form2_data.get("bloodGroup"),
+    AadharNo: form2_data.get("AadharNo"),
+    Location: form2_data.get("Location"),
+  };
+  console.log(dbData);
 
-    let form2_data = new FormData(form2);
-    const dbData = {
-      ...formInput,
-      bloodGroup : form2_data.get('bloodGroup'),
-      AadharNo : form2_data.get('AadharNo'),
-      Location : form2_data.get('Location'),
-    }
-      console.log(dbData);
-    
-    try {
-      const submission_data = await fetch('/SignUp',{
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json",
-        },
-        body : JSON.stringify(dbData)
-      })
-      window.location.href = "/DashBoard";
-      const finalData = await submission_data.json();
-      console.log('data :',finalData);
-      
-    } catch (error) {
-          console.error("Error submitting data:", error);
-    }
-})
+  try {
+    const submission_data = await fetch("/SignUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dbData),
+    });
+    window.location.href = "/DashBoard";
+    const finalData = await submission_data.json();
+    console.log("data :", finalData);
+  } catch (error) {
+    console.error("Error submitting data:", error);
+  }
+});
 
 // 1.Extract using new FormData()
 // 2.store as an Object
 // 3.In SignUp endpoint serve the Header as /json
-// 4. stringfy the data => set it to the body so it goes to req.body 
+// 4. stringfy the data => set it to the body so it goes to req.body
 // 5. METHOD : POST
+
+// 1. > 8
+// 2. Lower & Upper
+// 3. Numbers
+// .test => conditon then apply it to the password
+
+function passvalidator(pass) {
+  if (pass.length < 8) {
+    alert("Password must be greater then 8 characters ");
+    return false;
+
+  }
+  if (!/[A-Z]/.test(pass)) {
+    alert("Password must contain lowercase letters ");
+    return false;
+
+  }
+  if (!/[a-z]/.test(pass)) {
+    alert("Password must contain Uppercase letters ");
+    return false;
+
+  }
+  if (!/[0-9]/.test(pass)) {
+    alert("Password must contain atleast one number ! ");
+    return false;
+
+  }
+
+  return true;
+}
