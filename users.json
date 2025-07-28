@@ -52,5 +52,14 @@
     "AadharNo": "65",
     "Location": "Madanapalle",
     "dateOfBirth": "0160-04-26"
+  },
+  {
+    "username": "TejaSree",
+    "email": "teju@gmail.com",
+    "password": "$2b$10$uxM1Tn6woxVU8B4rB1y7e.ZSyxUERPU3dalPVpeMztF4rPeGD3cUm",
+    "bloodGroup": "O+",
+    "AadharNo": "4629",
+    "Location": "angalu",
+    "dateOfBirth": "2006-11-21"
   }
 ]

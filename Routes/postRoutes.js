@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const postRouter = express.Router();
 const fs = require("fs");
+const bcrypt = require("bcrypt");
 
 const rootDir = require("../utils/path");
 // postRouter.use(express.static(path.join(__dirname, "public")));
@@ -21,10 +22,12 @@ function getUsersData() {
 postRouter.post("/SignUp", (req, res) => {
   console.log("Body : ", req.body);
 
+  const hassedPass = bcrypt.hashSync(req.body.password, 10);
+
   const userData = {
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password,
+    password: hassedPass,
     bloodGroup: req.body.bloodGroup,
     AadharNo: req.body.AadharNo,
     Location: req.body.Location,
@@ -55,15 +58,20 @@ postRouter.post("/Login", (req, res) => {
   console.log("From the function :", existingUser);
 
   const user = existingUser.find((e) => {
-    return e.email === userData.email && e.password === userData.password;
+    return e.email === userData.email;
   });
 
-  if (user) {
-    console.log("User Found", user);
-    res.redirect("/DashBoard");
-  } else {
+  if (!user) {
     res.status(401).send("Invalid Username !");
+    return;
   }
+
+  console.log("User Found", user);
+  const passcheck = bcrypt.compareSync(userData.password, user.password);
+  if (!passcheck) {
+    res.send("Incorrect password !");
+  }
+  res.redirect("/DashBoard");
 });
 
 module.exports = postRouter;
