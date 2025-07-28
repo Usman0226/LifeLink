@@ -1,12 +1,56 @@
-{"username":"Usman Gani Chandan","email":"chandanusmangani@gmail.com","password":"fas"}
-{"username":"Usman Gani","email":"chandanusmangani@gmail.com","password":"hs"}
-{"username":"Usman Gani","email":"chandanusmangani@gmail.com","password":"afs"}
-{"username":"Usman Gani Chandan","email":"chandanusmangani@gmail.com","password":"hsfb"}
-{"username":"Usman Gani Chandan","email":"chandanusmangani@gmail.com","password":"hsfb"}
-{"username":"usman","email":"chandanusmangani@gmail.com","password":"asf"}
-{"username":"usman","email":"chandanusmangani@gmail.com","password":"asf"}
-{"username":"Usman Gani Chandan","email":"chandanusmangani@gmail.com","password":"fsd"}
-{"username":"Usman Gani Chandan","email":"chandanusmangani@gmail.com","password":"fsd"}
-{"username":"undefined","email":"undefined","password":"asfd"}
-{"username":"Usman Gani","password":"Test@01","bloodGroup":"A+","AadharNo":"99","Location":"Madanapalle"}
-{"username":"Usman Gani Chandan","email":"chandanusmangani@gmail.com","password":"Test","bloodGroup":"A+","AadharNo":"99","Location":"Madanapalle"}
+[
+  {
+    "username": "Usman Gani Chandan",
+    "email": "chandanusmangani@gmail.com",
+    "password": "UsmanGani@123",
+    "DOB": "",
+    "bloodGroup": "A+",
+    "AadharNo": "664562",
+    "Location": "zvsdvz"
+  },
+  {
+    "username": "Yugesh",
+    "email": "yugeshtg@gmail.com",
+    "password": "Yugi@1234",
+    "DOB": "2007-02-12",
+    "bloodGroup": "A+",
+    "AadharNo": "68",
+    "Location": "gk"
+  },
+  {
+    "username": "Usman Gani Chandan",
+    "email": "Gani@gmail.com",
+    "password": "Usmang ksadklsaKJHk1323214",
+    "bloodGroup": "A+",
+    "AadharNo": "12345678",
+    "Location": "Madanapalle",
+    "dateOfBirth": "5206-02-26"
+  },
+  {
+    "username": "Rahul Naidu",
+    "email": "rahul@gmail.com",
+    "password": "Test@1234",
+    "bloodGroup": "O+",
+    "AadharNo": "54",
+    "Location": "Angallu",
+    "dateOfBirth": "2006-02-19"
+  },
+  {
+    "username": "Zainul Amaan",
+    "email": "zainul@gmail.com",
+    "password": "Testing12132",
+    "bloodGroup": "A+",
+    "AadharNo": "659",
+    "Location": "Madanapalle",
+    "dateOfBirth": "2007-11-07"
+  },
+  {
+    "username": "Suhel ",
+    "email": "suhelshaik001@gmail.com",
+    "password": "lflasfl;Ll121",
+    "bloodGroup": "A+",
+    "AadharNo": "65",
+    "Location": "Madanapalle",
+    "dateOfBirth": "0160-04-26"
+  }
+]

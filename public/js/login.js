@@ -5,6 +5,7 @@ const mail = document.querySelector("#email");
 const rst = document.querySelector("#reset");
 const forget = document.querySelector(".forget");
 const passinput = document.querySelector(".password_input");
+const form = document.querySelector("#loginForm");
 
 eye.addEventListener("click", (e) => {
   e.preventDefault();
@@ -26,10 +27,33 @@ eye.addEventListener("click", (e) => {
   }
 });
 
-loginBtn.addEventListener("click", (e) => {
+loginBtn.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  //To submit
   if (mail.value !== "" && pass.value !== "") {
-    window.location.href = "/public/DashBoard.html";
+    const formData = new FormData(form);
+    const formObject = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    if (!email.value.endsWith("@gmail.com")) {
+      email.setCustomValidity("Please enter an email address of @gmail.com");
+    }
+    
+    try {
+      const submission = await fetch("/LOGIN", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
+      // window.location.href = "/DashBoard.html";
+    } catch (err) {
+      console.log(err);
+    }
   }
 });
 
@@ -41,11 +65,10 @@ forget.addEventListener("click", () => {
 });
 
 rst.addEventListener("click", (e) => {
-    e.preventDefault();
-    if(mail.value != ""){
-      window.location.href = "./DashBoard.html"
-    }else{
-      alert('Input the mail please !')
-    }
+  e.preventDefault();
+  if (mail.value != "") {
+    window.location.href = "/DashBoard.html";
+  } else {
+    alert("Input the mail please !");
+  }
 });
- 

@@ -36,7 +36,7 @@ signIn.addEventListener("click", (e) => {
   const password = form1_data.get("password");
 
   if (!passvalidator(password)) {
-    console.log("At the validator !");
+    console.log("Struck at the validator !");
     return;
   }
 
@@ -73,7 +73,7 @@ form2.addEventListener("submit", async (e) => {
     });
     window.location.href = "/DashBoard";
     const finalData = await submission_data.json();
-    console.log("data :", finalData);
+    console.log("After stringify data :", finalData);
   } catch (error) {
     console.error("Error submitting data:", error);
   }
@@ -92,12 +92,12 @@ form2.addEventListener("submit", async (e) => {
 
 function passvalidator(pass) {
   if (pass.length < 8) {
-    alert("Password must be greater then 8 characters ");
+    alert("Password must be greater than 8 characters ");
     return false;
 
   }
   if (!/[A-Z]/.test(pass)) {
-    alert("Password must contain lowercase letters ");
+    alert("Password must contain lower,case letters ");
     return false;
 
   }

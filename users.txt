@@ -1,3 +1,0 @@
-{"username":"Usman Gani","email":"chandanusmangani@gmail.com","password":"asd"}
-{"username":"Usman Gani","email":"usmangani@gmail.com","password":"hjh"}{"username":"usman","email":"lkjas@gmail.com","password":"kjghj "}
-{"username":"usman","email":"gani@gmail.com","password":"has"}
