@@ -99,17 +99,14 @@ function passvalidator(pass) {
   if (!/[A-Z]/.test(pass)) {
     alert("Password must contain lower,case letters ");
     return false;
-
   }
   if (!/[a-z]/.test(pass)) {
     alert("Password must contain Uppercase letters ");
     return false;
-
   }
   if (!/[0-9]/.test(pass)) {
     alert("Password must contain atleast one number ! ");
     return false;
-
   }
 
   return true;

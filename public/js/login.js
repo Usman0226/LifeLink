@@ -50,7 +50,7 @@ loginBtn.addEventListener("submit", async (e) => {
         },
         body: JSON.stringify(formObject),
       });
-      // window.location.href = "/DashBoard.html";
+      window.location.href = "/DashBoard.html";
     } catch (err) {
       console.log(err);
     }
