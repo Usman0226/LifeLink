@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </head>
 
@@ -61,7 +63,7 @@
         </div>
     </section>
 
- 
+
     <div id="emergencyFormOverlay" class="request-form-overlay"></div>
     <div id="emergencyFormModal" class="request-form">
         <h2 style="margin-bottom:10px;">Emergency Request Form</h2>
@@ -128,7 +130,12 @@
     <section id="bloodBanks" class="blood-banks">
         <h2>Find Nearby Blood Banks</h2>
         <div class="blood-banks-content">
-            <div id="bloodBankMap" class="blood-bank-map"></div>
+            <div id="bloodBankMap" class="blood-bank-map">
+                <section class="map-section glass transition-section">
+                    <h3><i class="fas fa-map-marked-alt"></i> Live Map</h3>
+                    <div id="map" class="map-container"></div>
+                </section>
+            </div>
             <div class="blood-bank-list">
                 <h3>Available Blood Banks</h3>
                 <table>
@@ -160,7 +167,7 @@
                             <td>Tirupati</td>
                             <td>+91 91234 56789</td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td>Jeevan Dhara Blood Bank</td>
                             <td>Kadapa</td>
                             <td>+91 87654 32109</td>
@@ -175,8 +182,8 @@
             </div>
         </div>
     </section>
-    
-   <footer>
+
+    <footer>
         &copy; 2025 LifeLink. All rights reserved.
     </footer>
 

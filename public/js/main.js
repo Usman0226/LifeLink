@@ -39,3 +39,45 @@ closeDonateFormBtn.addEventListener("click", closeDonateForm);
 menuToggle.addEventListener("click", () => {
   navMenu.classList.toggle("show");
 });
+
+const fallbackLocation = [13.55, 78.5]; // Madanapalle
+const zoomLevel = 10;
+
+function initMap(lat, lon) {
+  const map = L.map('map').setView([lat, lon], zoomLevel);
+
+  // Add tiles
+  L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=7GdPQstJTIq4t7BSTEXo', {
+    tileSize: 512,
+    zoomOffset: -1,
+    attribution: '&copy; <a href="https://www.maptiler.com">YUGESH</a>',
+  }).addTo(map);
+
+  // Add marker
+  L.marker([lat, lon]).addTo(map)
+    .bindPopup("You are here!")
+    .openPopup();
+}
+
+function loadUserLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        initMap(lat, lon);
+      },
+      (error) => {
+        console.warn("Geolocation error:", error.message);
+        alert("Couldn't get your location. Showing default location.");
+        initMap(fallbackLocation[0], fallbackLocation[1]);
+      }
+    );
+  } else {
+    alert("Geolocation not supported. Showing default location.");
+    initMap(fallbackLocation[0], fallbackLocation[1]);
+  }
+}
+
+// Load map on page load
+window.onload = loadUserLocation;
