@@ -61,5 +61,14 @@
     "AadharNo": "4629",
     "Location": "angalu",
     "dateOfBirth": "2006-11-21"
+  },
+  {
+    "username": "Yugesh",
+    "email": "yugeshtg@gmail.com",
+    "password": "$2b$10$ofCFNkBIf5tKU1TApW88teTy5zpMoBe2ZUxlnDQayHGYjdtlquM0q",
+    "bloodGroup": "A-",
+    "AadharNo": "115549",
+    "Location": "kcbkws",
+    "dateOfBirth": "2025-12-29"
   }
 ]

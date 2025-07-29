@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-   
+
 </head>
 
 <body>
@@ -25,14 +25,15 @@
         </div>
     </header>
 
-    <button id="emergencyRequestBtn"><i style="margin-right: 8px;" class="fa-solid fa-truck-droplet"></i>Emergency Request</button>
+    <button id="emergencyRequestBtn"><i style="margin-right: 8px;" class="fa-solid fa-truck-droplet"></i>Emergency
+        Request</button>
 
     <section class="hero">
         <div class="hero-text">
             <h2><span>Connecting Donors</span><br><span>to Lives in Need</span></h2>
             <p>LifeLink - Bridge the gap between donor and the people in need! Join our community and make every drop
                 count.</p>
-            <button id="donateNowBtn" class="cta-btn" style="margin-bottom: 15px;">Donate Now</button>
+            <button id="donateNowBtn" class="cta-btn donate-sumbit" style="margin-bottom: 15px;">Donate Now</button>
         </div>
         <img src="./Assets/Mesh.png" alt="LifeLink Hero" />
     </section>
@@ -46,7 +47,7 @@
         <div class="feature">
             <i class="fas fa-map-marked-alt"></i>
             <h4>Smart Location Match</h4>
-            <p >We intelligently connect donors with those in need.</p>
+            <p>We intelligently connect donors with those in need.</p>
         </div>
         <div class="feature">
             <i class="fa-solid fa-hand-holding-droplet"></i>
@@ -67,7 +68,7 @@
     <div id="emergencyFormOverlay" class="request-form-overlay"></div>
     <div id="emergencyFormModal" class="request-form">
         <h2 style="margin-bottom:10px;">Emergency Request Form</h2>
-        <form id="emergencyRequestForm" >
+        <form id="emergencyRequestForm">
             <label for="bloodGroup">Blood Group</label>
             <select id="bloodGroup" name="bloodGroup" required>
                 <option value="">Select Blood Group</option>
@@ -91,7 +92,43 @@
             </div>
         </form>
     </div>
+
+    <div id="donateFormOverlay" class="request-form-overlay"></div>
+    <div id="donateFormModal" class="donate-form glass">
+        <form>
+            <h2 class="form-heading">🩸 Become a Lifesaver</h2>
+            <p class="form-subheading">Your donation can save up to 3 lives. Thank you for stepping forward.</p>
+            <div class="form-group">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+                <select required>
+                    <option value="" disabled selected>Blood Group</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                </select>
+                <input type="tel" placeholder="Phone Number" required>
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="City / Hospital Name" required>
+                <input type="date" required>
+            </div>
+            <textarea placeholder="Message to the recipients (optional)" rows="3"></textarea>
+            <div class="form-buttons">
+                <button type="button" class="cancel-button" id="closeDonateFormBtn">Cancel</button>
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+
     <script src="./js/main.js"></script>
 </body>
 
-</html> 
+</html>
