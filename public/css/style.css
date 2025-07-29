@@ -515,14 +515,14 @@ footer {
 .blood-banks-content {
     height: 100%;
     display: flex;
-    flex: 1;
+    /* flex: 1; */
     justify-content: space-around;
-    gap: .5px;
+    gap: 35px;
     flex-wrap: wrap;
 }
 
  .blood-bank-map {
-    width: 50%;
+    width: 40%;
     background-color: #fdf5e5;
     border-radius: 15px;
     padding: 20px;
@@ -593,4 +593,180 @@ footer {
   .map-container {
     height: 300px; 
   }
+}
+
+
+
+.blood-banks-content {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.blood-bank-list-container {
+    width: 50%;
+    background-color: #fdf5e5;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    overflow-y: auto;
+    height: 600px;
+}
+
+.blood-bank-list-container h3 {
+    color: #a23238;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.blood-bank-list-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.blood-bank-list-item:hover {
+    background-color: #f8f8f8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.blood-bank-list-item.highlighted {
+    background-color: #ffebeb;
+    border: 1px solid #a23238;
+    box-shadow: 0 4px 10px rgba(162, 50, 56, 0.2);
+}
+.blood-bank-list-item h4 {
+    margin-bottom: 5px;
+}
+.blood-bank-list-item p {
+    margin-bottom: 3px;
+}
+.blood-bank-list-item .services span {
+    margin-right: 5px;
+}
+
+.blood-bank-map {
+    width: 40%;
+    background-color: #fdf5e5;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.map-container {
+    height: 360px;
+    width: 100%;
+    z-index: 9;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+.map-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #a23238;
+    font-size: 1.8rem;
+}
+
+/* the ongoing requests page */
+.emergency-requests-table-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow-x: auto; 
+}
+
+.emergency-requests-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.emergency-requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.emergency-requests-table th,
+.emergency-requests-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.emergency-requests-table th {
+    background-color: #a23238;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+
+.emergency-requests-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.emergency-table-blood-type {
+    font-weight: bold;
+    color: #a23238;
+}
+
+.emergency-table-status-tag {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.emergency-table-status-urgent { background-color: #fecaca; color: #dc2626; }
+.emergency-table-status-pending { background-color: #fde68a; color: #d97706; }
+
+.emergency-table-respond-button {
+    background-color: #a23238;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 28px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.emergency-table-respond-button:hover {
+    background-color: #8b2a2f;
+}
+
+
+.dashboard-section-filters { 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    justify-content: center;
+    margin-bottom: 40px; 
+}
+.dashboard-section-filters select,
+.dashboard-section-filters input[type="text"] {
+    flex-grow: 1; 
+    max-width: 300px;
+    padding: 12px 20px; 
+    border: 1px solid #d1d5db; 
+    border-radius: 25px; 
+    font-size: 1rem;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.dashboard-section-filters select:focus,
+.dashboard-section-filters input[type="text"]:focus {
+    outline: none;
+    border-color: #a23238;
+    box-shadow: 0 0 0 3px rgba(162, 50, 56, 0.2);
 }

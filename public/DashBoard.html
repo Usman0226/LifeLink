@@ -127,61 +127,59 @@
         </form>
     </div>
 
-    <section id="bloodBanks" class="blood-banks">
-        <h2>Find Nearby Blood Banks</h2>
-        <div class="blood-banks-content">
-            <div id="bloodBankMap" class="blood-bank-map">
-                <section class="map-section glass transition-section">
-                    <h3><i class="fas fa-map-marked-alt"></i> Live Map</h3>
-                    <div id="map" class="map-container"></div>
-                </section>
-            </div>
-            <div class="blood-bank-list">
-                <h3>Available Blood Banks</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Location</th>
-                            <th>Contact</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Red Cross Blood Bank</td>
-                            <td>Madanapalle</td>
-                            <td>+91 98765 43210</td>
-                        </tr>
-                        <tr>
-                            <td>LifeSaver Hospital</td>
-                            <td>Anantapur</td>
-                            <td>+91 99887 66554</td>
-                        </tr>
-                        <tr>
-                            <td>Community Blood Center</td>
-                            <td>Chittoor</td>
-                            <td>+91 97654 32109</td>
-                        </tr>
-                        <tr>
-                            <td>Reddrop Clinic</td>
-                            <td>Tirupati</td>
-                            <td>+91 91234 56789</td>
-                        </tr>
-                        <tr>
-                            <td>Jeevan Dhara Blood Bank</td>
-                            <td>Kadapa</td>
-                            <td>+91 87654 32109</td>
-                        </tr>
-                        <tr>
-                            <td>Rakthdaan Kendra</td>
-                            <td>Kurnool</td>
-                            <td>+91 76543 21098</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <section id="find-donate-section" class="blood-banks">
+        <h2 class="dashboard-section-title">Donate Now</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #555;">Some msg xyz</p>
+
+        <div>
+            
+            <div id="content-banks" class="tab-content" style="padding-top: 20px;">
+                <div class="blood-banks-content">
+                    <div id="blood-bank-list-dynamic" class="blood-bank-list-container">
+                        <h3>Available Blood Banks</h3>
+                        <!--   by JS -->
+                    </div>
+                    <div class="blood-bank-map">
+                        <section class="map-section glass transition-section">
+                            <h3><i class="fas fa-map-marked-alt"></i> Live Map</h3>
+                            <div id="map" class="map-container"></div>
+                            <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #777;">Hover for name </p>
+                            <p id="map-location-name"
+                                style="text-align: center; margin-top: 10px; font-size: 1.2em; font-weight: bold; color: #a23238;">
+                            </p>
+                        </section>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+
+    <div class="blood-banks" style="margin-top: 0; padding-top: 0;">
+        <h2 style="margin-top: 0;">Ongoing Emergency Requests</h2>
+        <p style="text-align: center; margin-bottom: 20px; color: #555;">Your help is urgently required.</p>
+
+        <div class="dashboard-section-filters">
+            <select id="filter-blood-type">
+                <option selected value="all">All Blood Types</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+            <input type="text" id="filter-location" placeholder="Filter by city">
+        </div>
+
+        <div id="emergency-requests-container" class="emergency-requests-table-container">
+            <!-- js -->
+        </div>
+        <p id="no-requests-message" class="no-requests-message" style="display: none;">No requests match the current
+            filters.</p>
+    </div>
 
     <footer>
         &copy; 2025 LifeLink. All rights reserved.
