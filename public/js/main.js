@@ -219,6 +219,7 @@ function filterAndloadEmergencyRequests() {
   loadEmergencyRequests(filteredRequests);
 }
 
+loadEmergencyRequests(emergencyRequestsData);
 filterBloodType.addEventListener("change", filterAndloadEmergencyRequests);
 filterLocation.addEventListener("input", filterAndloadEmergencyRequests);
 
@@ -378,7 +379,7 @@ function initMap(lat, lon) {
     "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=7GdPQstJTIq4t7BSTEXo",
     {
       tileSize: 512,
-      zoomOffset: -1,
+      zoomOffset: -8,
       attribution: '&copy; <a href="https://www.maptiler.com">YUGESH</a>',
     }
   ).addTo(mapInstance);
