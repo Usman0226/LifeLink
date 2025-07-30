@@ -607,7 +607,8 @@ footer {
 
 .blood-bank-list-container {
     width: 50%;
-    background-color: #fdf5e5;
+    scrollbar-width: none;
+    background-color: #FAFAFA;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -624,7 +625,7 @@ footer {
 
 .blood-bank-list-item {
     padding: 15px 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #FAFAFA;
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
@@ -633,7 +634,7 @@ footer {
     box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 .blood-bank-list-item:hover {
-    background-color: #f8f8f8;
+    background-color: #e53935;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
@@ -654,7 +655,7 @@ footer {
 
 .blood-bank-map {
     width: 40%;
-    background-color: #fdf5e5;
+    background-color: #fafafa;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
