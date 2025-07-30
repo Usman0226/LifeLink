@@ -169,7 +169,7 @@ function loadEmergencyRequests(requests) {
                         <th>Location</th>
                         <th>Units</th>
                         <th>Status</th>
-                        <th>?</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -218,6 +218,7 @@ function filterAndloadEmergencyRequests() {
 
   loadEmergencyRequests(filteredRequests);
 }
+loadEmergencyRequests(emergencyRequestsData);
 
 loadEmergencyRequests(emergencyRequestsData);
 filterBloodType.addEventListener("change", filterAndloadEmergencyRequests);
@@ -308,16 +309,15 @@ function renderBloodBanks(banks) {
     item.innerHTML = `
     <h4 style="font-weight: bold; color: #333;">${bank.name}</h4>
     <p style="font-size: 0.9em; color: #666;">${bank.address}</p>
-    <p style="font-size: 0.8em; color: #777; margin-top: 5px;">Hours: ${
-      bank.open
-    }</p>
+    <p style="font-size: 0.8em; color: #777; margin-top: 5px;">Hours: ${bank.open
+      }</p>
     <div class="services" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;">
     ${bank.services
-      .map(
-        (s) =>
-          `<span style="background-color: #fecaca; color: #dc2626; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">${s}</span>`
-      )
-      .join("")}
+        .map(
+          (s) =>
+            `<span style="background-color: #fecaca; color: #dc2626; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">${s}</span>`
+        )
+        .join("")}
     </div>
     `;
     bloodBankListDynamic.appendChild(item);
@@ -367,7 +367,7 @@ let mapInstance = null; // To store the Leaflet map instance
 
 //   Map
 const fallbackLocation = [13.55, 78.5]; // Madanapalle
-const zoomLevel = 10;
+const zoomLevel = 8;
 
 function initMap(lat, lon) {
   if (mapInstance) {
