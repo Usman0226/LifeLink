@@ -10,7 +10,781 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
 
+body {
+    background: radial-gradient(circle, #fddcdc, #f9f9f9);
+    min-height: 100vh;
+    padding-top: 75px;
+}
+
+header {
+    width: 90%;
+    background-color: rgba(185, 28, 28, 0.5);
+    color: white;
+    border-radius: 28px;
+    padding: 1rem 1.5rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    transition: background ease-in-out .8s;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease-in-out;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    nav {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        background-color: rgba(185, 28, 28, 0.5);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.2rem;
+        display: none;
+        border-radius: 28px;
+        margin: 5px;
+    }
+
+    nav a {
+        width: 100%;
+        border-bottom: 1px solid #ffffff43;
+    }
+
+    nav.show {
+        display: flex;
+    }
+
+    body {
+        padding-top: 170px;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .hero-text,
+    .hero img {
+        max-width: 100%;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #emergencyRequestBtn {
+        top: 125px;
+        right: 0.5rem;
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+.feature i {
+    transition: transform 0.4s ease, color 0.4s ease;
+    display: inline-block;
+}
+
+
+.feature:hover i {
+    animation: hoverFloat 0.6s ease forwards;
+}
+
+
+@keyframes hoverFloat {
+    0% {
+        transform: translateY(0) scale(1);
+        rotate: -7deg;
+    }
+
+    50% {
+        rotate: -7deg;
+        transform: translateY(-10px) scale(1.2);
+    }
+
+    100% {
+        rotate: -7deg;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#emergencyRequestBtn {
+    position: fixed;
+    top: 12%;
+    right: 5%;
+    background-color: #a23238;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 28px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+    z-index: 90;
+
+}
+
+#emergencyRequestBtn:hover {
+    background-color: #8b2a2f;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    padding-bottom: 0;
+    min-height: 70vh;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hero-text h2 {
+    font-size: 3rem;
+    color: #a23238;
+    /* line-height: 0.5; */
+    margin: 0;
+}
+
+.hero-text h2 span {
+
+    display: inline;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.hero img {
+    flex: 1;
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.cta-btn {
+    background-color: #a23238;
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 28px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    justify-content: center;
+}
+
+.cta-btn:hover {
+    background-color: #8b2a2f;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background: white;
+    border-radius: 20px;
+    padding: 60px 30px;
+    max-width: 1100px;
+    margin: 40px auto;
+    margin-top: 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.feature {
+    max-width: 250px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.feature i {
+    font-size: 36px;
+    color: #a23238;
+    margin-bottom: 15px;
+}
+
+.feature h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 14px;
+    color: #555;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #a23238;
+    color: white;
+}
+
+.request-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: none;
+}
+
+.request-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: #fdf5e5;
+    /* background-color: rgba(255, 255, 255, 0.7); */
+    backdrop-filter: blur(6px);
+    padding: 1.5rem 1rem;
+    border-radius: 28px;
+    width: 500px;
+    max-width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    color: #000000;
+}
+
+.request-form label {
+    align-self: flex-start;
+}
+
+.request-form input,
+.request-form select,
+.request-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #8f8f8fcf;
+    border-radius: 20px;
+    margin-top: 6px;
+    margin-bottom: 1rem;
+
+}
+
+.request-form input:focus,
+.request-form select:focus,
+.request-form textarea:focus {
+    outline: none;
+    border-color: #a23238;
+    box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+}
+
+/* Overlay */
+#donateFormOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: none;
+}
+
+/* Modal Form Container */
+#donateFormModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fdf1dc;
+    /* light cream background */
+    padding: 30px 20px;
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1000;
+    display: none;
+}
+
+/* Form Title */
+#donateFormModal h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Input + Select + Textarea Styles */
+#donateFormModal input,
+#donateFormModal select,
+#donateFormModal textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    font-size: 16px;
+    font-family: 'Segoe UI', sans-serif;
+    margin-top: 12px;
+    box-sizing: border-box;
+}
+
+/* Button Container */
+#donateFormModal .form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Cancel and Submit Buttons */
+#donateFormModal .form-buttons button {
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#donateFormModal .form-buttons .cancel-button {
+    background-color: #1a1311;
+}
+
+#donateFormModal .form-buttons .submit-button {
+    background-color: #9b2b2b;
+}
+
+#donateFormModal .form-buttons .cancel-button:hover {
+    background-color: #000;
+}
+
+#donateFormModal .form-buttons .submit-button:hover {
+    background-color: #7e2222;
+}
+
+
+
+
+#donateFormModal,
+#donateFormOverlay {
+    display: none;
+    /* Hide donate form and overlay by default */
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+        gap: 30px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+        align-items: center;
+    }
+
+    .hero-text h2 {
+        font-size: 2.2rem;
+    }
+
+    .hero img {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    #emergencyRequestBtn i {
+        font-size: 30px;
+    }
+
+}
+
+
+
+.blood-banks {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 22px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.blood-bank-list {
+    width: 50%;
+    background-color: #fdf5e5;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.blood-banks h2 {
+    font-size: 2.5rem;
+    color: #a23238;
+    margin-bottom: 30px;
+}
+
+.blood-banks-content {
+    height: 100%;
+    display: flex;
+    /* flex: 1; */
+    justify-content: space-around;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+ .blood-bank-map {
+    width: 40%;
+    background-color: #fdf5e5;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.blood-bank-list h3 {
+    color: #a23238;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.blood-bank-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.blood-bank-list th,
+.blood-bank-list td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.blood-bank-list tr {
+    border-radius: 28px;
+}
+
+.blood-bank-list th {
+    background-color: #a23238;
+    color: white;
+    font-weight: 600;
+}
+
+.blood-bank-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.blood-bank-list tr:hover {
+    background-color: #f1f1f1;
+}
+ .map-container {
+    height: 360px;
+    width: 100%;
+    z-index: 9;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+.map-section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #a23238;
+  font-size: 1.8rem;
+}
+@media (max-width: 768px) {
+  .blood-banks-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .blood-bank-map,
+  .blood-bank-list {
+    width: 100%;
+  }
+
+  .map-container {
+    height: 300px; 
+  }
+}
+
+
+
+.blood-banks-content {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.blood-bank-list-container {
+    width: 50%;
+    scrollbar-width: none;
+    background-color: #FAFAFA;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    overflow-y: auto;
+    height: 600px;
+}
+
+.blood-bank-list-container h3 {
+    color: #a23238;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.blood-bank-list-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #FAFAFA;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.blood-bank-list-item:hover {
+    background-color: #e53935;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.blood-bank-list-item.highlighted {
+    background-color: #ffebeb;
+    border: 1px solid #a23238;
+    box-shadow: 0 4px 10px rgba(162, 50, 56, 0.2);
+}
+.blood-bank-list-item h4 {
+    margin-bottom: 5px;
+}
+.blood-bank-list-item p {
+    margin-bottom: 3px;
+}
+.blood-bank-list-item .services span {
+    margin-right: 5px;
+}
+
+.blood-bank-map {
+    width: 40%;
+    background-color: #fafafa;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.map-container {
+    height: 360px;
+    width: 100%;
+    z-index: 9;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+.map-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #a23238;
+    font-size: 1.8rem;
+}
+
+/* the ongoing requests page */
+.emergency-requests-table-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow-x: auto; 
+}
+
+.emergency-requests-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.emergency-requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.emergency-requests-table th,
+.emergency-requests-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.emergency-requests-table th {
+    background-color: #a23238;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+
+.emergency-requests-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.emergency-table-blood-type {
+    font-weight: bold;
+    color: #a23238;
+}
+
+.emergency-table-status-tag {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.emergency-table-status-urgent { background-color: #fecaca; color: #dc2626; }
+.emergency-table-status-pending { background-color: #fde68a; color: #d97706; }
+
+.emergency-table-respond-button {
+    background-color: #a23238;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 28px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.emergency-table-respond-button:hover {
+    background-color: #8b2a2f;
+}
+
+
+.dashboard-section-filters { 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    justify-content: center;
+    margin-bottom: 40px; 
+}
+.dashboard-section-filters select,
+.dashboard-section-filters input[type="text"] {
+    flex-grow: 1; 
+    max-width: 300px;
+    padding: 12px 20px; 
+    border: 1px solid #d1d5db; 
+    border-radius: 25px; 
+    font-size: 1rem;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.dashboard-section-filters select:focus,
+.dashboard-section-filters input[type="text"]:focus {
+    outline: none;
+    border-color: #a23238;
+    box-shadow: 0 0 0 3px rgba(162, 50, 56, 0.2);
+}
+    </style>
 </head>
 
 <body>
@@ -126,7 +900,7 @@
             </div>
         </form>
     </div>
-
+     <!-- Available Blood Banks  -->
     <section id="find-donate-section" class="blood-banks">
         <h2 class="dashboard-section-title">Donate Now</h2>
         <p style="text-align: center; margin-bottom: 40px; color: #555;">Be a hero-give the gift of life</p>
@@ -187,6 +961,403 @@
 
 
     <script src="./js/main.js"></script>
+    <script>
+        const emergencyFormModal = document.getElementById("emergencyFormModal");
+const emergencyFormOverlay = document.getElementById("emergencyFormOverlay");
+const emergencyRequestBtn = document.getElementById("emergencyRequestBtn");
+const closeEmergencyFormBtn = document.getElementById("closeEmergencyFormBtn");
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.getElementById("navMenu");
+const donateFormModal = document.getElementById("donateFormModal");
+const donateFormOverlay = document.getElementById("donateFormOverlay");
+const donateNowBtn = document.getElementById("donateNowBtn");
+const closeDonateFormBtn = document.getElementById("closeDonateFormBtn");
+const emergencyRequestsData = [
+  {
+    id: 1,
+    bloodType: "O-",
+    location: "Mumbai",
+    hospital: "City Hospital",
+    units: 2,
+    status: "Urgent",
+  },
+  {
+    id: 2,
+    bloodType: "A+",
+    location: "Delhi",
+    hospital: "Capital Health",
+    units: 4,
+    status: "Urgent",
+  },
+  {
+    id: 3,
+    bloodType: "B-",
+    location: "Bangalore",
+    hospital: "Garden City Medical",
+    units: 1,
+    status: "Pending",
+  },
+  {
+    id: 4,
+    bloodType: "AB+",
+    location: "Mumbai",
+    hospital: "Sea View Clinic",
+    units: 3,
+    status: "Urgent",
+  },
+  {
+    id: 5,
+    bloodType: "O+",
+    location: "Chennai",
+    hospital: "Marina General",
+    units: 5,
+    status: "Pending",
+  },
+  {
+    id: 6,
+    bloodType: "A-",
+    location: "Hyderabad",
+    hospital: "Deccan Hospital",
+    units: 2,
+    status: "Urgent",
+  },
+  {
+    id: 7,
+    bloodType: "B+",
+    location: "Pune",
+    hospital: "Maharashtra Clinic",
+    units: 1,
+    status: "Pending",
+  },
+  {
+    id: 8,
+    bloodType: "O-",
+    location: "Kolkata",
+    hospital: "East End Hospital",
+    units: 3,
+    status: "Urgent",
+  },
+  {
+    id: 9,
+    bloodType: "AB+",
+    location: "Ahmedabad",
+    hospital: "Gujarat Medical",
+    units: 2,
+    status: "Pending",
+  },
+  {
+    id: 10,
+    bloodType: "A+",
+    location: "Lucknow",
+    hospital: "Nawab Hospital",
+    units: 4,
+    status: "Urgent",
+  },
+];
+
+emergencyRequestBtn.addEventListener("click", () => {
+  emergencyFormModal.style.display = "block";
+  emergencyFormOverlay.style.display = "block";
+});
+
+donateNowBtn.addEventListener("click", () => {
+  donateFormModal.style.display = "block";
+  donateFormOverlay.style.display = "block";
+  // donateFormModal.classList.add("slide-up");
+});
+
+function closeForm() {
+  emergencyFormModal.style.display = "none";
+  emergencyFormOverlay.style.display = "none";
+}
+
+function closeDonateForm() {
+  donateFormModal.style.display = "none";
+  donateFormOverlay.style.display = "none";
+  // donateFormModal.classList.remove("slide-up");
+}
+
+closeEmergencyFormBtn.addEventListener("click", closeForm);
+
+closeDonateFormBtn.addEventListener("click", closeDonateForm);
+
+menuToggle.addEventListener("click", () => {
+  navMenu.classList.toggle("show");
+});
+
+// const fallbackLocation = [13.55, 78.5]; // Madanapalle
+// const zoomLevel = 10;
+
+function loadUserLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        initMap(lat, lon);
+      },
+      (error) => {
+        console.warn("Geolocation error:", error.message);
+        alert("Couldn't get your location. Showing default location.");
+        initMap(fallbackLocation[0], fallbackLocation[1]);
+      }
+    );
+  } else {
+    alert("Geolocation not supported. Showing default location.");
+    initMap(fallbackLocation[0], fallbackLocation[1]);
+  }
+}
+
+// Load map on page load
+window.onload = loadUserLocation;
+
+const emergencyRequestsContainer = document.getElementById(
+  "emergency-requests-container"
+);
+const noRequestsMessage = document.getElementById("no-requests-message");
+const filterBloodType = document.getElementById("filter-blood-type");
+const filterLocation = document.getElementById("filter-location");
+
+function loadEmergencyRequests(requests) {
+  emergencyRequestsContainer.innerHTML = "";
+  if (requests.length === 0) {
+    noRequestsMessage.style.display = "block";
+  } else {
+    noRequestsMessage.style.display = "none";
+    let tableHtml = `
+            <table class="emergency-requests-table">
+                <thead>
+                    <tr>
+                        <th>Blood Type</th>
+                        <th>Hospital</th>
+                        <th>Location</th>
+                        <th>Units</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+    requests.forEach((req) => {
+      const statusClass =
+        req.status === "Urgent"
+          ? "emergency-table-status-urgent"
+          : "emergency-table-status-pending";
+      tableHtml += `
+                <tr>
+                    <td class="emergency-table-blood-type">${req.bloodType}</td>
+                    <td>${req.hospital}</td>
+                    <td>${req.location}</td>
+                    <td>${req.units}</td>
+                    <td><span class="emergency-table-status-tag ${statusClass}">${req.status}</span></td>
+                    <td><button class="emergency-table-respond-button">Respond</button></td>
+                </tr>
+            `;
+    });
+    tableHtml += `
+                </tbody>
+            </table>
+        `;
+    emergencyRequestsContainer.innerHTML = tableHtml;
+  }
+}
+
+//Filtering
+function filterAndloadEmergencyRequests() {
+  const bloodType = filterBloodType.value;
+  const location = filterLocation.value.toLowerCase();
+
+  let filteredRequests = emergencyRequestsData;
+
+  if (bloodType !== "all") {
+    filteredRequests = filteredRequests.filter(
+      (req) => req.bloodType === bloodType
+    );
+  }
+  if (location) {
+    filteredRequests = filteredRequests.filter((req) =>
+      req.location.toLowerCase().includes(location)
+    );
+  }
+
+  loadEmergencyRequests(filteredRequests);
+}
+loadEmergencyRequests(emergencyRequestsData);
+
+loadEmergencyRequests(emergencyRequestsData);
+filterBloodType.addEventListener("change", filterAndloadEmergencyRequests);
+filterLocation.addEventListener("input", filterAndloadEmergencyRequests);
+
+const bloodBanksData = [
+  {
+    id: 1,
+    name: "Red Cross Blood Bank",
+    city: "Madanapalle",
+    address: "123 Life St, Madanapalle",
+    open: "9 AM - 5 PM",
+    services: ["Whole Blood", "Platelets"],
+    lat: 13.6333,
+    lon: 78.5,
+  },
+  {
+    id: 2,
+    name: "LifeSaver Hospital",
+    city: "Anantapur",
+    address: "456 Health Ave, Anantapur",
+    open: "24 Hours",
+    services: ["Whole Blood", "Plasma"],
+    lat: 14.6819,
+    lon: 77.6006,
+  },
+  {
+    id: 3,
+    name: "Community Blood Center",
+    city: "Chittoor",
+    address: "789 Tech Park Rd, Chittoor",
+    open: "8 AM - 8 PM",
+    services: ["Whole Blood", "Platelets", "Plasma"],
+    lat: 13.2167,
+    lon: 79.1167,
+  },
+  {
+    id: 4,
+    name: "Reddrop Clinic",
+    city: "Tirupati",
+    address: "101 Marine Dr, Tirupati",
+    open: "10 AM - 6 PM",
+    services: ["Whole Blood"],
+    lat: 13.65,
+    lon: 79.4167,
+  },
+  {
+    id: 5,
+    name: "Jeevan Dhara Blood Bank",
+    city: "Kadapa",
+    address: "202 Main Rd, Kadapa",
+    open: "9 AM - 7 PM",
+    services: ["Whole Blood", "Platelets"],
+    lat: 14.4667,
+    lon: 78.8167,
+  },
+  {
+    id: 6,
+    name: "Rakthdaan Kendra",
+    city: "Kurnool",
+    address: "303 Bypass Rd, Kurnool",
+    open: "8 AM - 6 PM",
+    services: ["Whole Blood", "Plasma"],
+    lat: 15.8281,
+    lon: 78.0374,
+  },
+];
+
+const bloodBankListDynamic = document.getElementById("blood-bank-list-dynamic");
+const mapLocationName = document.getElementById("map-location-name");
+
+function renderBloodBanks(banks) {
+  bloodBankListDynamic.innerHTML = "<h3>Available Blood Banks</h3>"; // Clear and add title
+
+  // Clear existing markers if map exists
+  if (mapInstance) {
+    mapInstance.eachLayer(function (layer) {
+      if (layer instanceof L.Marker) {
+        mapInstance.removeLayer(layer);
+      }
+    });
+  }
+
+  banks.forEach((bank) => {
+    const item = document.createElement("div");
+    item.className = "blood-bank-list-item";
+    item.dataset.bankId = bank.id;
+    item.innerHTML = `
+    <h4 style="font-weight: bold; color: #333;">${bank.name}</h4>
+    <p style="font-size: 0.9em; color: #666;">${bank.address}</p>
+    <p style="font-size: 0.8em; color: #777; margin-top: 5px;">Hours: ${bank.open
+      }</p>
+    <div class="services" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;">
+    ${bank.services
+        .map(
+          (s) =>
+            `<span style="background-color: #fecaca; color: #dc2626; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">${s}</span>`
+        )
+        .join("")}
+    </div>
+    `;
+    bloodBankListDynamic.appendChild(item);
+
+    // Add marker to map
+    if (mapInstance && bank.lat && bank.lon) {
+      const marker = L.marker([bank.lat, bank.lon])
+        .addTo(mapInstance)
+        .bindPopup(`<b>${bank.name}</b><br>${bank.address}`);
+      marker.on("mouseover", function () {
+        item.classList.add("highlighted");
+        mapLocationName.textContent = bank.name;
+      });
+      marker.on("mouseout", function () {
+        item.classList.remove("highlighted");
+        mapLocationName.textContent = "";
+      });
+      item.marker = marker;
+    }
+  });
+
+  bloodBankListDynamic
+    .querySelectorAll(".blood-bank-list-item")
+    .forEach((item) => {
+      item.addEventListener("mouseover", function () {
+        item.classList.add("highlighted");
+        const bankId = parseInt(item.dataset.bankId);
+        const bank = bloodBanksData.find((b) => b.id === bankId);
+        mapLocationName.textContent = bank.name;
+        if (mapInstance && bank.lat && bank.lon) {
+          if (item.marker) {
+            item.marker.openPopup();
+          }
+        }
+      });
+      item.addEventListener("mouseout", function () {
+        item.classList.remove("highlighted");
+        mapLocationName.textContent = "";
+        if (item.marker) {
+          item.marker.closePopup();
+        }
+      });
+    });
+}
+
+let mapInstance = null; // To store the Leaflet map instance
+
+//   Map
+const fallbackLocation = [13.55, 78.5]; // Madanapalle
+const zoomLevel = 8;
+
+function initMap(lat, lon) {
+  if (mapInstance) {
+    mapInstance.remove();
+  }
+  mapInstance = L.map("map").setView([lat, lon], zoomLevel);
+
+  L.tileLayer(
+    "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=7GdPQstJTIq4t7BSTEXo",
+    {
+      tileSize: 512,
+      zoomOffset: -8,
+      attribution: '&copy; <a href="https://www.maptiler.com">YUGESH</a>',
+    }
+  ).addTo(mapInstance);
+
+  L.marker([lat, lon])
+    .addTo(mapInstance)
+    .bindPopup("Your approximate location")
+    .openPopup();
+
+  renderBloodBanks(bloodBanksData); // Render blood banks after map is initialized
+}
+
+
+    </script>
 </body>
 
 </html>
