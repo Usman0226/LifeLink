@@ -1,7 +1,7 @@
 [
   {
     "username": "Usman Gani Chandan",
-    "email": "chandanusmangani@gmail.com",
+    "email": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
     "password": "UsmanGani@123",
     "DOB": "",
     "bloodGroup": "A+",
@@ -11,7 +11,7 @@
   {
     "username": "Yugesh",
     "email": "yugeshtg@gmail.com",
-    "password": "Yugi@1234",
+    "password": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
     "DOB": "2007-02-12",
     "bloodGroup": "A+",
     "AadharNo": "68",
@@ -20,7 +20,7 @@
   {
     "username": "Usman Gani Chandan",
     "email": "Gani@gmail.com",
-    "password": "Usmang ksadklsaKJHk1323214",
+    "password": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
     "bloodGroup": "A+",
     "AadharNo": "12345678",
     "Location": "Madanapalle",
@@ -29,7 +29,7 @@
   {
     "username": "Rahul Naidu",
     "email": "rahul@gmail.com",
-    "password": "Test@1234",
+    "password": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
     "bloodGroup": "O+",
     "AadharNo": "54",
     "Location": "Angallu",
@@ -37,8 +37,8 @@
   },
   {
     "username": "Zainul Amaan",
-    "email": "zainul@gmail.com",
-    "password": "Testing12132",
+    "email": "ZainulAmaan@gmail.com",
+    "password": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
     "bloodGroup": "A+",
     "AadharNo": "659",
     "Location": "Madanapalle",
@@ -47,7 +47,7 @@
   {
     "username": "Suhel ",
     "email": "suhelshaik001@gmail.com",
-    "password": "lflasfl;Ll121",
+    "password": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
     "bloodGroup": "A+",
     "AadharNo": "65",
     "Location": "Madanapalle",
@@ -70,5 +70,14 @@
     "AadharNo": "115549",
     "Location": "kcbkws",
     "dateOfBirth": "2025-12-29"
+  },
+  {
+    "username": "Usman Gani Chandan",
+    "email": "chandan@gmail.com",
+    "password": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
+    "bloodGroup": "A+",
+    "AadharNo": "65",
+    "Location": "Madanapalle",
+    "dateOfBirth": "2006-02-26"
   }
 ]

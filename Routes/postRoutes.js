@@ -69,9 +69,9 @@ postRouter.post("/Login", (req, res) => {
   console.log("User Found", user);
   const passcheck = bcrypt.compareSync(userData.password, user.password);
   if (!passcheck) {
-    res.send("Incorrect password !");
+    return res.send("Incorrect password !");
   }
-  res.redirect("/DashBoard");
+  return res.redirect("/DashBoard");
 });
 
 module.exports = postRouter;
