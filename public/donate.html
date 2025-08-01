@@ -5,294 +5,588 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeLink-Donate Now</title>
-    <link rel="stylesheet" href="../public/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        .blood-banks {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 60px 20px;
-            background: white;
-            border-radius: 22px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
-            text-align: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .blood-banks-content {
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .app-container {
+            height: 100vh;
+            position: relative;
             display: flex;
-            justify-content: space-around;
-            gap: 35px;
-            flex-wrap: wrap;
+            flex-direction: column;
         }
 
-        .blood-bank-list-container {
-            width: 50%;
-            background-color: #FAFAFA;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-            max-height: 600px;
-            text-align: left;
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            position: relative;
         }
 
-        .blood-bank-list-container h3 {
+        .header h2 {
             color: #a23238;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
         }
 
-        .blood-bank-list-item {
-            padding: 15px 20px;
-            border-bottom: 1px solid #FAFAFA;
-            text-align: left;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 4px;
         }
 
-        .blood-bank-list-item:hover {
-            background-color: #e53935;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Map Container */
+        .map-wrapper {
+            flex: 1;
+            position: relative;
         }
 
-        .blood-bank-list-item.highlighted {
-            background-color: #ffebeb;
-            border: 1px solid #a23238;
-            box-shadow: 0 4px 10px rgba(162, 50, 56, 0.2);
-        }
-
-        .blood-bank-map {
-            width: 40%;
-            background-color: #fafafa;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .map-container {
-            height: 360px;
+        #map {
             width: 100%;
-            z-index: 9;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            z-index: 1;
         }
 
-        .map-section h3 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            color: #a23238;
-            font-size: 1.8rem;
+        /* Bottom Sheet */
+        .bottom-sheet {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transform: translateY(calc(100% - 120px));
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            max-height: 85vh;
         }
 
-        @media (max-width: 768px) {
-            .blood-banks-content {
-                flex-direction: column;
-                gap: 20px;
+        .bottom-sheet.expanded {
+            transform: translateY(0);
+        }
+
+        /* Drag Handle */
+        .drag-handle {
+            width: 36px;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            margin: 12px auto 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .drag-handle:hover {
+            background: #bbb;
+        }
+
+        /* Sheet Header */
+        .sheet-header {
+            padding: 0 20px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+
+        .sheet-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .sheet-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* List Container */
+        .list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+            max-height: calc(85vh - 100px);
+        }
+
+        /* Blood Bank Items */
+        .blood-bank-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f5f5f5;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+
+        .blood-bank-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .blood-bank-item.highlighted {
+            background-color: #fff8f8;
+            border-left: 4px solid #a23238;
+        }
+
+        .bank-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .bank-address {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .bank-hours {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .services-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .service-tag {
+            background-color: #fef2f2;
+            color: #dc2626;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Location Display */
+        .current-location {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 500;
+            font-size: 0.9rem;
+            color: #333;
+            max-width: 250px;
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 769px) {
+            .app-container {
+                flex-direction: row;
             }
 
-            .blood-bank-map,
-            .blood-bank-list-container {
+            .header {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                right: auto;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+                max-width: 400px;
+            }
+
+            .map-wrapper {
                 width: 100%;
+                height: 100vh;
             }
 
-            .map-container {
-                height: 300px;
+            .bottom-sheet {
+                position: fixed;
+                left: 20px;
+                bottom: 20px;
+                top: 140px;
+                right: auto;
+                width: 400px;
+                max-height: none;
+                transform: translateX(-320px);
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             }
+
+            .bottom-sheet.expanded {
+                transform: translateX(0);
+            }
+
+            .drag-handle {
+                display: none;
+            }
+
+            .sheet-header {
+                border-bottom: 1px solid #f0f0f0;
+                padding: 16px 20px;
+            }
+
+            .list-container {
+                max-height: calc(100vh - 240px);
+            }
+
+            .current-location {
+                top: 140px;
+                left: 440px;
+            }
+        }
+
+        /* Touch interactions for mobile */
+        @media (max-width: 768px) {
+            .bottom-sheet {
+                touch-action: pan-y;
+            }
+        }
+
+        /* Scrollbar styling */
+        .list-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .list-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .list-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .list-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
         }
     </style>
-
 </head>
 
 <body>
-    <section id="find-donate-section" class="blood-banks" style="width: 100vw;">
-        <h2 class="dashboard-section-title">Donate Now</h2>
-        <p style="text-align: center; margin-bottom: 40px; color: #555;">Be a hero—give the gift of life</p>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <h2>Donate Now</h2>
+            <p>Be a hero—give the gift of life</p>
+        </div>
 
-        <div class="tab-content" style="padding-top: 20px;">
-            <div class="blood-banks-content">
+        <!-- Map -->
+        <div class="map-wrapper">
+            <div id="map"></div>
+        </div>
 
-                <div id="blood-bank-list-dynamic" class="blood-bank-list-container">
-                    <h3>Available Blood Banks</h3>
+        <!-- Current Location Display -->
+        <div class="current-location" id="current-location" style="display: none;">
+            <div id="map-location-name"></div>
+        </div>
 
-                </div>
+        <!-- Bottom Sheet / Side Panel -->
+        <div class="bottom-sheet" id="bottom-sheet">
+            <div class="drag-handle" id="drag-handle"></div>
+            
+            <div class="sheet-header" id="sheet-header">
+                <div class="sheet-title">Available Blood Banks</div>
+                <div class="sheet-subtitle" id="results-count">Loading...</div>
+            </div>
 
-
-                <div class="blood-bank-map">
-                    <section class="map-section">
-                        <h3><i class="fas fa-map-marked-alt"></i> Live Map</h3>
-                        <div id="map" class="map-container"></div>
-                        <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #777;">Hover for name
-                        </p>
-                        <p id="map-location-name"
-                            style="text-align: center; margin-top: 10px; font-size: 1.2em; font-weight: bold; color: #a23238;">
-                        </p>
-                    </section>
-                </div>
+            <div class="list-container" id="blood-bank-list">
+                <!-- Blood bank items will be populated here -->
             </div>
         </div>
-    </section>
+    </div>
 
-</body>
-<script>
-    const bloodBanksData = [
-        {
-            id: 1,
-            name: "Red Cross Blood Bank",
-            city: "Madanapalle",
-            address: "123 Life St, Madanapalle",
-            open: "9 AM - 5 PM",
-            services: ["Whole Blood", "Platelets"],
-            lat: 13.6333,
-            lon: 78.5,
-        },
-        {
-            id: 2,
-            name: "LifeSaver Hospital",
-            city: "Anantapur",
-            address: "456 Health Ave, Anantapur",
-            open: "24 Hours",
-            services: ["Whole Blood", "Plasma"],
-            lat: 14.6819,
-            lon: 77.6006,
-        },
-        {
-            id: 3,
-            name: "Community Blood Center",
-            city: "Chittoor",
-            address: "789 Tech Park Rd, Chittoor",
-            open: "8 AM - 8 PM",
-            services: ["Whole Blood", "Platelets", "Plasma"],
-            lat: 13.2167,
-            lon: 79.1167,
-        },
-        {
-            id: 4,
-            name: "Reddrop Clinic",
-            city: "Tirupati",
-            address: "101 Marine Dr, Tirupati",
-            open: "10 AM - 6 PM",
-            services: ["Whole Blood"],
-            lat: 13.65,
-            lon: 79.4167,
-        },
-        {
-            id: 5,
-            name: "Jeevan Dhara Blood Bank",
-            city: "Kadapa",
-            address: "202 Main Rd, Kadapa",
-            open: "9 AM - 7 PM",
-            services: ["Whole Blood", "Platelets"],
-            lat: 14.4667,
-            lon: 78.8167,
-        },
-        {
-            id: 6,
-            name: "Rakthdaan Kendra",
-            city: "Kurnool",
-            address: "303 Bypass Rd, Kurnool",
-            open: "8 AM - 6 PM",
-            services: ["Whole Blood", "Plasma"],
-            lat: 15.8281,
-            lon: 78.0374,
-        },
-    ];
+    <script>
+        const bloodBanksData = [
+            {
+                id: 1,
+                name: "Red Cross Blood Bank",
+                city: "Madanapalle",
+                address: "123 Life St, Madanapalle",
+                open: "9 AM - 5 PM",
+                services: ["Whole Blood", "Platelets"],
+                lat: 13.6333,
+                lon: 78.5,
+            },
+            {
+                id: 2,
+                name: "LifeSaver Hospital",
+                city: "Anantapur",
+                address: "456 Health Ave, Anantapur",
+                open: "24 Hours",
+                services: ["Whole Blood", "Plasma"],
+                lat: 14.6819,
+                lon: 77.6006,
+            },
+            {
+                id: 3,
+                name: "Community Blood Center",
+                city: "Chittoor",
+                address: "789 Tech Park Rd, Chittoor",
+                open: "8 AM - 8 PM",
+                services: ["Whole Blood", "Platelets", "Plasma"],
+                lat: 13.2167,
+                lon: 79.1167,
+            },
+            {
+                id: 4,
+                name: "Reddrop Clinic",
+                city: "Tirupati",
+                address: "101 Marine Dr, Tirupati",
+                open: "10 AM - 6 PM",
+                services: ["Whole Blood"],
+                lat: 13.65,
+                lon: 79.4167,
+            },
+            {
+                id: 5,
+                name: "Jeevan Dhara Blood Bank",
+                city: "Kadapa",
+                address: "202 Main Rd, Kadapa",
+                open: "9 AM - 7 PM",
+                services: ["Whole Blood", "Platelets"],
+                lat: 14.4667,
+                lon: 78.8167,
+            },
+            {
+                id: 6,
+                name: "Rakthdaan Kendra",
+                city: "Kurnool",
+                address: "303 Bypass Rd, Kurnool",
+                open: "8 AM - 6 PM",
+                services: ["Whole Blood", "Plasma"],
+                lat: 15.8281,
+                lon: 78.0374,
+            },
+        ];
 
-    const bloodBankListDynamic = document.getElementById("blood-bank-list-dynamic");
-    const mapLocationName = document.getElementById("map-location-name");
+        // Global variables
+        let mapInstance = null;
+        let markers = [];
+        let isExpanded = false;
 
-    let mapInstance = null;
+        // DOM elements
+        const bottomSheet = document.getElementById('bottom-sheet');
+        const dragHandle = document.getElementById('drag-handle');
+        const sheetHeader = document.getElementById('sheet-header');
+        const bloodBankList = document.getElementById('blood-bank-list');
+        const mapLocationName = document.getElementById('map-location-name');
+        const currentLocation = document.getElementById('current-location');
+        const resultsCount = document.getElementById('results-count');
 
-    function renderBloodBanks(banks) {
-        bloodBankListDynamic.innerHTML = "<h3>Available Blood Banks</h3>";
-
-
-        if (mapInstance) {
-            mapInstance.eachLayer(layer => {
-                if (layer instanceof L.Marker) {
-                    mapInstance.removeLayer(layer);
-                }
-            });
+        // Bottom sheet functionality
+        function toggleBottomSheet() {
+            isExpanded = !isExpanded;
+            bottomSheet.classList.toggle('expanded', isExpanded);
         }
 
-        banks.forEach(bank => {
-            const item = document.createElement("div");
-            item.className = "blood-bank-list-item";
-            item.dataset.bankId = bank.id;
-            item.innerHTML = `
-      <h4 style="font-weight: bold; color: #333;">${bank.name}</h4>
-      <p style="font-size: 0.9em; color: #666;">${bank.address}</p>
-      <p style="font-size: 0.8em; color: #777;">Hours: ${bank.open}</p>
-      <div class="services" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;">
-        ${bank.services.map(service => `<span style="background-color: #fecaca; color: #dc2626; padding: 3px 8px; border-radius: 12px; font-size: 0.75em;">${service}</span>`).join("")}
-      </div>
-    `;
-            bloodBankListDynamic.appendChild(item);
+        // Touch/drag functionality for mobile
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
 
+        function handleTouchStart(e) {
+            startY = e.touches[0].clientY;
+            isDragging = true;
+            bottomSheet.style.transition = 'none';
+        }
 
-            const marker = L.marker([bank.lat, bank.lon])
-                .addTo(mapInstance)
-                .bindPopup(`<b>${bank.name}</b><br>${bank.address}`);
+        function handleTouchMove(e) {
+            if (!isDragging) return;
+            
+            currentY = e.touches[0].clientY;
+            const deltaY = currentY - startY;
+            
+            if (!isExpanded && deltaY < 0) {
+                // Dragging up when collapsed
+                const translateY = Math.max(deltaY, -200);
+                bottomSheet.style.transform = `translateY(calc(100% - 120px + ${translateY}px))`;
+            } else if (isExpanded && deltaY > 0) {
+                // Dragging down when expanded
+                const translateY = Math.min(deltaY, 200);
+                bottomSheet.style.transform = `translateY(${translateY}px)`;
+            }
+        }
 
-            marker.on("mouseover", () => {
-                item.classList.add("highlighted");
-                mapLocationName.textContent = bank.name;
-            });
-            marker.on("mouseout", () => {
-                item.classList.remove("highlighted");
-                mapLocationName.textContent = "";
-            });
+        function handleTouchEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            
+            const deltaY = currentY - startY;
+            
+            if (!isExpanded && deltaY < -50) {
+                toggleBottomSheet();
+            } else if (isExpanded && deltaY > 50) {
+                toggleBottomSheet();
+            } else {
+                // Snap back to current state
+                bottomSheet.style.transform = isExpanded ? 'translateY(0)' : 'translateY(calc(100% - 120px))';
+            }
+        }
 
-            item.addEventListener("mouseover", () => {
-                item.classList.add("highlighted");
-                mapLocationName.textContent = bank.name;
-                marker.openPopup();
-            });
-            item.addEventListener("mouseout", () => {
-                item.classList.remove("highlighted");
-                mapLocationName.textContent = "";
-                marker.closePopup();
-            });
+        // Event listeners for touch/drag
+        dragHandle.addEventListener('click', toggleBottomSheet);
+        sheetHeader.addEventListener('click', toggleBottomSheet);
 
-            item.marker = marker;
-        });
-    }
+        // Mobile touch events
+        if (window.innerWidth <= 768) {
+            bottomSheet.addEventListener('touchstart', handleTouchStart, { passive: true });
+            bottomSheet.addEventListener('touchmove', handleTouchMove, { passive: false });
+            bottomSheet.addEventListener('touchend', handleTouchEnd);
+        }
 
-    function initMap(lat = 13.55, lon = 78.5) {
-        if (mapInstance) mapInstance.remove();
+        // Initialize map
+        function initMap(lat = 13.55, lon = 78.5) {
+            if (mapInstance) mapInstance.remove();
 
-        mapInstance = L.map("map").setView([lat, lon], 8);
+            mapInstance = L.map("map", {
+                zoomControl: false
+            }).setView([lat, lon], 8);
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: "&copy; OpenStreetMap contributors"
-        }).addTo(mapInstance);
+            // Add zoom control to bottom right
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(mapInstance);
 
-        L.marker([lat, lon])
-            .addTo(mapInstance)
-            .bindPopup("Your approximate location")
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: "&copy; OpenStreetMap contributors"
+            }).addTo(mapInstance);
+
+            // User location marker
+            L.marker([lat, lon], {
+                icon: L.divIcon({
+                    className: 'user-location-marker',
+                    html: '<div style="width: 20px; height: 20px; background: #4285f4; border: 3px solid white; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></div>',
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                })
+            }).addTo(mapInstance)
+            .bindPopup("Your location")
             .openPopup();
 
-        renderBloodBanks(bloodBanksData);
-    }
-
-
-    window.addEventListener("load", () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                pos => initMap(pos.coords.latitude, pos.coords.longitude),
-                () => initMap()
-            );
-        } else {
-            initMap();
+            renderBloodBanks(bloodBanksData);
         }
-    });
 
-</script>
+        // Render blood banks
+        function renderBloodBanks(banks) {
+            // Clear existing markers
+            markers.forEach(marker => mapInstance.removeLayer(marker));
+            markers = [];
 
+            // Clear list
+            bloodBankList.innerHTML = '';
+
+            // Update results count
+            resultsCount.textContent = `${banks.length} blood banks found`;
+
+            banks.forEach((bank, index) => {
+                // Create list item
+                const item = document.createElement("div");
+                item.className = "blood-bank-item";
+                item.dataset.bankId = bank.id;
+                item.innerHTML = `
+                    <div class="bank-name">${bank.name}</div>
+                    <div class="bank-address">${bank.address}</div>
+                    <div class="bank-hours">Hours: ${bank.open}</div>
+                    <div class="services-tags">
+                        ${bank.services.map(service => 
+                            `<span class="service-tag">${service}</span>`
+                        ).join("")}
+                    </div>
+                `;
+                bloodBankList.appendChild(item);
+
+                // Create map marker
+                const marker = L.marker([bank.lat, bank.lon], {
+                    icon: L.divIcon({
+                        className: 'blood-bank-marker',
+                        html: '<div style="width: 24px; height: 24px; background: #dc2626; border: 2px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">+</div>',
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    })
+                }).addTo(mapInstance);
+
+                markers.push(marker);
+
+                // Popup for marker
+                marker.bindPopup(`
+                    <div style="min-width: 200px;">
+                        <strong>${bank.name}</strong><br>
+                        ${bank.address}<br>
+                        <small>Hours: ${bank.open}</small>
+                    </div>
+                `);
+
+                // Hover interactions
+                marker.on("mouseover", () => {
+                    item.classList.add("highlighted");
+                    currentLocation.style.display = 'block';
+                    mapLocationName.textContent = bank.name;
+                });
+
+                marker.on("mouseout", () => {
+                    item.classList.remove("highlighted");
+                    currentLocation.style.display = 'none';
+                });
+
+                item.addEventListener("mouseover", () => {
+                    item.classList.add("highlighted");
+                    currentLocation.style.display = 'block';
+                    mapLocationName.textContent = bank.name;
+                    marker.openPopup();
+                });
+
+                item.addEventListener("mouseout", () => {
+                    item.classList.remove("highlighted");
+                    currentLocation.style.display = 'none';
+                    marker.closePopup();
+                });
+
+                // Click to center map
+                item.addEventListener("click", () => {
+                    mapInstance.setView([bank.lat, bank.lon], 12);
+                    marker.openPopup();
+                });
+            });
+        }
+
+        // Initialize app
+        window.addEventListener("load", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    pos => initMap(pos.coords.latitude, pos.coords.longitude),
+                    () => initMap()
+                );
+            } else {
+                initMap();
+            }
+        });
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            if (mapInstance) {
+                setTimeout(() => {
+                    mapInstance.invalidateSize();
+                }, 100);
+            }
+        });
+    </script>
+</body>
 </html>
