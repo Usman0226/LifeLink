@@ -29,11 +29,11 @@
             flex-direction: column;
         }
 
-        /* Header */
+
         .header {
             background: white;
             padding: 16px 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             position: relative;
         }
@@ -63,7 +63,7 @@
             z-index: 1;
         }
 
-        /* Bottom Sheet */
+
         .bottom-sheet {
             position: absolute;
             bottom: 0;
@@ -71,7 +71,7 @@
             right: 0;
             background: white;
             border-radius: 16px 16px 0 0;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             transform: translateY(calc(100% - 120px));
             transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -82,7 +82,6 @@
             transform: translateY(0);
         }
 
-        /* Drag Handle */
         .drag-handle {
             width: 36px;
             height: 4px;
@@ -97,7 +96,7 @@
             background: #bbb;
         }
 
-        /* Sheet Header */
+
         .sheet-header {
             padding: 0 20px 16px;
             border-bottom: 1px solid #f0f0f0;
@@ -116,7 +115,7 @@
             color: #666;
         }
 
-        /* List Container */
+
         .list-container {
             flex: 1;
             overflow-y: auto;
@@ -124,7 +123,7 @@
             max-height: calc(85vh - 100px);
         }
 
-        /* Blood Bank Items */
+
         .blood-bank-item {
             padding: 16px 20px;
             border-bottom: 1px solid #f5f5f5;
@@ -177,7 +176,7 @@
             font-weight: 500;
         }
 
-        /* Location Display */
+
         .current-location {
             position: absolute;
             top: 80px;
@@ -185,14 +184,68 @@
             background: white;
             padding: 12px 16px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             z-index: 500;
             font-size: 0.9rem;
             color: #333;
             max-width: 250px;
         }
 
-        /* Desktop Styles */
+
+        .blood-bank-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f5f5f5;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .bank-info {
+            flex: 1;
+        }
+
+        .camp_register {
+            display: flex;
+            align-self: flex-end;
+            align-items: center;
+            position: absolute;
+            top:50%;
+       
+        }
+
+        .register-btn {
+            background: #a23238;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 80px;
+        }
+
+        .register-btn:hover {
+            background: #8b1e24;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(162, 50, 56, 0.3);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 4px rgba(162, 50, 56, 0.3);
+        }
+
+        .register-btn:hover {
+            background: #8b1e24;
+        }
+
         @media (min-width: 769px) {
             .app-container {
                 flex-direction: row;
@@ -205,7 +258,7 @@
                 right: auto;
                 background: white;
                 border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
                 max-width: 400px;
             }
@@ -225,7 +278,7 @@
                 max-height: none;
                 transform: translateX(-320px);
                 border-radius: 8px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             }
 
             .bottom-sheet.expanded {
@@ -251,14 +304,14 @@
             }
         }
 
-        /* Touch interactions for mobile */
+
         @media (max-width: 768px) {
             .bottom-sheet {
                 touch-action: pan-y;
             }
         }
 
-        /* Scrollbar styling */
+
         .list-container::-webkit-scrollbar {
             width: 4px;
         }
@@ -280,33 +333,32 @@
 
 <body>
     <div class="app-container">
-        <!-- Header -->
+
         <div class="header">
             <h2>Donate Now</h2>
             <p>Be a hero—give the gift of life</p>
         </div>
 
-        <!-- Map -->
+
         <div class="map-wrapper">
             <div id="map"></div>
         </div>
 
-        <!-- Current Location Display -->
         <div class="current-location" id="current-location" style="display: none;">
             <div id="map-location-name"></div>
         </div>
 
-        <!-- Bottom Sheet / Side Panel -->
+
         <div class="bottom-sheet" id="bottom-sheet">
             <div class="drag-handle" id="drag-handle"></div>
-            
+
             <div class="sheet-header" id="sheet-header">
                 <div class="sheet-title">Available Blood Banks</div>
                 <div class="sheet-subtitle" id="results-count">Loading...</div>
             </div>
 
             <div class="list-container" id="blood-bank-list">
-                <!-- Blood bank items will be populated here -->
+                <!-- Blood bank items  -->
             </div>
         </div>
     </div>
@@ -375,7 +427,6 @@
             },
         ];
 
-        // Global variables
         let mapInstance = null;
         let markers = [];
         let isExpanded = false;
@@ -389,7 +440,7 @@
         const currentLocation = document.getElementById('current-location');
         const resultsCount = document.getElementById('results-count');
 
-        // Bottom sheet functionality
+
         function toggleBottomSheet() {
             isExpanded = !isExpanded;
             bottomSheet.classList.toggle('expanded', isExpanded);
@@ -408,16 +459,16 @@
 
         function handleTouchMove(e) {
             if (!isDragging) return;
-            
+
             currentY = e.touches[0].clientY;
             const deltaY = currentY - startY;
-            
+
             if (!isExpanded && deltaY < 0) {
-                // Dragging up when collapsed
+
                 const translateY = Math.max(deltaY, -200);
                 bottomSheet.style.transform = `translateY(calc(100% - 120px + ${translateY}px))`;
             } else if (isExpanded && deltaY > 0) {
-                // Dragging down when expanded
+
                 const translateY = Math.min(deltaY, 200);
                 bottomSheet.style.transform = `translateY(${translateY}px)`;
             }
@@ -426,22 +477,21 @@
         function handleTouchEnd() {
             if (!isDragging) return;
             isDragging = false;
-            
+
             bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            
+
             const deltaY = currentY - startY;
-            
+
             if (!isExpanded && deltaY < -50) {
                 toggleBottomSheet();
             } else if (isExpanded && deltaY > 50) {
                 toggleBottomSheet();
             } else {
-                // Snap back to current state
                 bottomSheet.style.transform = isExpanded ? 'translateY(0)' : 'translateY(calc(100% - 120px))';
             }
         }
 
-        // Event listeners for touch/drag
+        // for touch/drag
         dragHandle.addEventListener('click', toggleBottomSheet);
         sheetHeader.addEventListener('click', toggleBottomSheet);
 
@@ -460,7 +510,6 @@
                 zoomControl: false
             }).setView([lat, lon], 8);
 
-            // Add zoom control to bottom right
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(mapInstance);
@@ -469,7 +518,6 @@
                 attribution: "&copy; OpenStreetMap contributors"
             }).addTo(mapInstance);
 
-            // User location marker
             L.marker([lat, lon], {
                 icon: L.divIcon({
                     className: 'user-location-marker',
@@ -478,26 +526,22 @@
                     iconAnchor: [10, 10]
                 })
             }).addTo(mapInstance)
-            .bindPopup("Your location")
-            .openPopup();
+                .bindPopup("Your location")
+                .openPopup();
 
             renderBloodBanks(bloodBanksData);
         }
 
-        // Render blood banks
         function renderBloodBanks(banks) {
-            // Clear existing markers
             markers.forEach(marker => mapInstance.removeLayer(marker));
             markers = [];
 
-            // Clear list
             bloodBankList.innerHTML = '';
 
-            // Update results count
             resultsCount.textContent = `${banks.length} blood banks found`;
 
             banks.forEach((bank, index) => {
-                // Create list item
+
                 const item = document.createElement("div");
                 item.className = "blood-bank-item";
                 item.dataset.bankId = bank.id;
@@ -506,14 +550,17 @@
                     <div class="bank-address">${bank.address}</div>
                     <div class="bank-hours">Hours: ${bank.open}</div>
                     <div class="services-tags">
-                        ${bank.services.map(service => 
-                            `<span class="service-tag">${service}</span>`
-                        ).join("")}
+                        ${bank.services.map(service =>
+                    `<span class="service-tag">${service}</span>`
+                ).join("")}
+                    </div>
+
+                    <div class="camp_register">
+                         <button class="register-btn" data-bank-id="${bank.id}">Register</button>
                     </div>
                 `;
                 bloodBankList.appendChild(item);
 
-                // Create map marker
                 const marker = L.marker([bank.lat, bank.lon], {
                     icon: L.divIcon({
                         className: 'blood-bank-marker',
@@ -525,7 +572,7 @@
 
                 markers.push(marker);
 
-                // Popup for marker
+
                 marker.bindPopup(`
                     <div style="min-width: 200px;">
                         <strong>${bank.name}</strong><br>
@@ -534,7 +581,7 @@
                     </div>
                 `);
 
-                // Hover interactions
+
                 marker.on("mouseover", () => {
                     item.classList.add("highlighted");
                     currentLocation.style.display = 'block';
@@ -559,7 +606,7 @@
                     marker.closePopup();
                 });
 
-                // Click to center map
+
                 item.addEventListener("click", () => {
                     mapInstance.setView([bank.lat, bank.lon], 12);
                     marker.openPopup();
@@ -567,7 +614,7 @@
             });
         }
 
-        // Initialize app
+
         window.addEventListener("load", () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -579,7 +626,7 @@
             }
         });
 
-        // Handle resize
+
         window.addEventListener('resize', () => {
             if (mapInstance) {
                 setTimeout(() => {
@@ -589,4 +636,5 @@
         });
     </script>
 </body>
+
 </html>
