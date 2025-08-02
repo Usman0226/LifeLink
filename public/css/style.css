@@ -310,7 +310,7 @@ footer {
     position: fixed;
     top: 50%;
     left: 50%;
-    background: #fdf5e5;
+    background: #fde5ed;
     /* background-color: rgba(255, 255, 255, 0.7); */
     backdrop-filter: blur(6px);
     padding: 1.5rem 1rem;
@@ -445,7 +445,6 @@ footer {
 #donateFormModal,
 #donateFormOverlay {
     display: none;
-    /* Hide donate form and overlay by default */
 }
 
 @media (max-width: 768px) {

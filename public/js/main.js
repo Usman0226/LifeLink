@@ -97,9 +97,7 @@ emergencyRequestBtn.addEventListener("click", () => {
 });
 
 donateNowBtn.addEventListener("click", () => {
-  donateFormModal.style.display = "block";
-  donateFormOverlay.style.display = "block";
-  // donateFormModal.classList.add("slide-up");
+  window.location.href = '/donate'
 });
 
 function closeForm() {
@@ -110,7 +108,6 @@ function closeForm() {
 function closeDonateForm() {
   donateFormModal.style.display = "none";
   donateFormOverlay.style.display = "none";
-  // donateFormModal.classList.remove("slide-up");
 }
 
 closeEmergencyFormBtn.addEventListener("click", closeForm);
@@ -121,8 +118,6 @@ menuToggle.addEventListener("click", () => {
   navMenu.classList.toggle("show");
 });
 
-// const fallbackLocation = [13.55, 78.5]; // Madanapalle
-// const zoomLevel = 10;
 
 function loadUserLocation() {
   if (navigator.geolocation) {

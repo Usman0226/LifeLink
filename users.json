@@ -1,8 +1,8 @@
 [
   {
     "username": "Usman Gani Chandan",
-    "email": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
-    "password": "UsmanGani@123",
+    "email": "chandanusmangani@gmail.com",
+    "password": "$2b$10$7Q1sg1vhJTeeFNCl4FCoLuRIfQttynSsqQkkBfww2euKV0eIeMfta",
     "DOB": "",
     "bloodGroup": "A+",
     "AadharNo": "664562",
@@ -56,7 +56,7 @@
   {
     "username": "TejaSree",
     "email": "teju@gmail.com",
-    "password": "$2b$10$uxM1Tn6woxVU8B4rB1y7e.ZSyxUERPU3dalPVpeMztF4rPeGD3cUm",
+    "password": "$2b$10$bAyrJybZ2HrYtb6M5Jp5kuxOftwADttZCQX6RxViKfN/eNurMyGEG",
     "bloodGroup": "O+",
     "AadharNo": "4629",
     "Location": "angalu",
@@ -79,5 +79,14 @@
     "AadharNo": "65",
     "Location": "Madanapalle",
     "dateOfBirth": "2006-02-26"
+  },
+  {
+    "username": "Amaan Zainul Chakrapet",
+    "email": "amaanzainul@gmail.com",
+    "password": "$2b$10$bAyrJybZ2HrYtb6M5Jp5kuxOftwADttZCQX6RxViKfN/eNurMyGEG",
+    "bloodGroup": "A+",
+    "AadharNo": "65",
+    "Location": "Madanapalle",
+    "dateOfBirth": "2007-11-07"
   }
 ]
