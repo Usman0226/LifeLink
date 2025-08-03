@@ -81,3 +81,8 @@ module.exports = postRouter;
 // 1. get the input values & store
 // 2. Read the data store the users into an array
 // 3. Match the users using the .find method !
+
+postRouter.post("/dashBoard",(req,res)=>{
+  console.log("The body of the emergency request",req.body);
+  res.sendStatus(200);
+})

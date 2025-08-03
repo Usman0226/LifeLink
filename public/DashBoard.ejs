@@ -67,7 +67,7 @@
     <div id="emergencyFormOverlay" class="request-form-overlay"></div>
     <div id="emergencyFormModal" class="request-form">
         <h2 style="margin-bottom:10px;">Emergency Request Form</h2>
-        <form id="emergencyRequestForm">
+        <form id="emergencyRequestForm" method="post">
             <label for="bloodGroup">Blood Group</label>
             <select id="bloodGroup" name="bloodGroup" required>
                 <option value="">Select Blood Group</option>
@@ -80,14 +80,37 @@
                 <option value="O+">O+</option>
                 <option value="O-">O-</option>
             </select>
-            <textarea name="description" rows="2" placeholder="Describe your emergency need..."></textarea>
+            <select id="bloodUnits" name="bloodUnits"  required>
+                <option value="">Select Units</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+            <input name="hospitalName" placeholder="Hospital Name">
             <input type="text" name="location" placeholder="Location (e.g., Madanapalle)" />
             <input type="text" name="contactName" placeholder="Your Full Name" />
             <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
+            <div class="confirmation" style="
+                display: flex;
+                justify-content:flex-start;
+                align-items:center;
+                gap:5px;
+                padding:5px
+             ">
+                <input type="checkbox" id="checkbox" required style="width: 15px;margin:0; align-self:center;">
+                <label for="checkbox" style="opacity: 0.7;font-size:small;">I confirm this is a genuine request</label>
+            </div>
+            
             <div style="display: flex; justify-content: center; gap: 1rem;">
                 <button type="button" id="closeEmergencyFormBtn" class="cta-btn"
                     style="background: #1a1110; color: #fff; max-height:50px">Cancel</button>
-                <button type="submit" class="cta-btn" style="max-height:50px">Submit</button>
+                <button id="requestSubmission" type="submit" class="cta-btn" style="max-height:50px">Submit</button>
             </div>
         </form>
     </div>
@@ -126,24 +149,25 @@
             </div>
         </form>
     </div> -->
-     <!-- Available Blood Banks  -->
-    <section id="find-donate-section" class="blood-banks">
+    <!-- Available Blood Banks  -->
+    <!-- <section id="find-donate-section" class="blood-banks">
         <h2 class="dashboard-section-title">Donate Now</h2>
         <p style="text-align: center; margin-bottom: 40px; color: #555;">Be a hero-give the gift of life</p>
 
         <div>
-            
+
             <div id="content-banks" class="tab-content" style="padding-top: 20px;">
                 <div class="blood-banks-content">
                     <div id="blood-bank-list-dynamic" class="blood-bank-list-container">
                         <h3>Available Blood Banks</h3>
-                        <!--   by JS -->
+                        
                     </div>
                     <div class="blood-bank-map">
                         <section class="map-section glass transition-section">
                             <h3><i class="fas fa-map-marked-alt"></i> Live Map</h3>
                             <div id="map" class="map-container"></div>
-                            <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #777;">Hover for name </p>
+                            <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #777;">Hover for
+                                name </p>
                             <p id="map-location-name"
                                 style="text-align: center; margin-top: 10px; font-size: 1.2em; font-weight: bold; color: #a23238;">
                             </p>
@@ -152,7 +176,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
 
     <div class="blood-banks" style="margin-top: 0; padding-top: 0;">
@@ -186,8 +210,8 @@
     </footer>
 
 
-    <script src="./js/main.js"></script>
-   
+    <script src="/js/main.js"></script>
+
 </body>
 
 </html>

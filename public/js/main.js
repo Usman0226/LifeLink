@@ -7,7 +7,7 @@ const navMenu = document.getElementById("navMenu");
 const donateFormModal = document.getElementById("donateFormModal");
 const donateFormOverlay = document.getElementById("donateFormOverlay");
 const donateNowBtn = document.getElementById("donateNowBtn");
-const closeDonateFormBtn = document.getElementById("closeDonateFormBtn");
+// const closeDonateFormBtn = document.getElementById("closeDonateFormBtn");
 const emergencyRequestsData = [
   {
     id: 1,
@@ -97,7 +97,7 @@ emergencyRequestBtn.addEventListener("click", () => {
 });
 
 donateNowBtn.addEventListener("click", () => {
-  window.location.href = '/donate'
+  window.location.href = "/donate";
 });
 
 function closeForm() {
@@ -112,12 +112,11 @@ function closeDonateForm() {
 
 closeEmergencyFormBtn.addEventListener("click", closeForm);
 
-closeDonateFormBtn.addEventListener("click", closeDonateForm);
+// closeDonateFormBtn.addEventListener("click", closeDonateForm);
 
 menuToggle.addEventListener("click", () => {
   navMenu.classList.toggle("show");
 });
-
 
 function loadUserLocation() {
   if (navigator.geolocation) {
@@ -304,15 +303,16 @@ function renderBloodBanks(banks) {
     item.innerHTML = `
     <h4 style="font-weight: bold; color: #333;">${bank.name}</h4>
     <p style="font-size: 0.9em; color: #666;">${bank.address}</p>
-    <p style="font-size: 0.8em; color: #777; margin-top: 5px;">Hours: ${bank.open
-      }</p>
+    <p style="font-size: 0.8em; color: #777; margin-top: 5px;">Hours: ${
+      bank.open
+    }</p>
     <div class="services" style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;">
     ${bank.services
-        .map(
-          (s) =>
-            `<span style="background-color: #fecaca; color: #dc2626; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">${s}</span>`
-        )
-        .join("")}
+      .map(
+        (s) =>
+          `<span style="background-color: #fecaca; color: #dc2626; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">${s}</span>`
+      )
+      .join("")}
     </div>
     `;
     bloodBankListDynamic.appendChild(item);
@@ -387,3 +387,37 @@ function initMap(lat, lon) {
   renderBloodBanks(bloodBanksData); // Render blood banks after map is initialized
 }
 
+// Emergency request form data submission
+const submissionBtn = document.querySelector("#requestSubmission");
+const emergencyRequestForm = document.querySelector("#emergencyRequestForm");
+
+emergencyRequestForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  console.log("clicked");
+
+  const formData = new FormData(emergencyRequestForm);
+
+  const requestData = {
+    bloodGroup: formData.get("bloodGroup"),
+    Units: formData.get("bloodUnits"),
+    location: formData.get("location"),
+    hospital: formData.get("hospitalName"),
+    contactNumber: formData.get("contactInfo"),
+    contactName: formData.get("contactName"),
+  };
+
+  try {
+    const submissionData = await fetch("/dashBoard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    closeForm();
+  } catch (err) {
+    alert("Request submission failed !");
+    closeForm();
+  }
+});

@@ -59,6 +59,46 @@ const bloodBanksData = [
     lat: 15.8281,
     lon: 78.0374,
   },
+  {
+    id: 6,
+    name: "Rakthdaan Kendra",
+    city: "Kurnool",
+    address: "303 Bypass Rd, Kurnool",
+    open: "8 AM - 6 PM",
+    services: ["Whole Blood", "Plasma"],
+    lat: 15.8281,
+    lon: 78.0374,
+  },
+  {
+    id: 6,
+    name: "Rakthdaan Kendra",
+    city: "Kurnool",
+    address: "303 Bypass Rd, Kurnool",
+    open: "8 AM - 6 PM",
+    services: ["Whole Blood", "Plasma"],
+    lat: 15.8281,
+    lon: 78.0374,
+  },
+  {
+    id: 6,
+    name: "Rakthdaan Kendra",
+    city: "Kurnool",
+    address: "303 Bypass Rd, Kurnool",
+    open: "8 AM - 6 PM",
+    services: ["Whole Blood", "Plasma"],
+    lat: 15.8281,
+    lon: 78.0374,
+  },
+  {
+    id: 6,
+    name: "Rakthdaan Kendra",
+    city: "Kurnool",
+    address: "303 Bypass Rd, Kurnool",
+    open: "8 AM - 6 PM",
+    services: ["Whole Blood", "Plasma"],
+    lat: 15.8281,
+    lon: 78.0374,
+  },
 ];
 
 let mapInstance = null;
@@ -175,7 +215,7 @@ function renderBloodBanks(banks) {
 
   bloodBankList.innerHTML = "";
 
-  resultsCount.textContent = `${banks.length} blood banks found`;
+  resultsCount.textContent = `${banks.length} donation camps found`;
 
   banks.forEach((bank, index) => {
     const item = document.createElement("div");

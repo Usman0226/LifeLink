@@ -31,7 +31,7 @@ let formInput = {};
 signIn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  //manual submission
+  //manual submission  
   let form1_data = new FormData(form1);
   const password = form1_data.get("password");
 
