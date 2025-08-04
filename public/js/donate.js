@@ -191,7 +191,7 @@ function initMap(lat = 13.55, lon = 78.5) {
     .addTo(mapInstance);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "&copy; OpenStreetMap contributors",
+    attribution: "&copy; YUGESH",
   }).addTo(mapInstance);
 
   L.marker([lat, lon], {

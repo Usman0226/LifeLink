@@ -506,6 +506,7 @@ footer {
 }
 
 .blood-banks h2 {
+    padding-top: 25px;
     font-size: 2.5rem;
     color: #a23238;
     margin-bottom: 30px;
