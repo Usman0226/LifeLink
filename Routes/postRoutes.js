@@ -3,6 +3,11 @@ const path = require("path");
 const postRouter = express.Router();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const connectDB = require("../db");
+const User = require('../models/user');
+
+connectDB();
 
 const rootDir = require("../utils/path");
 // postRouter.use(express.static(path.join(__dirname, "public")));
@@ -19,7 +24,7 @@ function getUsersData() {
   }
 }
 
-postRouter.post("/SignUp", (req, res) => {
+postRouter.post("/SignUp", async(req, res) => {
   console.log("Body : ", req.body);
 
   const hassedPass = bcrypt.hashSync(req.body.password, 10);
@@ -33,14 +38,29 @@ postRouter.post("/SignUp", (req, res) => {
     Location: req.body.Location,
     dateOfBirth: req.body.DOB,
   };
+
+  try{
+    const user = new User(userData);
+    await user.save();
+    console.log("sent the data ");
+    return res.send('Saved to DB ! ')
+    
+  }
+  catch(err){
+    console.log("Error saving the data !",err);
+    
+  }
   // console.log(userData);
 
   //getting user data and push the new User !
   let users = getUsersData();
   users.push(userData);
 
+  
   // writing the data into the file
   fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
+
+  postRouter
 
   console.log("File written successfully!");
   res.redirect("/DashBoard");
@@ -84,5 +104,20 @@ module.exports = postRouter;
 
 postRouter.post("/dashBoard",(req,res)=>{
   console.log("The body of the emergency request",req.body);
+  const requestData = {
+    bloodGroup: req.body.bloodGroup,
+    Units:req.body.Units,
+    location:req.body.location,
+    hospital:req.body.hospital,
+    contactNumber:req.body.contactNumber,
+    contactName:req.body.contactName,
+    Reason : req.body.Reason,
+  }
+
+  console.log(requestData);
+  
+  
   res.sendStatus(200);
 })
+
+
