@@ -53,20 +53,17 @@ postRouter.post("/SignUp", async(req, res) => {
   // console.log(userData);
 
   //getting user data and push the new User !
-  let users = getUsersData();
-  users.push(userData);
+  // let users = getUsersData();
+  // users.push(userData);
 
   
   // writing the data into the file
-  fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
-
-  postRouter
-
-  console.log("File written successfully!");
+  // fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
+  // console.log("File written successfully!");
   res.redirect("/DashBoard");
 });
 
-postRouter.post("/Login", (req, res) => {
+postRouter.post("/Login", async(req, res) => {
   console.log("From Login Page : ", req.body);
 
   const userData = {
@@ -74,24 +71,40 @@ postRouter.post("/Login", (req, res) => {
     password: req.body.password,
   };
 
-  const existingUser = getUsersData();
-  console.log("From the function :", existingUser);
-
-  const user = existingUser.find((e) => {
-    return e.email === userData.email;
-  });
-
-  if (!user) {
-    res.status(401).send("Invalid Username !");
+  const userExist = await User.findOne({email : userData.email});
+  if(!userExist){
+    console.log("User not found in the DB");
     return;
   }
-
-  console.log("User Found", user);
-  const passcheck = bcrypt.compareSync(userData.password, user.password);
-  if (!passcheck) {
-    return res.send("Incorrect password !");
+  console.log("User found :",userExist);
+  console.log("checking pass !");
+  
+  const passveerify = await bcrypt.compare(userData.password,userExist.password);
+  console.log("pass check done!");
+  
+  if(!passveerify){
+    return res.send("Incorrect pass !")
   }
-  return res.redirect("/DashBoard");
+ return res.redirect("/DashBoard");
+  // // return;
+  // const existingUser = getUsersData();
+  // // console.log("From the function :", existingUser);
+
+  // const user = existingUser.find((e) => {
+  //   return e.email === userData.email;
+  // });
+
+  // if (!user) {
+  //   res.status(401).send("Invalid Username !");
+  //   return;
+  // }
+
+  // console.log("User Found", user);
+  // const passcheck = bcrypt.compareSync(userData.password, user.password);
+  // if (!passcheck) {
+  //   return res.send("Incorrect password !");
+  // }
+ 
 });
 
 module.exports = postRouter;
