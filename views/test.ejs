@@ -115,12 +115,12 @@
             align-items: center;
         }
 
-        #emergencyRequestBtn {
+        /* #emergencyRequestBtn {
             top: 125px;
             right: 0.5rem;
             font-size: 14px;
             padding: 8px 16px;
-        }
+        } */
     }
 
     .feature i {
@@ -242,6 +242,12 @@
     text-align: center;
     justify-content: center;
 }
+@media (max-width: 768px) {
+  #emergencyRequestBtn .button-text {
+    display: none;
+  }
+}
+
 
 .ct
 </style>
@@ -259,8 +265,10 @@
     </div>
 </header>
 
-<button id="emergencyRequestBtn"><i style="margin-right: 8px;" class="fa-solid fa-truck-droplet"></i>Emergency
-    Request</button>
+<button id="emergencyRequestBtn">
+  <i class="fa-solid fa-truck-droplet"></i>
+  <span class="button-text">Emergency Request</span>
+</button>
     
     <div id="emergencyFormOverlay" class="request-form-overlay"></div>
     <div id="emergencyFormModal" class="request-form">
