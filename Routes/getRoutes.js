@@ -5,18 +5,18 @@ const getRouter = express.Router();
 
 const rootDir = require("../utils/path");
 
-// getRouter.use(express.static(path.join(__dirname, "public")));
+getRouter.use(express.static(path.join(__dirname, "public")));
 
 getRouter.get("/Login", (req, res) => {
-  res.render(path.join(rootDir, "public", "LOGIN.ejs"));
+  res.render(path.join(rootDir, "views", "LOGIN.ejs"));
 });
 
 getRouter.get("/SignUp", (req, res) => {
-  res.render(path.join(rootDir, "public", "SignUp.ejs")); 
+  res.render(path.join(rootDir, "views", "SignUp.ejs")); 
 });
 
 getRouter.get("/DashBoard", (req, res) => {
-  res.render(path.join(rootDir, "public", "DashBoard.ejs"));
+  res.render(path.join(rootDir, "views", "DashBoard.ejs"));
 });
 
 getRouter.get('/donate',(req,res)=>{

@@ -312,10 +312,6 @@ window.addEventListener("resize", () => {
 });
 
 //Register form
-//   const register = document.querySelector(".register-btn");
-// register.addEventListener('click', () => {
-
-//})
 
 const regTitle = document.querySelector(".registerTitle");
 const campLoc = document.getElementById("campLocation");
@@ -335,11 +331,10 @@ document.addEventListener("click", (e) => {
     document.getElementById("registerFormOverlay").style.display = "block";
   }
 
-  if (
-    e.target.id === "closeregisterFormBtn" ||
-    e.target.id === "registerFormOverlay"
-  ) {
+  if (e.target.id === "closeregisterFormBtn" || e.target.id === "registerFormOverlay") {
+
     document.getElementById("registerForm").style.display = "none";
     document.getElementById("registerFormOverlay").style.display = "none";
+    
   }
 });

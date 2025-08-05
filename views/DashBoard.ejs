@@ -19,7 +19,7 @@
             <h1 class="logo">LifeLink</h1>
             <button id="menuToggle" class="hamburger"><i class="fas fa-bars"></i></button>
             <nav id="navMenu">
-                <a href="#">Home</a>
+                <a href="/dashBoard">Home</a>
                 <a href="#">Profile</a>
                 <a href="#">About</a>
                 <a href="#">Contact</a>
@@ -97,16 +97,16 @@
             <input type="text" name="location" placeholder="Location (e.g., Madanapalle)" />
             <input type="text" name="contactName" placeholder="Your Full Name" />
             <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
-            <div class="confirmation" style="
+            <!-- <div class="confirmation" style="
                 display: flex;
                 justify-content:flex-start;
                 align-items:center;
                 gap:5px;
                 padding:5px
              ">
-                <input type="checkbox" id="checkbox" required style="width: 15px;margin:0; align-self:center;">
-                <label for="checkbox" style="opacity: 0.7;font-size:small;">I confirm this is a genuine request</label>
-            </div>
+                
+            </div> -->
+            <label for="checkbox" style="opacity: 0.7;font-size:small;display:flex;justify-content:flex-start"><input type="checkbox" id="checkbox" required style="width: 12px; align-self:center;margin-right:5px ">I confirm this is a genuine request</label>
             
             <div style="display: flex; justify-content: center; gap: 1rem;">
                 <button type="button" id="closeEmergencyFormBtn" class="cta-btn"

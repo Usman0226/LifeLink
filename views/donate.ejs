@@ -437,7 +437,7 @@
 
 <body>
   <div class="header">
-               <%- include('test') %>
+               <%- include('nav') %>
             </div>
     
         <div class="app-container">
@@ -470,7 +470,7 @@
             <div id="registerFormOverlay" class="request-form-overlay"></div>
             <div id="registerForm" class="request-form">
                 <h2 class="registerTitle">Register Form</h2>
-                <form id="emergencyRequestForm">
+                <form id="emergencyRequestForm" method="post" action="/register">
                     <label for="bloodGroup">Blood Group</label>
                     <select id="bloodGroup" name="bloodGroup" required>
                         <option value="">Select Blood Group</option>

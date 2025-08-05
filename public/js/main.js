@@ -91,9 +91,16 @@ const emergencyRequestsData = [
   },
 ];
 
+let timer = null;
+
 emergencyRequestBtn.addEventListener("click", () => {
   emergencyFormModal.style.display = "block";
   emergencyFormOverlay.style.display = "block";
+
+  if(timer != null){
+    clearTimeout(timer);
+  }
+
 });
 
 donateNowBtn.addEventListener("click", () => {
@@ -103,6 +110,10 @@ donateNowBtn.addEventListener("click", () => {
 function closeForm() {
   emergencyFormModal.style.display = "none";
   emergencyFormOverlay.style.display = "none";
+  timer = setTimeout(()=>{
+    document.querySelector("#emergencyRequestForm").reset();
+    timer = null;
+  },5000)
 }
 
 function closeDonateForm() {
