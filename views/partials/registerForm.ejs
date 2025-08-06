@@ -1,0 +1,165 @@
+<style>
+        /* Register Form */
+        #registerFormOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            display: none;
+        }
+
+        /* Modal container */
+        #registerForm {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+            width: 500px;
+            max-width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            text-align: center;
+            color: #000000;
+        }
+
+        /* Form Title */
+        #registerForm h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #a23238;
+        }
+
+        /* Form Elements */
+        #registerForm form label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        #registerForm input,
+        #registerForm select,
+        #registerForm textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #8f8f8fcf;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            transition: box-shadow 0.3s ease;
+        }
+
+        #registerForm input:focus,
+        #registerForm select:focus,
+        #registerForm textarea:focus {
+            outline: none;
+            border-color: #a23238;
+            box-shadow: 0 0 0 3px rgba(162, 50, 56, 0.2);
+        }
+
+        /* Buttons */
+        #registerForm button.cta-btn {
+            background-color: #a23238;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 28px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            max-height: 50px;
+        }
+
+        #registerForm button.cta-btn:hover {
+            background-color: #8b2a2f;
+        }
+
+        #registerForm button#closeregisterFormBtn {
+            background-color: #1a1110;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            #registerForm {
+                width: 90%;
+                padding: 1rem;
+            }
+
+            #registerForm h2 {
+                font-size: 20px;
+            }
+        }
+</style>
+
+<!-- register Form  -->
+<div id="registerFormOverlay" class="request-form-overlay"></div>
+<div id="registerForm" class="request-form">
+    <h2 class="registerTitle">Register Form</h2>
+    <form id="emergencyRequestForm" method="post" action="/register">
+        <label for="bloodGroup">Blood Group</label>
+        <select id="bloodGroup" name="bloodGroup" required>
+            <option value="">Select Blood Group</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+        </select>
+
+        <input id="campLocation" type="text" name="location" placeholder="Location (e.g., Madanapalle)"
+            value="Angallu" />
+        <input type="text" name="contactName" placeholder="Your Full Name" />
+        <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+            <button type="button" id="closeregisterFormBtn" class="cta-btn"
+                style="background: #1a1110; color: #fff; max-height:50px">Cancel</button>
+            <button type="submit" class="cta-btn" style="max-height:50px">Register</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    
+const regTitle = document.querySelector(".registerTitle");
+const campLoc = document.getElementById("campLocation");
+const registerForm = document.getElementById("registerForm");
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("register-btn")) {
+    const campId = e.target.dataset.bankId;
+    const selectedCamp = bloodBanksData.find((bank) => bank.id == campId);
+
+    if (selectedCamp) {
+      regTitle.textContent = `Register for ${selectedCamp.name}`;
+      campLoc.value = selectedCamp.city;
+      registerForm.dataset.selectedCampId = campId;
+    }
+
+    registerForm.style.display = "block";
+    document.getElementById("registerFormOverlay").style.display = "block";
+  }
+
+  if (e.target.id === "closeregisterFormBtn" || e.target.id === "registerFormOverlay") {
+
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("registerFormOverlay").style.display = "none";
+    
+  }
+});
+</script>

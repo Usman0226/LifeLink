@@ -8,8 +8,8 @@ const connectDB = require("../db");
 
 //models
 const User = require("../models/user");
-const request = require("../models/request");
 const register = require("../models/register");
+const request = require("../models/request");
 
 connectDB();
 postRouter.use(express.json());
@@ -73,7 +73,7 @@ postRouter.post("/Login", async (req, res) => {
   return res.redirect("/DashBoard");
 });
 
-postRouter.post("/dashBoard", async (req, res) => {
+postRouter.post("/request", async (req, res) => {
   console.log("The body of the emergency request", req.body);
   const requestData = {
     bloodGroup: req.body.bloodGroup,

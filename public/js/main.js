@@ -397,39 +397,3 @@ function initMap(lat, lon) {
 
   renderBloodBanks(bloodBanksData); // Render blood banks after map is initialized
 }
-
-// Emergency request form data submission
-const submissionBtn = document.querySelector("#requestSubmission");
-const emergencyRequestForm = document.querySelector("#emergencyRequestForm");
-
-emergencyRequestForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  console.log("clicked");
-
-  const formData = new FormData(emergencyRequestForm);
-
-  const requestData = {
-    bloodGroup: formData.get("bloodGroup"),
-    Units: formData.get("bloodUnits"),
-    location: formData.get("location"),
-    hospital: formData.get("hospitalName"),
-    contactNumber: formData.get("contactInfo"),
-    contactName: formData.get("contactName"),
-    Reason :  formData.get("Reason"),
-  };
-
-  try {
-    const submissionData = await fetch("/dashBoard", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    });
-
-    closeForm();
-  } catch (err) {
-    alert("Request submission failed !");
-    closeForm();
-  }
-});
