@@ -56,15 +56,12 @@ postRouter.post("/Login", async (req, res) => {
   const userExist = await User.findOne({ email: userData.email });
   if (!userExist) {
     console.log("User not found in the DB");
-    return;
+    return res.send("Invalid User email ! ");
   }
   console.log("User found :", userExist);
   console.log("checking pass !");
 
-  const passveerify = await bcrypt.compare(
-    userData.password,
-    userExist.password
-  );
+  const passveerify = await bcrypt.compare(userData.password,userExist.password);
   console.log("pass check done!");
 
   if (!passveerify) {
@@ -103,8 +100,11 @@ postRouter.post("/register", async (req, res) => {
   };
 
 
-  const registration = new register(userdata);
+  const registration = new register(userdata)
   await registration.save()
+
+ 
+  res.redirect("/donate")
 });
 
 module.exports = postRouter;

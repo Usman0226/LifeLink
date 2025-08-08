@@ -1,13 +1,8 @@
-const emergencyFormModal = document.getElementById("emergencyFormModal");
-const emergencyFormOverlay = document.getElementById("emergencyFormOverlay");
-const emergencyRequestBtn = document.getElementById("emergencyRequestBtn");
-const closeEmergencyFormBtn = document.getElementById("closeEmergencyFormBtn");
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
 const donateFormModal = document.getElementById("donateFormModal");
 const donateFormOverlay = document.getElementById("donateFormOverlay");
 const donateNowBtn = document.getElementById("donateNowBtn");
-// const closeDonateFormBtn = document.getElementById("closeDonateFormBtn");
 const emergencyRequestsData = [
   {
     id: 1,
@@ -397,3 +392,15 @@ function initMap(lat, lon) {
 
   renderBloodBanks(bloodBanksData); // Render blood banks after map is initialized
 }
+
+
+
+
+
+document.addEventListener('click',(e)=>{
+    if(e.target.id == "donorRegister"){
+      window.location.href= "/SignUp"
+    }
+
+    
+})

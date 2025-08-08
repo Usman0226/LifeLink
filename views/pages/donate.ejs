@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeLink-Donate Now</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
-    <style !important>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -98,6 +98,8 @@
 
 
         .sheet-header {
+            display: flex;
+            justify-content: space-between;
             padding: 0 20px 16px;
             border-bottom: 1px solid #f0f0f0;
             cursor: pointer;
@@ -437,10 +439,10 @@
 
 <body>
     <div class="header">
-        <%- include('./partials/nav') %>
+        <%- include('../partials/nav') %>
     </div>
-    
-    <%- include("./partials/emergencyForm") %>
+
+    <%- include("../partials/emergencyForm") %>
 
         <div class="app-container">
 
@@ -457,8 +459,17 @@
                 <div class="drag-handle" id="drag-handle"></div>
 
                 <div class="sheet-header" id="sheet-header">
-                    <div class="sheet-title">OnGoing Donation Camps</div>
-                    <div class="sheet-subtitle" id="results-count">Loading...</div>
+                    <div class="headers">
+                        <div class="sheet-title">OnGoing Donation Camps</div>
+                        <div class="sheet-subtitle" id="results-count">Loading...</div>
+                    </div>
+                    <div id="tabs">
+                        <select name="mode" id="switch" class="sty">
+                            <option value="camps">Camps</option>
+                            <option value="banks">Banks</option>
+                        </select>
+                    </div>
+
                 </div>
 
                 <div class="list-container" id="blood-bank-list">
@@ -496,14 +507,15 @@
             </div> -->
         </div>
 
-            <%- include("./partials/registerForm") %>
+        <%- include("../partials/registerForm") %>
 
+            <script src="/js/donate.js"></script>
+            <% if (jsfile && Array.isArray(jsfile)) { %>
+                <% jsfile.forEach((e)=> { %>
+                    <script src="/js/<%= e %>.js"></script>
+                    <% }) %>
+                        <% } %>
 
-
-
-
-
-        <script src="/js/donate.js"></script>
 </body>
 
 </html>

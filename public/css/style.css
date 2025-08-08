@@ -8,7 +8,7 @@
 body {
     background: radial-gradient(circle, #fddcdc, #f9f9f9);
     min-height: 100vh;
-    padding-top: 75px;
+    padding-top: 3%;
 }
 
 header {
