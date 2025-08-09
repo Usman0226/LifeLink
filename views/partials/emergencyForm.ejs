@@ -14,11 +14,19 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s;
         z-index: 90;
-
     }
 
     #emergencyRequestBtn:hover {
         background-color: #8b2a2f;
+    }
+
+    #closeEmergencyFormBtnTop {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 10px 18px;
+        font-size: 15px;
+        border-radius: 20px;
     }
 
     .request-form {
@@ -26,7 +34,6 @@
         top: 50%;
         left: 50%;
         background: #fff;
-        /* background-color: rgba(255, 255, 255, 0.7); */
         backdrop-filter: blur(6px);
         padding: 1.5rem 1rem;
         border-radius: 28px;
@@ -37,13 +44,41 @@
         box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
         display: none;
         z-index: 1000;
-        text-align: center;
         transform: translate(-50%, -50%);
-        color: #000000;
+        color: #000;
+        text-align: left;
+    }
+
+    .request-form h2 {
+        margin-bottom: 10px;
+        text-align: left;
     }
 
     .request-form label {
-        align-self: flex-start;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    #submitAndSearchBtn {
+        background-color: #1a1110;
+        color: #fff;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 28px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
     }
 
     .request-form input,
@@ -55,7 +90,6 @@
         border-radius: 20px;
         margin-top: 6px;
         margin-bottom: 1rem;
-
     }
 
     .request-form input:focus,
@@ -100,14 +134,12 @@
             font-size: 20px;
         }
     }
-
-    label{
-        justify-content: flex-start;
-    }
 </style>
 <div id="emergencyFormOverlay" class="request-form-overlay"></div>
 <div id="emergencyFormModal" class="request-form">
-    <h2 style="margin-bottom:10px;">Emergency Request Form</h2>
+    <button type="button" id="closeEmergencyFormBtnTop" class="close-btn" aria-label="Close Emergency Form"
+        style="background: #1a1110; color: #fff; max-height:50px">&times;</button>
+    <h2>Emergency Request Form</h2>
     <form id="emergencyRequestForm" method="post" action="/request">
         <label for="bloodGroup">Blood Group</label>
         <select id="bloodGroup" name="bloodGroup" required>
@@ -139,13 +171,14 @@
         <input type="text" name="contactName" placeholder="Your Full Name" />
         <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
 
-        <label for="checkbox" style="opacity: 0.7;font-size:small;display:flex;justify-content:flex-start"><input
-                type="checkbox" id="checkbox" required style="width: 12px; align-self:center;margin-right:5px ">I
-            confirm this is a genuine request</label>
+        <label for="checkbox" style="opacity: 0.7;font-size: medium;">
+            <input type="checkbox" id="checkbox" required style="width: 19px;">
+            I confirm this is a genuine request
+        </label>
 
         <div style="display: flex; justify-content: center; gap: 1rem;">
-            <button type="button" id="closeEmergencyFormBtn" class="cta-btn"
-                style="background: #1a1110; color: #fff; max-height:50px">Cancel</button>
+            <button type="button" id="submitAndSearchBtn" class="cta-btn"
+                style="background: #1a1110; color: #fff; max-height:50px">Submit and Search</button>
             <button id="requestSubmission" type="submit" class="cta-btn" style="max-height:50px">Submit</button>
         </div>
     </form>
