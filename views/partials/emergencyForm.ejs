@@ -1,0 +1,148 @@
+<style>
+    #emergencyRequestBtn {
+        position: fixed;
+        top: 12%;
+        right: 5%;
+        background-color: #a23238;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 28px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+        z-index: 90;
+
+    }
+
+    #emergencyRequestBtn:hover {
+        background-color: #8b2a2f;
+    }
+
+    .request-form {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background: #fff;
+        /* background-color: rgba(255, 255, 255, 0.7); */
+        backdrop-filter: blur(6px);
+        padding: 1.5rem 1rem;
+        border-radius: 28px;
+        width: 500px;
+        max-width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+        display: none;
+        z-index: 1000;
+        text-align: center;
+        transform: translate(-50%, -50%);
+        color: #000000;
+    }
+
+    .request-form label {
+        align-self: flex-start;
+    }
+
+    .request-form input,
+    .request-form select,
+    .request-form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #8f8f8fcf;
+        border-radius: 20px;
+        margin-top: 6px;
+        margin-bottom: 1rem;
+
+    }
+
+    .request-form input:focus,
+    .request-form select:focus,
+    .request-form textarea:focus {
+        outline: none;
+        border-color: #a23238;
+        box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+    }
+
+    #donateFormOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 999;
+        display: none;
+    }
+
+    .cta-btn {
+        background-color: #a23238;
+        color: white;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 28px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+        #emergencyRequestBtn .button-text {
+            display: none;
+        }
+
+        #ambulance {
+            font-size: 20px;
+        }
+    }
+</style>
+<div id="emergencyFormOverlay" class="request-form-overlay"></div>
+<div id="emergencyFormModal" class="request-form">
+    <h2 style="margin-bottom:10px;">Emergency Request Form</h2>
+    <form id="emergencyRequestForm" method="post" action="/request">
+        <label for="bloodGroup">Blood Group</label>
+        <select id="bloodGroup" name="bloodGroup" required>
+            <option value="">Select Blood Group</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+        </select>
+        <select id="bloodUnits" name="bloodUnits" required>
+            <option value="">Select Units</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+        <input name="hospitalName" placeholder="Hospital Name">
+        <input name="Reason" placeholder="Request Reason...">
+        <input type="text" name="location" placeholder="Location (e.g., Madanapalle)" />
+        <input type="text" name="contactName" placeholder="Your Full Name" />
+        <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
+
+        <label for="checkbox" style="opacity: 0.7;font-size:small;display:flex;justify-content:flex-start"><input
+                type="checkbox" id="checkbox" required style="width: 12px; align-self:center;margin-right:5px ">I
+            confirm this is a genuine request</label>
+
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+            <button type="button" id="closeEmergencyFormBtn" class="cta-btn"
+                style="background: #1a1110; color: #fff; max-height:50px">Cancel</button>
+            <button id="requestSubmission" type="submit" class="cta-btn" style="max-height:50px">Submit</button>
+        </div>
+    </form>
+</div>

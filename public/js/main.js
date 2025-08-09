@@ -1,13 +1,8 @@
-const emergencyFormModal = document.getElementById("emergencyFormModal");
-const emergencyFormOverlay = document.getElementById("emergencyFormOverlay");
-const emergencyRequestBtn = document.getElementById("emergencyRequestBtn");
-const closeEmergencyFormBtn = document.getElementById("closeEmergencyFormBtn");
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
 const donateFormModal = document.getElementById("donateFormModal");
 const donateFormOverlay = document.getElementById("donateFormOverlay");
 const donateNowBtn = document.getElementById("donateNowBtn");
-// const closeDonateFormBtn = document.getElementById("closeDonateFormBtn");
 const emergencyRequestsData = [
   {
     id: 1,
@@ -91,9 +86,16 @@ const emergencyRequestsData = [
   },
 ];
 
+let timer = null;
+
 emergencyRequestBtn.addEventListener("click", () => {
   emergencyFormModal.style.display = "block";
   emergencyFormOverlay.style.display = "block";
+
+  if(timer != null){
+    clearTimeout(timer);
+  }
+
 });
 
 donateNowBtn.addEventListener("click", () => {
@@ -103,6 +105,10 @@ donateNowBtn.addEventListener("click", () => {
 function closeForm() {
   emergencyFormModal.style.display = "none";
   emergencyFormOverlay.style.display = "none";
+  timer = setTimeout(()=>{
+    document.querySelector("#emergencyRequestForm").reset();
+    timer = null;
+  },5000)
 }
 
 function closeDonateForm() {
@@ -387,38 +393,14 @@ function initMap(lat, lon) {
   renderBloodBanks(bloodBanksData); // Render blood banks after map is initialized
 }
 
-// Emergency request form data submission
-const submissionBtn = document.querySelector("#requestSubmission");
-const emergencyRequestForm = document.querySelector("#emergencyRequestForm");
 
-emergencyRequestForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  console.log("clicked");
 
-  const formData = new FormData(emergencyRequestForm);
 
-  const requestData = {
-    bloodGroup: formData.get("bloodGroup"),
-    Units: formData.get("bloodUnits"),
-    location: formData.get("location"),
-    hospital: formData.get("hospitalName"),
-    contactNumber: formData.get("contactInfo"),
-    contactName: formData.get("contactName"),
-    Reason :  formData.get("Reason"),
-  };
 
-  try {
-    const submissionData = await fetch("/dashBoard", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    });
+document.addEventListener('click',(e)=>{
+    if(e.target.id == "donorRegister"){
+      window.location.href= "/SignUp"
+    }
 
-    closeForm();
-  } catch (err) {
-    alert("Request submission failed !");
-    closeForm();
-  }
-});
+    
+})
