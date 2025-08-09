@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     bloodGroup: String,
     AadharNo: Number,
     Location: String,
-    dateOfBirth: String
+    dateOfBirth: String,
+    refreshToken: String
 });
 
 module.exports = mongoose.model('User',userSchema)

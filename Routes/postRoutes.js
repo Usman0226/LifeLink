@@ -5,6 +5,8 @@ const fs = require("fs");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const connectDB = require("../db");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 //models
 const User = require("../models/user");
@@ -16,6 +18,7 @@ postRouter.use(express.json());
 
 //Paths
 const rootDir = require("../utils/path");
+const auth = require("../public/js/auth");
 // const filePath = path.join(rootDir, "users.json");
 
 postRouter.post("/SignUp", async (req, res) => {
@@ -61,12 +64,34 @@ postRouter.post("/Login", async (req, res) => {
   console.log("User found :", userExist);
   console.log("checking pass !");
 
-  const passveerify = await bcrypt.compare(userData.password,userExist.password);
+  const passveerify = await bcrypt.compare(
+    userData.password,
+    userExist.password
+  );
   console.log("pass check done!");
 
   if (!passveerify) {
     return res.send("Incorrect pass !");
   }
+  //payload , secret key , expire time
+  const token = jwt.sign(
+    { id: userExist._id, email: userExist.email },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN }
+  );
+
+  const refreshToken = jwt.sign(
+    { id: userExist._id, email: userExist.email },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: "7d" }
+  );
+
+  userExist.refreshToken = refreshToken;
+  await userExist.save();
+
+  res.cookie("token", token, { httpOnly: true });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true });
+
   return res.redirect("/DashBoard");
 });
 
@@ -94,17 +119,33 @@ postRouter.post("/request", async (req, res) => {
 postRouter.post("/register", async (req, res) => {
   const userdata = {
     bloodGroup: req.body.bloodGroup,
-    location:  req.body.location,
-    contactName:  req.body.contactName,
-    contactInfo:  req.body.contactInfo,
+    location: req.body.location,
+    contactName: req.body.contactName,
+    contactInfo: req.body.contactInfo,
   };
 
+  const registration = new register(userdata);
+  await registration.save();
 
-  const registration = new register(userdata)
-  await registration.save()
-
- 
-  res.redirect("/donate")
+  res.redirect("/donate");
 });
 
+postRouter.post("/logout", auth, async (req, res) => {
+  try {
+    if (req.cookies.refreshToken) {
+      await User.updateOne(
+        { refreshToken: req.cookies.refreshToken },
+        { $unset: { refreshToken: "" } }
+      );
+    }
+
+    res.clearCookie("token", { httpOnly: true });
+    res.clearCookie("refreshtoken", { httpOnly: true });
+    return res.redirect("/dashBoard");
+    
+  } catch (err) {
+    console.log(err);
+        return res.redirect("/login");
+  }
+});
 module.exports = postRouter;

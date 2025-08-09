@@ -1,27 +1,40 @@
-// Functions
-// 1. auth => getauth from the app
-// 2. database => getFirestore
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const User = require("../../models/user");
 
-// import {initializeApp} from "firebase/app"
-// import {getAuth} from "firebase/auth"
-// import {getFirestore} from "firebase/firestore"
+const auth = async function (req, res, next) {
+  const token = req.cookies.token;
+  const refreshToken = req.cookies.refreshToken;
+  if (!token && refreshToken) {
+    try {
+      const refreshTokenVerify = jwt.verify(
+        refreshToken,
+        process.env.JWT_REFRESH_SECRET
+      );
+      const user = await User.findOne({ refreshToken });
+      if (!user) {
+        return res.redirect("/login");
+      }
+      req.user = refreshTokenVerify;
+      return next();
+    } catch (Error) {
+      console.error(Error);
+    }
+  }
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCz5Ex2S_6lnlw1kaNuTMXHh56oqfNFuw8",
-//   authDomain: "lifelik.firebaseapp.com",
-//   projectId: "lifelik",
-//   storageBucket: "lifelik.firebasestorage.app",
-//   messagingSenderId: "242771720685",
-//   appId: "1:242771720685:web:f4e1fc046a65220c0bcfe4",
-//   measurementId: "G-CGS4MF107M"
-// };
+  if (token) {
+    try {
+      const verify = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = verify;
+      return next();
+      console.log(req.user);
+    } catch (err) {
+      console.error("Invalid token");
+      return res.redirect("/login");
+    }
+  }
 
+  return res.redirect("/login");
+};
 
-// const app = initializeApp(firebaseConfig);
-
-
-// const auth = getAuth(app);
-// const db = getFirestore(app);
-
-// // module.exports = {auth,db}; 
-// export {auth, db};
+module.exports = auth;

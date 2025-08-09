@@ -209,6 +209,8 @@ function initMap(lat = 13.55, lon = 78.5) {
   renderBloodBanks(bloodBanksData);
 }
 
+
+//Blood banks insertion
 function renderBloodBanks(banks) {
   markers.forEach((marker) => mapInstance.removeLayer(marker));
   markers = [];
