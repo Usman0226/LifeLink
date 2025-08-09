@@ -3,17 +3,17 @@
 
 ## Weekend Agenda
 - [✔️] A button beside the "Donate Now" for Join as donor
-- UI for donor registration 
+- [✔️] JWT
 - Emergency request List => OnGoing requests table 
 - window detect in nav (e.target)
 - Authorization 
-- Blood banks and ongoing camps list
+- Blood banks and ongoing camps list (Real Data)
 - [InProgress] Partials => components
 - change aadhaar into an phone number and OTP via n8n ? Twillo
 
 
 
-# BIG THINGS (AUTHORIZATION)
+# BIG THINGS
 
 - The session (Express-session)
 - The search and request 
@@ -32,5 +32,15 @@
 
 # Commands
 
-- npm i express jsonwebtoken bcryptjs dotenv
-- 
+- npm i express jsonwebtoken bcryptjs dotenv cookie-parser
+- node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+
+
+# Cookies
+
+- Use the cookie in response as :
+```js
+ { 
+    res.cookie(any variable like token for JWT,value)
+ }
+ ```
