@@ -14,7 +14,7 @@ getRouter.get("/SignUp", (req, res) => {
   res.render(path.join(rootDir, "views","pages", "SignUp.ejs")); 
 });
 
-getRouter.get("/DashBoard", (req, res) => {
+getRouter.get("/DashBoard",auth, (req, res) => {
   res.render(path.join(rootDir,"views","pages", "DashBoard.ejs"),{
     jsfile : ['emergencyForm']
   });
