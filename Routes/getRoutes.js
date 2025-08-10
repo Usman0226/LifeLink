@@ -20,7 +20,7 @@ getRouter.get("/DashBoard",auth, (req, res) => {
   });
 });
 
-getRouter.get('/donate',auth,(req,res)=>{
+getRouter.get('/donate',(req,res)=>{
  res.render(path.join(rootDir,"views","pages", "donate.ejs"),{
     jsfile : ['registerForm','emergencyForm']
   });
