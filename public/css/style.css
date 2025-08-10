@@ -485,6 +485,20 @@ footer {
 }
 
 
+.features .icon {
+    width: 40px;
+    height: 40px;
+    fill: #a23238;
+    margin-bottom: 10px;
+}
+
+.features .feature {
+    text-align: center;
+}
+
+.features h4 {
+    margin: 8px 0;
+}
 
 .blood-banks {
     max-width: 1200px;
@@ -521,7 +535,7 @@ footer {
     flex-wrap: wrap;
 }
 
- .blood-bank-map {
+.blood-bank-map {
     width: 40%;
     background-color: #fdf5e5;
     border-radius: 15px;
@@ -565,7 +579,8 @@ footer {
 .blood-bank-list tr:hover {
     background-color: #f1f1f1;
 }
- .map-container {
+
+.map-container {
     height: 360px;
     width: 100%;
     z-index: 9;
@@ -573,26 +588,28 @@ footer {
     background-color: #fff;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
 }
+
 .map-section h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #a23238;
-  font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #a23238;
+    font-size: 1.8rem;
 }
+
 @media (max-width: 768px) {
-  .blood-banks-content {
-    flex-direction: column;
-    gap: 20px;
-  }
+    .blood-banks-content {
+        flex-direction: column;
+        gap: 20px;
+    }
 
-  .blood-bank-map,
-  .blood-bank-list {
-    width: 100%;
-  }
+    .blood-bank-map,
+    .blood-bank-list {
+        width: 100%;
+    }
 
-  .map-container {
-    height: 300px; 
-  }
+    .map-container {
+        height: 300px;
+    }
 }
 
 
@@ -631,24 +648,29 @@ footer {
     transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     border-radius: 8px;
     margin-bottom: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
+
 .blood-bank-list-item:hover {
     background-color: #e53935;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .blood-bank-list-item.highlighted {
     background-color: #ffebeb;
     border: 1px solid #a23238;
     box-shadow: 0 4px 10px rgba(162, 50, 56, 0.2);
 }
+
 .blood-bank-list-item h4 {
     margin-bottom: 5px;
 }
+
 .blood-bank-list-item p {
     margin-bottom: 3px;
 }
+
 .blood-bank-list-item .services span {
     margin-right: 5px;
 }
@@ -669,6 +691,7 @@ footer {
     background-color: #fff;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
 }
+
 .map-section h3 {
     margin-top: 0;
     margin-bottom: 20px;
@@ -683,7 +706,7 @@ footer {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow-x: auto; 
+    overflow-x: auto;
 }
 
 .emergency-requests-table tbody tr:nth-child(even) {
@@ -730,8 +753,16 @@ footer {
     font-weight: 600;
     white-space: nowrap;
 }
-.emergency-table-status-urgent { background-color: #fecaca; color: #dc2626; }
-.emergency-table-status-pending { background-color: #fde68a; color: #d97706; }
+
+.emergency-table-status-urgent {
+    background-color: #fecaca;
+    color: #dc2626;
+}
+
+.emergency-table-status-pending {
+    background-color: #fde68a;
+    color: #d97706;
+}
 
 .emergency-table-respond-button {
     background-color: #a23238;
@@ -742,29 +773,32 @@ footer {
     cursor: pointer;
     white-space: nowrap;
 }
+
 .emergency-table-respond-button:hover {
     background-color: #8b2a2f;
 }
 
 
-.dashboard-section-filters { 
+.dashboard-section-filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; 
+    gap: 20px;
     justify-content: center;
-    margin-bottom: 40px; 
+    margin-bottom: 40px;
 }
+
 .dashboard-section-filters select,
 .dashboard-section-filters input[type="text"] {
-    flex-grow: 1; 
+    flex-grow: 1;
     max-width: 300px;
-    padding: 12px 20px; 
-    border: 1px solid #d1d5db; 
-    border-radius: 25px; 
+    padding: 12px 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 25px;
     font-size: 1rem;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); 
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 .dashboard-section-filters select:focus,
 .dashboard-section-filters input[type="text"]:focus {
     outline: none;
