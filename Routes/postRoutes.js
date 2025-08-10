@@ -83,7 +83,7 @@ postRouter.post("/Login", async (req, res) => {
   const refreshToken = jwt.sign(
     { id: userExist._id, email: userExist.email },
     process.env.JWT_REFRESH_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }
   );
 
   userExist.refreshToken = refreshToken;
@@ -142,7 +142,7 @@ postRouter.post("/logout", auth, async (req, res) => {
     res.clearCookie("token", { httpOnly: true });
     res.clearCookie("refreshtoken", { httpOnly: true });
     return res.redirect("/dashBoard");
-    
+
   } catch (err) {
     console.log(err);
         return res.redirect("/login");

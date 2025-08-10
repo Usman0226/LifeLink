@@ -20,11 +20,11 @@
         background-color: #8b2a2f;
     }
 
-    #closeEmergencyFormBtnTop {
+    #closeEmergencyFormBtn {
         position: absolute;
         top: 15px;
         right: 15px;
-        padding: 10px 18px;
+        padding: 5px 9px;
         font-size: 15px;
         border-radius: 20px;
     }
@@ -137,8 +137,8 @@
 </style>
 <div id="emergencyFormOverlay" class="request-form-overlay"></div>
 <div id="emergencyFormModal" class="request-form">
-    <button type="button" id="closeEmergencyFormBtnTop" class="close-btn" aria-label="Close Emergency Form"
-        style="background: #1a1110; color: #fff; max-height:50px">&times;</button>
+    <button type="button" id="closeEmergencyFormBtn" class="close-btn" aria-label="Close Emergency Form"
+        style="background: #1a1110; color: #fff; max-height:50px;font-size:large">&times;</button>
     <h2>Emergency Request Form</h2>
     <form id="emergencyRequestForm" method="post" action="/request">
         <label for="bloodGroup">Blood Group</label>

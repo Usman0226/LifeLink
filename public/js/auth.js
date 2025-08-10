@@ -3,14 +3,19 @@ require("dotenv").config();
 const User = require("../../models/user");
 
 const auth = async function (req, res, next) {
+
   const token = req.cookies.token;
   const refreshToken = req.cookies.refreshToken;
-  if (!token && refreshToken) {
+
+  if (!token) {
+    if(refreshToken){
     try {
       const refreshTokenVerify = jwt.verify(
         refreshToken,
         process.env.JWT_REFRESH_SECRET
       );
+      console.log("token validated !");
+      
       const user = await User.findOne({ refreshToken });
       if (!user) {
         return res.redirect("/login");
@@ -19,6 +24,11 @@ const auth = async function (req, res, next) {
       return next();
     } catch (Error) {
       console.error(Error);
+    }
+    }
+    else{
+        console.log('error');
+        
     }
   }
 
@@ -36,5 +46,6 @@ const auth = async function (req, res, next) {
 
   return res.redirect("/login");
 };
+
 
 module.exports = auth;

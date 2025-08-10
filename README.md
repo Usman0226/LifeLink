@@ -5,8 +5,8 @@
 - [✔️] A button beside the "Donate Now" for Join as donor
 - [✔️] JWT
 - Emergency request List => OnGoing requests table 
-- window detect in nav (e.target)
-- Authorization 
+- window detect in nav (e.target) & update
+- [✔️] Authorization 
 - Blood banks and ongoing camps list (Real Data)
 - [InProgress] Partials => components
 - change aadhaar into an phone number and OTP via n8n ? Twillo
@@ -19,6 +19,8 @@
 - The search and request 
 - Users real time notification's
 - Share details on accept
+- Emergency Requests smart routing => nearest first 
+- 
 
 
 
