@@ -58,7 +58,7 @@ form2.addEventListener("submit", async (e) => {
   const dbData = {
     ...formInput,
     bloodGroup: form2_data.get("bloodGroup"),
-    AadharNo: form2_data.get("AadharNo"),
+    phone: form2_data.get("phone"),
     Location: form2_data.get("Location"),
   };
   console.log(dbData);

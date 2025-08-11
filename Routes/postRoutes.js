@@ -31,7 +31,7 @@ postRouter.post("/SignUp", async (req, res) => {
     email: req.body.email,
     password: hassedPass,
     bloodGroup: req.body.bloodGroup,
-    AadharNo: req.body.AadharNo,
+    phone: req.body.phone,
     Location: req.body.Location,
     dateOfBirth: req.body.DOB,
   };
@@ -55,6 +55,10 @@ postRouter.post("/Login", async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   };
+
+  if (!userData.email || !userData.password) {
+    return res.status(201).send("Please provide both email and password.").redirect('/login');
+  }
 
   const userExist = await User.findOne({ email: userData.email });
   if (!userExist) {
@@ -88,9 +92,21 @@ postRouter.post("/Login", async (req, res) => {
 
   userExist.refreshToken = refreshToken;
   await userExist.save();
+  const tokenExpiresInSeconds = parseInt(process.env.JWT_EXPIRES_IN, 10) * 1000;
+  const refreshTokenExpiresInSeconds = parseInt(process.env.JWT_REFRESH_EXPIRES_IN, 10) * 1000;
 
-  res.cookie("token", token, { httpOnly: true });
-  res.cookie("refreshToken", refreshToken, { httpOnly: true });
+  res.cookie(
+    "token",
+    token,
+    { httpOnly: true },
+    { maxAge: tokenExpiresInSeconds }
+  );
+  res.cookie(
+    "refreshToken",
+    refreshToken,
+    { httpOnly: true },
+    { maxAge: refreshTokenExpiresInSeconds }
+  );
 
   return res.redirect("/DashBoard");
 });
@@ -142,10 +158,11 @@ postRouter.post("/logout", auth, async (req, res) => {
     res.clearCookie("token", { httpOnly: true });
     res.clearCookie("refreshtoken", { httpOnly: true });
     return res.redirect("/dashBoard");
-
   } catch (err) {
     console.log(err);
-        return res.redirect("/login");
+    return res.redirect("/login");
   }
 });
-module.exports = postRouter;
+
+
+module.exports =postRouter;

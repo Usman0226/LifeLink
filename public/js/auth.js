@@ -7,7 +7,20 @@ const auth = async function (req, res, next) {
   const token = req.cookies.token;
   const refreshToken = req.cookies.refreshToken;
 
-  if (!token) {
+    if (token) {
+    try {
+      const verify = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = verify;
+      return next();
+      console.log(req.user);
+    } catch (err) {
+      console.error("Invalid token");
+      return res.redirect("/login");
+    }
+  }
+
+
+  
     if(refreshToken){
     try {
       const refreshTokenVerify = jwt.verify(
@@ -30,19 +43,8 @@ const auth = async function (req, res, next) {
         console.log('error');
         
     }
-  }
+  
 
-  if (token) {
-    try {
-      const verify = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = verify;
-      return next();
-      console.log(req.user);
-    } catch (err) {
-      console.error("Invalid token");
-      return res.redirect("/login");
-    }
-  }
 
   return res.redirect("/login");
 };

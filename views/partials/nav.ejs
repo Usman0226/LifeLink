@@ -138,6 +138,7 @@
         border: none;
         cursor: pointer;
     }
+
     .icon {
         width: 32px;
         height: 32px;
@@ -177,9 +178,11 @@
             <a href="/dashBoard">Home</a>
             <a href="#">Live Requests</a>
             <a href="#">About</a>
-            <a href="#">Profile</a>
+            <a id="profileBtn" href="#">Profile</a>
         </nav>
     </div>
+    <%- include("./profile", {user: user}) %>
+    
 </header>
 
 <button id="emergencyRequestBtn">
@@ -196,4 +199,6 @@
         navMenu.classList.toggle("show");
     });
 
+
+  
 </script>

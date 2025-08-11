@@ -456,8 +456,9 @@
 </head>
 
 <body>
-    <div class="header">
-        <%- include('../partials/nav') %>
+    <div class="header" style="background: none;">
+        <%- include('../partials/nav', { user: user }) %>
+        
     </div>
 
     <%- include("../partials/emergencyForm") %>

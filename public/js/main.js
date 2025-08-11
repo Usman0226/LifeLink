@@ -102,15 +102,15 @@ loaddata()
 
 let timer = null;
 
-// emergencyRequestBtn.addEventListener("click", () => {
-//   emergencyFormModal.style.display = "block";
-//   emergencyFormOverlay.style.display = "block";
+emergencyRequestBtn.addEventListener("click", () => {
+  emergencyFormModal.style.display = "block";
+  emergencyFormOverlay.style.display = "block";
 
-//   if(timer != null){
-//     clearTimeout(timer);
-//   }
+  if(timer != null){
+    clearTimeout(timer);
+  }
 
-// });
+});
 
 //Routes
 document.addEventListener("click", (e) => {

@@ -340,3 +340,9 @@ window.addEventListener("resize", () => {
     
 //   }
 // });
+    const button = document.getElementById("profileBtn");
+
+
+  button.addEventListener('click', () => {
+        document.getElementById('profileContainer').classList.toggle('show');
+    });

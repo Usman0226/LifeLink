@@ -232,7 +232,8 @@
             }
         }
 
-        #eye {
+        #eye,
+        .eye {
             width: 25px;
             height: 25px;
             outline: none;
@@ -284,13 +285,14 @@
                         </div>
                         <div class="details">
                             <label class="sub_title" for="email"> <i class="fa-solid fa-envelope"></i>Email</label>
-                            <input name="email" placeholder="Enter your email" id="email" class="sty" type="email" required>
+                            <input name="email" placeholder="Enter your email" id="email" class="sty" type="email"
+                                required>
                         </div>
                         <div class="details">
                             <label class="sub_title" for="password"> <i class="fas fa-lock"></i> Password</label>
                             <div id="box">
-                                <input name="password" placeholder="Enter your password" id="password" class="sty1" type="password"
-                                    autocomplete="current-password" style="border: none;" required>
+                                <input name="password" placeholder="Enter your password" id="password" class="sty1"
+                                    type="password" autocomplete="current-password" style="border: none;" required>
                                 <button id="eye"><i id="icon" class="fa-solid fa-eye"
                                         style="color: #e31621;"></i></button>
                             </div>
@@ -299,7 +301,8 @@
                         <div class="details">
                             <label class="sub_title" for="date"> <i class="fa-solid fa-calendar"></i> Date Of
                                 Birth</label>
-                            <input name="dateOfBirth" placeholder="Date Of Birth" id="date" class="sty" type="date" required>
+                            <input name="dateOfBirth" placeholder="Date Of Birth" id="date" class="sty" type="date"
+                                required>
                         </div>
                         <div id="btm">
                             <button type="button" class="btn" id="signIn">Sign Up</button>
@@ -332,19 +335,31 @@
                                 <option value="O-">O-</option>
                             </select>
                         </div>
-                        <div class="details">
-                            <label class="sub_title" for="aadhar"> <i class="fa-regular fa-address-card"></i>Your Aadhar
+                        <div class="details" style="gap: 10px;">
+                            <!-- <label class="sub_title" for="aadhar"> <i class="fa-regular fa-address-card"></i>Your Aadhar
                                 No</label>
-                            <input name="AadharNo" placeholder="Aadhar No :" id="aadhar" class="sty" type="number" required>
+                            <input name="AadharNo" placeholder="Aadhar No :" id="aadhar" class="sty" type="number"
+                                required> -->
+
+                            <div id="box">
+                                <input name="phone" class="sty1" type="text" id="phone" placeholder="Enter phone">
+                                <button type="button" class="eye" >Send
+                                    OTP</button>
+                            </div>
+                            <div id="box">
+                                <input name="otp" class="sty1" type="text" id="otp" placeholder="Enter OTP">
+                                <button type="button" class="eye" >Verify OTP</button>
+
+                            </div>
+
                         </div>
                         <div class="details">
                             <label class="sub_title" for="password1"> <i class="fas fa-map-marked-alt"></i></i>
                                 Location</label>
                             <div id="box">
-                                <input name="Location" placeholder="Current Location" id="password1" class="sty1" type="location "
-                                    autocomplete="current-password" style="border: none;" required>
+                                <input name="Location" placeholder="Current Location" id="password1" class="sty1"
+                                    type="location " autocomplete="current-password" style="border: none;" required>
                             </div>
-
                         </div>
                         <div id="btm">
                             <button type="submit" class="btn" style="font-weight: 400;">Started </button>
