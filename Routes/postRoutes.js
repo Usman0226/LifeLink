@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const connectDB = require("../db");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { sendSMS } = require("../services/twilio");
 
 //models
 const User = require("../models/user");
@@ -19,33 +20,46 @@ postRouter.use(express.json());
 //Paths
 const rootDir = require("../utils/path");
 const auth = require("../public/js/auth");
+const { constants } = require("buffer");
+const { send } = require("process");
 // const filePath = path.join(rootDir, "users.json");
 
 postRouter.post("/SignUp", async (req, res) => {
   console.log("Body : ", req.body);
 
-  const hassedPass = bcrypt.hashSync(req.body.password, 10);
+  const { username, email, password, bloodGroup, phone, Location, DOB } =
+    req.body;
 
-  const userData = {
-    username: req.body.username,
-    email: req.body.email,
-    password: hassedPass,
-    bloodGroup: req.body.bloodGroup,
-    phone: req.body.phone,
-    Location: req.body.Location,
-    dateOfBirth: req.body.DOB,
-  };
-
-  try {
-    const user = new User(userData);
-    await user.save();
-    console.log("sent the data to DB");
-    return res.send("Saved to DB ! ");
-  } catch (err) {
-    console.log("Error saving the data !", err);
+  if (!username || !email || !password || !phone) {
+    return res.status(400).send("Please provide all required fields.");
   }
 
-  res.redirect("/DashBoard");
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userData = {
+      username: username,
+      email: email,
+      password: hashedPassword,
+      bloodGroup: bloodGroup,
+      phone: phone,
+      location: Location,
+      dateOfBirth: DOB,
+    };
+
+    const user = new User(userData);
+    await user.save();
+    console.log("Dta sent to DB.");
+
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    console.log(`Generated OTP: ${otp}`);
+    await sendSMS(phone, `Your OTP for LifeLink is ${otp}.`);
+
+    res.redirect("/DashBoard");
+  } catch (err) {
+    console.error("An errorduring sign up:", err);
+    return res.status(500).send("Internal Server Error.");
+  }
 });
 
 postRouter.post("/Login", async (req, res) => {
@@ -57,7 +71,10 @@ postRouter.post("/Login", async (req, res) => {
   };
 
   if (!userData.email || !userData.password) {
-    return res.status(201).send("Please provide both email and password.").redirect('/login');
+    return res
+      .status(201)
+      .send("Please provide both email and password.")
+      .redirect("/login");
   }
 
   const userExist = await User.findOne({ email: userData.email });
@@ -93,7 +110,8 @@ postRouter.post("/Login", async (req, res) => {
   userExist.refreshToken = refreshToken;
   await userExist.save();
   const tokenExpiresInSeconds = parseInt(process.env.JWT_EXPIRES_IN, 10) * 1000;
-  const refreshTokenExpiresInSeconds = parseInt(process.env.JWT_REFRESH_EXPIRES_IN, 10) * 1000;
+  const refreshTokenExpiresInSeconds =
+    parseInt(process.env.JWT_REFRESH_EXPIRES_IN, 10) * 1000;
 
   res.cookie(
     "token",
@@ -164,5 +182,4 @@ postRouter.post("/logout", auth, async (req, res) => {
   }
 });
 
-
-module.exports =postRouter;
+module.exports = postRouter;

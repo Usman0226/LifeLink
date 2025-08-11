@@ -94,7 +94,6 @@ let loaddata = async () => {
   console.log(emergencyRequestsData);
 
   loadEmergencyRequests(emergencyRequestsData);
-  filterBloodType.addEventListener("change", filterAndloadEmergencyRequests);
   filterLocation.addEventListener("input", filterAndloadEmergencyRequests);
 };
 
@@ -102,15 +101,15 @@ loaddata()
 
 let timer = null;
 
-emergencyRequestBtn.addEventListener("click", () => {
-  emergencyFormModal.style.display = "block";
-  emergencyFormOverlay.style.display = "block";
+// emergencyRequestBtn.addEventListener("click", () => {
+//   emergencyFormModal.style.display = "block";
+//   emergencyFormOverlay.style.display = "block";
 
-  if(timer != null){
-    clearTimeout(timer);
-  }
+//   if(timer != null){
+//     clearTimeout(timer);
+//   }
 
-});
+// });
 
 //Routes
 document.addEventListener("click", (e) => {

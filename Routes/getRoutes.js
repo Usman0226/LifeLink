@@ -16,10 +16,34 @@ getRouter.get("/SignUp", (req, res) => {
   res.render(path.join(rootDir, "views", "pages", "SignUp.ejs"));
 });
 
-getRouter.get("/DashBoard", auth, (req, res) => {
-  res.render(path.join(rootDir, "views", "pages", "DashBoard.ejs"), {
+getRouter.get("/DashBoard", auth, async(req, res) => {
+    try {
+    const userEmail = req.user.email;
+    console.log(" user email:", userEmail);
+
+    const userData = await User.findOne({ email: userEmail });
+
+    if (!userData) {
+      console.log("User not found in DB with email:", userEmail);
+      return res.status(404).send("User not found.");
+    }
+
+    const user = {
+      username: userData.username,
+      bloodGroup: userData.bloodGroup,
+      location: userData.Location,
+      phone: userData.phone,
+    };
+
+     res.render(path.join(rootDir, "views", "pages", "DashBoard.ejs"), {
+        user: user,
     jsfile: ["emergencyForm"],
   });
+  } catch (error) {
+    console.error("Error fetching", error);
+    res.status(500).send("Internal Server Error.");
+  }
+ 
 });
 
 getRouter.get("/donate", auth, async (req, res) => {
