@@ -206,7 +206,7 @@ function loadEmergencyRequests(requests) {
                     <td>${req.location}</td>
                     <td>${req.Units}</td>
                     <td><span class="emergency-table-status-tag ${statusClass}">${req.status}</span></td>
-                    <td><button class="emergency-table-respond-button">Respond</button></td>
+                    <td><button id="resp" class="emergency-table-respond-button" data-id="${req._id}">Respond</button></td>
                 </tr>
             `;
     });
@@ -241,15 +241,35 @@ function filterAndloadEmergencyRequests() {
 
 // Respond
 
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("emergency-table-respond-button")) {
-    document.querySelector(".respond-form").classList.add("show-respond");
-  }
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("emergency-table-respond-button")) {
+        const id = e.target.getAttribute("data-id");
+        console.log(" clicked ID:", id);
 
-  if (
-    e.target.id === "closeRespondBtn" ||
-    e.target.id === "respondFormOverlay"||e.target.id == "close"||e.target.classList == "close-path"
-  ) {
-    document.querySelector(".respond-form").classList.remove("show-respond");
-  }
+        const requestData = emergencyRequestsData.find(r => r._id?.toString() === id || r.id === id);
+        console.log("Matched request data:", requestData);
+
+        if (!requestData) {
+            alert("Could not find request data!");
+            return;
+        }
+
+        // Prefill form
+        document.querySelector('#hos').value = requestData.hospital;
+        document.querySelector('#locationOf').value = requestData.location;
+        console.log(requestData.bloodGroup);
+        
+        document.getElementById('bloodGroup').value = requestData.bloodGroup;
+      
+        document.querySelector(".respond-form").classList.add("show-respond");
+    }
+
+    if (
+        e.target.id === "closeRespondBtn" ||
+        e.target.id === "respondFormOverlay" ||
+        e.target.id === "close" ||
+        e.target.classList.contains("close-path")
+    ) {
+        document.querySelector(".respond-form").classList.remove("show-respond");
+    }
 });
