@@ -9,7 +9,7 @@ export const mapService = {
             "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=7GdPQstJTIq4t7BSTEXo",
             {
                 tileSize: 512,
-                zoomOffset: -8,
+                zoomOffset: -1,
                 attribution: '&copy; <a href="https://www.maptiler.com">YUGESH</a>',
             }
         ).addTo(this.mapInstance);

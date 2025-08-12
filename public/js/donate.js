@@ -229,17 +229,16 @@ function renderBloodBanks(banks) {
                 <div class="bank-hours">Hours: ${bank.open}</div>
                 <div class="services-tags">
                     ${bank.services
-                      .map(
-                        (service) =>
-                          `<span class="service-tag">${service}</span>`
-                      )
-                      .join("")}
+        .map(
+          (service) =>
+            `<span class="service-tag">${service}</span>`
+        )
+        .join("")}
                 </div>
 
                 <div class="camp_register">
-                        <button class="register-btn" data-bank-id="${
-                          bank.id
-                        }">Register</button>
+                        <button class="register-btn" data-bank-id="${bank.id
+      }">Register</button>
                 </div>
             `;
     bloodBankList.appendChild(item);
@@ -278,6 +277,14 @@ function renderBloodBanks(banks) {
       item.classList.add("highlighted");
       currentLocation.style.display = "block";
       mapLocationName.textContent = bank.name;
+      const mapHeight = document.getElementById("map").offsetHeight;
+      const offsetY = bottomSheet.classList.contains("expanded") ? mapHeight / 4 : mapHeight / 8;
+      const point = mapInstance.latLngToContainerPoint([bank.lat, bank.lon]);
+      const newPoint = L.point(point.x, point.y - offsetY);
+      const newLatLng = mapInstance.containerPointToLatLng(newPoint);
+      mapInstance.flyTo(newLatLng, mapInstance.getZoom(), {
+        duration: 1.2
+      });
       marker.openPopup();
     });
 
@@ -288,7 +295,7 @@ function renderBloodBanks(banks) {
     });
 
     item.addEventListener("click", () => {
-      mapInstance.setView([bank.lat, bank.lon], 12);
+      mapInstance.setView([bank.lat, bank.lon], 12, { duration: 1.2 });
       marker.openPopup();
     });
   });
@@ -337,12 +344,12 @@ window.addEventListener("resize", () => {
 
 //     document.getElementById("registerForm").style.display = "none";
 //     document.getElementById("registerFormOverlay").style.display = "none";
-    
+
 //   }
 // });
-    const button = document.getElementById("profileBtn");
+const button = document.getElementById("profileBtn");
 
 
-  button.addEventListener('click', () => {
-        document.getElementById('profileContainer').classList.toggle('show');
-    });
+button.addEventListener('click', () => {
+  document.getElementById('profileContainer').classList.toggle('show');
+});
