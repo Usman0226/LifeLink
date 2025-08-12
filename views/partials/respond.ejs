@@ -1,0 +1,168 @@
+<%- include('../partials/respond') %>
+
+<style>
+    #emergencyRequestBtn {
+        position: fixed;
+        top: 12%;
+        right: 5%;
+        background-color: #a23238;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 28px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+        z-index: 90;
+    }
+
+    #emergencyRequestBtn:hover {
+        background-color: #8b2a2f;
+    }
+
+    #closeEmergencyFormBtn {
+        position: absolute;
+        top: 18px;
+        right: 15px;
+        padding: 5px 9px;
+        font-size: 15px;
+        background: transparent !important;
+        appearance: none;
+        border: none;
+    }
+
+    .request-form {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background: #fff;
+        backdrop-filter: blur(6px);
+        padding: 1.5rem 1rem;
+        border-radius: 28px;
+        width: 500px;
+        max-width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+        display: none;
+        z-index: 1000;
+        transform: translate(-50%, -50%);
+        color: #000;
+        text-align: left;
+    }
+
+    .request-form h2 {
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .request-form label {
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    #submitAndSearchBtn {
+        background-color: #1a1110;
+        color: #fff;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 28px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .request-form input,
+    .request-form select,
+    .request-form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #8f8f8fcf;
+        border-radius: 20px;
+        margin-top: 6px;
+        margin-bottom: 1rem;
+    }
+
+    .request-form input:focus,
+    .request-form select:focus,
+    .request-form textarea:focus {
+        outline: none;
+        border-color: #a23238;
+        box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+    }
+
+    #donateFormOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 999;
+        display: none;
+    }
+
+    .cta-btn {
+        background-color: #a23238;
+        color: white;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 28px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+        #emergencyRequestBtn .button-text {
+            display: none;
+        }
+
+        #ambulance {
+            font-size: 20px;
+        }
+    }
+</style>
+<div id="emergencyFormOverlay" class="request-form-overlay"></div>
+<div id="emergencyFormModal" class="request-form">
+    <button type="button" id="closeEmergencyFormBtn" class="close-btn" aria-label="Close Emergency Form"
+        style="background: #1a1110; color: #fff; max-height:50px;font-size:large"><svg
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="rgba(0,0,0,1)">
+            <path
+                d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z">
+            </path>
+        </svg></button>
+    <h2>Respond Form</h2>
+    <input name="hospitalName" placeholder="Hospital Name">
+    <input type="text" name="location" placeholder="Location (e.g., Madanapalle)" />
+    <input type="text" name="contactName" placeholder="Your Full Name" />
+    <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
+
+    <label for="checkbox" style="opacity: 0.7;font-size: medium;">
+        <input type="checkbox" id="checkbox" required style="width: 19px;">
+        I confirm this is a genuine request
+    </label>
+
+    <div style="display: flex; justify-content: center; gap: 1rem;">
+        <button type="button" id="submitAndSearchBtn" class="cta-btn"
+            style="background: #1a1110; color: #fff; max-height:50px">Submit and Search</button>
+        <button id="requestSubmission" type="submit" class="cta-btn" style="max-height:50px">Submit</button>
+    </div>
+    </form>
+</div>
