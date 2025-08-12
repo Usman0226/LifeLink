@@ -13,7 +13,7 @@ body {
 
 header {
     width: 90%;
-    background-color: rgba(185, 28, 28, 0.5);
+    background-color: #b91c1c80;
     color: white;
     border-radius: 28px;
     padding: 1rem 1.5rem;
@@ -32,11 +32,31 @@ header {
     align-items: center;
 }
 
-.logo {
+/* .logo {
     font-size: 24px;
     font-weight: bold;
+} */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+.logo-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 15px;
+  mix-blend-mode:blend;
+}
+@media (max-width: 600px) {
+  .logo-image {
+    width: 32px;
+    height: 32px;
+  }
+  .logo {
+    font-size: 2rem;
+  }
+}
 nav {
     display: flex;
     gap: 20px;
