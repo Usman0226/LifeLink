@@ -27,10 +27,9 @@ const { send } = require("process");
 postRouter.post("/SignUp", async (req, res) => {
   console.log("Body : ", req.body);
 
-  const { username, email, password, bloodGroup, phone, Location, DOB } =
-    req.body;
+  const { username, email, password, bloodGroup, phone, Location, DOB } = req.body;
 
-  if (!username || !email || !password || !phone) {
+  if (!username || !email) {
     return res.status(400).send("Please provide all required fields.");
   }
 
@@ -57,7 +56,7 @@ postRouter.post("/SignUp", async (req, res) => {
 
     res.redirect("/DashBoard");
   } catch (err) {
-    console.error("An errorduring sign up:", err);
+    console.error("An error during sign up:", err);
     return res.status(500).send("Internal Server Error.");
   }
 });
