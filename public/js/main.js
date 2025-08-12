@@ -97,7 +97,7 @@ let loaddata = async () => {
   filterLocation.addEventListener("input", filterAndloadEmergencyRequests);
 };
 
-loaddata()
+loaddata();
 
 let timer = null;
 
@@ -238,3 +238,18 @@ function filterAndloadEmergencyRequests() {
 
   loadEmergencyRequests(filteredRequests);
 }
+
+// Respond
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("emergency-table-respond-button")) {
+    document.querySelector(".respond-form").classList.add("show-respond");
+  }
+
+  if (
+    e.target.id === "closeRespondBtn" ||
+    e.target.id === "respondFormOverlay"||e.target.id == "close"||e.target.classList == "close-path"
+  ) {
+    document.querySelector(".respond-form").classList.remove("show-respond");
+  }
+});
