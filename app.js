@@ -27,6 +27,6 @@ app.use(getRouter)
 app.use(postRouter)
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/dashBoard`);
+  console.log(`Server running at http://localhost:${PORT}/`);
 });
 

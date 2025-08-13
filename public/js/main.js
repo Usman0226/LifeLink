@@ -241,10 +241,10 @@ function filterAndloadEmergencyRequests() {
 
 // Respond
 
-  document.addEventListener("click", (e) => {
+document.addEventListener("click", (e) => {
     if (e.target.classList.contains("emergency-table-respond-button")) {
         const id = e.target.getAttribute("data-id");
-        console.log(" clicked ID:", id);
+        console.log("clicked ID:", id);
 
         const requestData = emergencyRequestsData.find(r => r._id?.toString() === id || r.id === id);
         console.log("Matched request data:", requestData);
@@ -254,15 +254,11 @@ function filterAndloadEmergencyRequests() {
             return;
         }
 
-        document.querySelector('#hos').value = requestData.hospital;
-        document.querySelector('#locationOf').value = requestData.location;
-        console.log(requestData.bloodGroup);
-        
-        document.getElementById('bloodGroup').value = requestData.bloodGroup;
-      
-        document.querySelector(".respond-form").classList.add("show-respond");
+        // Call a new function to set the form data and ID
+        openRespondFormWithData(requestData);
     }
-
+    
+    // Your existing code to close the modal remains the same
     if (
         e.target.id === "closeRespondBtn" ||
         e.target.id === "respondFormOverlay" ||
@@ -272,6 +268,22 @@ function filterAndloadEmergencyRequests() {
         document.querySelector(".respond-form").classList.remove("show-respond");
     }
 });
+
+// New function to handle opening the form and setting data
+function openRespondFormWithData(requestData) {
+    const respondFormModal = document.querySelector(".respond-form");
+
+    // Populate the form fields
+    document.querySelector('#hos').value = requestData.hospital;
+    document.querySelector('#locationOf').value = requestData.location;
+    document.getElementById('bloodGroup').value = requestData.bloodGroup;
+
+    // Set the request ID on the modal
+    respondFormModal.setAttribute('data-request-id', requestData._id);
+
+    // Show the modal
+    respondFormModal.classList.add("show-respond");
+}
 
 const emerg = document.getElementById("emerg");
 
@@ -286,3 +298,77 @@ function updateEmergencyText() {
 updateEmergencyText();
 
 window.addEventListener("resize", updateEmergencyText);
+
+
+// respond details
+
+async function handleRespond(requestId) {
+    try {
+        const response = await fetch(`/request/${requestId}/respond`, {
+            method: 'POST'
+        });
+
+        if (response.ok) {
+            alert("Your details are sent to the requester !")
+          
+        } else {
+            const error = await response.json();
+            alert(`Failed to respond: ${error.error}`);
+        }
+    } catch (error) {
+        console.error("Error responding:", error);
+        alert("An unexpected error occurred while trying to respond.");
+    }
+}
+
+
+// g
+
+
+// const respondForm = document.querySelector('.respond-form form');
+// respondForm.addEventListener('submit', async (e) => {
+//     e.preventDefault(); 
+
+//     const respondFormModal = document.querySelector(".respond-form");
+//     const requestId = respondFormModal.getAttribute('data-request-id');
+
+//     if (!requestId) {
+//         alert("Could not find emergency request ID.");
+//         return;
+//     }
+
+//     handleRespond(requestId);
+//     alert('The response details  is sent ')
+// });
+
+const respondForm = document.querySelector('.respond-form form');
+respondForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); 
+
+    const respondFormModal = document.querySelector(".respond-form");
+    const requestId = respondFormModal.getAttribute('data-request-id');
+
+    if (!requestId) {
+        alert("Could not find emergency request ID.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/request/${requestId}/respond`, {
+            method: 'POST',
+        });
+
+        if (response.ok) {
+            // Only show success alert and close modal on successful response
+            alert('Your response details have been sent to the requester!');
+            respondFormModal.classList.remove("show-respond");
+        } else {
+            // Handle server-side errors
+            const error = await response.json();
+            alert(`Failed to send response: ${error.error}`);
+        }
+    } catch (err) {
+        console.error('Error submitting response:', err);
+        alert("An error occurred. Please try again.");
+    }
+});

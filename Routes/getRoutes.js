@@ -3,6 +3,7 @@ const path = require("path");
 const getRouter = express.Router();
 const auth = require("../public/js/auth");
 const User = require("../models/user");
+const Response = require("../models/response"); 
 const { user } = require("./postRoutes");
 
 const rootDir = require("../utils/path");
@@ -37,14 +38,14 @@ getRouter.get("/DashBoard", auth, async(req, res) => {
 
      res.render(path.join(rootDir, "views", "pages", "DashBoard.ejs"), {
         user: user,
-    jsfile: ["emergencyForm"],
+    jsfile: ["emergencyForm","polling"],
   });
   } catch (error) {
     console.error("Error fetching", error);
     res.status(500).send("Internal Server Error.");
   }
  
-});
+}); 
 
 getRouter.get("/donate", auth, async (req, res) => {
   try {
@@ -110,5 +111,27 @@ getRouter.get("/profile", auth, async (req, res) => {
     res.status(500).send("Internal Server Error.");
   }
 });
+
+getRouter.get("/api/request/:id/responses", async (req, res) => {
+  try {
+    const requestId = req.params.id;
+    const responses = await Response.find({ requestId: requestId })
+      .populate('responderId', 'username bloodGroup Location phone')
+      .sort({ createdAt: 1 }); 
+      
+    res.json(responses);
+  } catch (err) {
+    console.error("Error fetching responses:", err);
+    res.status(500).json({ error: "Internal Server Error." });
+  }
+});
+
+getRouter.get('/', (req,res)=>{
+  res.render(path.join(rootDir, "views", "pages", "DashBoard.ejs"), {
+        user: user,
+    jsfile: ["emergencyForm","polling"],
+  });
+})
+
 
 module.exports = getRouter;

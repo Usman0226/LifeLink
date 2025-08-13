@@ -13,6 +13,7 @@ const { sendSMS } = require("../services/twilio");
 const User = require("../models/user");
 const register = require("../models/register");
 const request = require("../models/request");
+const Response = require("../models/response");
 
 connectDB();
 postRouter.use(express.json());
@@ -178,6 +179,38 @@ postRouter.post("/logout", auth, async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.redirect("/login");
+  }
+});
+
+
+postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
+  try {
+    const requestId = req.params.requestId;
+    const responderId = req.user.id; 
+
+  
+    const responder = await User.findById(responderId);
+    if (!responder) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    const newResponse = new Response({
+      requestId: requestId,
+      responderId: responderId,
+      responderDetails: {
+        username: responder.username,
+        bloodGroup: responder.bloodGroup,
+        location: responder.Location,
+        phone: responder.phone,
+      },
+    });
+
+    await newResponse.save();
+    console.log(`New response saved ID: ${requestId}`);
+    res.status(201).json({ message: "Response submitted successfully." });
+  } catch (err) {
+    console.error("Error submitting response", err);
+    res.status(500).json({ error: "Internal Server Error." });
   }
 });
 
