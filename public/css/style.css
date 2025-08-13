@@ -32,10 +32,10 @@ header {
     align-items: center;
 }
 
-/* .logo {
+.logo {
     font-size: 24px;
     font-weight: bold;
-} */
+}
 .logo-container {
   display: flex;
   align-items: center;

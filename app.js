@@ -13,13 +13,14 @@ const getRouter = require("./Routes/getRoutes")
 const postRouter = require("./Routes/postRoutes")
 
 const app = express();
-const PORT = 3003;
+const PORT = process.env.PORT || 4000 
 
 app.set("view engine","ejs")
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(express.static(path.join(__dirname, "public")))
 app.use(cookieParser())
+
 
 //Routes
 app.use(getRouter)

@@ -11,7 +11,7 @@ const bloodBanksData = [
   },
   {
     id: 2,
-    name: "LifeSaver Hospital",
+    name: "LifeSaver Camp",
     city: "Anantapur",
     address: "456 Health Ave, Anantapur",
     open: "24 Hours",
