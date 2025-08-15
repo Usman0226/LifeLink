@@ -10,14 +10,14 @@ const rootDir = require("../../src/utils/path");
 const getRequests = require("../models/request_data");
 
 getRouter.get("/Login", (req, res) => {
-  res.render(path.join(rootDir, "src","views", "pages", "LOGIN.ejs"));
+  res.render(path.join(rootDir,'src',"views", "pages", "LOGIN.ejs"));
 });
 
 getRouter.get("/SignUp", (req, res) => {
-  res.render(path.join(rootDir,"src", "views", "pages", "SignUp.ejs"));
+  res.render(path.join(rootDir,'src', "views", "pages", "SignUp.ejs"));
 });
 
-getRouter.get("/DashBoard", auth, async(req, res) => {
+getRouter.get("/DashBoard",auth,  async(req, res) => {
     try {
     const userEmail = req.user.email;
     console.log(" user email:", userEmail);
@@ -36,11 +36,12 @@ getRouter.get("/DashBoard", auth, async(req, res) => {
       phone: userData.phone,
     };
 
-     res.render(path.join(rootDir,"src", "views", "pages", "DashBoard.ejs"), {
+     res.render(path.join(rootDir,'src', "views", "pages", "DashBoard.ejs"), {
         user: user,
     jsfile: ["emergencyForm","polling"],
   });
   } catch (error) {
+    console.log("Check the auth connection !")
     console.error("Error fetching", error);
     res.status(500).send("Internal Server Error.");
   }
@@ -66,7 +67,7 @@ getRouter.get("/donate", auth, async (req, res) => {
       phone: userData.phone,
     };
 
-    res.render(path.join(rootDir,"src", "views", "pages", "donate.ejs"), {
+    res.render(path.join(rootDir,'src', "views", "pages", "donate.ejs"), {
       user: user,
       jsfile: ["registerForm", "emergencyForm"],
     });
@@ -127,7 +128,7 @@ getRouter.get("/api/request/:id/responses", async (req, res) => {
 });
 
 getRouter.get('/', (req,res)=>{
-  res.render(path.join(rootDir,"src","views", "pages", "DashBoard.ejs"), {
+  res.render(path.join(rootDir,'src',"views", "pages", "DashBoard.ejs"), {
         user: user,
     jsfile: ["emergencyForm","polling"],
   });

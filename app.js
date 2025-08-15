@@ -9,16 +9,17 @@ const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 //Routes Modules
-const getRouter = require("./Routes/getRoutes")
-const postRouter = require("./Routes/postRoutes")
+const getRouter = require("./src/Routes/getRoutes")
+const postRouter = require("./src/Routes/postRoutes")
 
 const app = express();
 const PORT = process.env.PORT || 4000 
 
 app.set("view engine","ejs")
+app.set('views',path.join(__dirname,'src','views'))
 app.use(express.json())
 app.use(express.urlencoded())
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join("public")))
 app.use(cookieParser())
 
 
