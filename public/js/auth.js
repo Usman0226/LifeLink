@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const User = require("../../models/user");
+const User = require("../../src/models/user");
 
 const auth = async function (req, res, next) {
 
@@ -18,8 +18,6 @@ const auth = async function (req, res, next) {
       return res.redirect("/login");
     }
   }
-
-
   
     if(refreshToken){
     try {
@@ -43,8 +41,6 @@ const auth = async function (req, res, next) {
         console.log('error');
         
     }
-  
-
 
   return res.redirect("/login");
 };

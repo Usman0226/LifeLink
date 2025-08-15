@@ -20,7 +20,7 @@ postRouter.use(express.json());
 
 //Paths
 const rootDir = require("../utils/path");
-const auth = require("../public/js/auth");
+const auth = require("../../public/js/auth");
 const { constants } = require("buffer");
 const { send } = require("process");
 // const filePath = path.join(rootDir, "users.json");

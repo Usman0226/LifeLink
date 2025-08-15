@@ -55,7 +55,7 @@ form2.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   let form2_data = new FormData(form2);
-  const dbData = {
+  const dbData = {    
     ...formInput,
     bloodGroup: form2_data.get("bloodGroup"),
     phone: form2_data.get("phone"),

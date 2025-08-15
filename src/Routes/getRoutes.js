@@ -1,20 +1,20 @@
 const express = require("express");
 const path = require("path");
 const getRouter = express.Router();
-const auth = require("../public/js/auth");
+const auth = require("../../public/js/auth")
 const User = require("../models/user");
 const Response = require("../models/response"); 
 const { user } = require("./postRoutes");
 
-const rootDir = require("../utils/path");
+const rootDir = require("../../src/utils/path");
 const getRequests = require("../models/request_data");
 
 getRouter.get("/Login", (req, res) => {
-  res.render(path.join(rootDir, "views", "pages", "LOGIN.ejs"));
+  res.render(path.join(rootDir, "src","views", "pages", "LOGIN.ejs"));
 });
 
 getRouter.get("/SignUp", (req, res) => {
-  res.render(path.join(rootDir, "views", "pages", "SignUp.ejs"));
+  res.render(path.join(rootDir,"src", "views", "pages", "SignUp.ejs"));
 });
 
 getRouter.get("/DashBoard", auth, async(req, res) => {
@@ -36,7 +36,7 @@ getRouter.get("/DashBoard", auth, async(req, res) => {
       phone: userData.phone,
     };
 
-     res.render(path.join(rootDir, "views", "pages", "DashBoard.ejs"), {
+     res.render(path.join(rootDir,"src", "views", "pages", "DashBoard.ejs"), {
         user: user,
     jsfile: ["emergencyForm","polling"],
   });
@@ -66,7 +66,7 @@ getRouter.get("/donate", auth, async (req, res) => {
       phone: userData.phone,
     };
 
-    res.render(path.join(rootDir, "views", "pages", "donate.ejs"), {
+    res.render(path.join(rootDir,"src", "views", "pages", "donate.ejs"), {
       user: user,
       jsfile: ["registerForm", "emergencyForm"],
     });
@@ -127,7 +127,7 @@ getRouter.get("/api/request/:id/responses", async (req, res) => {
 });
 
 getRouter.get('/', (req,res)=>{
-  res.render(path.join(rootDir, "views", "pages", "DashBoard.ejs"), {
+  res.render(path.join(rootDir,"src","views", "pages", "DashBoard.ejs"), {
         user: user,
     jsfile: ["emergencyForm","polling"],
   });
