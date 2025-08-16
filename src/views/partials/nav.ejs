@@ -10,9 +10,9 @@
         </button>
 
         <nav id="navMenu">
-            <a href="/dashBoard">Home</a>
-            <a href="#">Live Requests</a>
-            <a href="#">About</a>
+            <a id="home" href="/dashBoard">Home</a>
+            <a id="requests" href="#">Live Requests</a>
+            <a id="about" href="#">About</a>
             <a id="profileBtn" href="#">Profile</a>
         </nav>
     </div>
@@ -34,6 +34,23 @@
         navMenu.classList.toggle("show");
     });
 
+    const windowLocation = window.location.pathname;
+    console.log(windowLocation,"the location found !");
+
+    switch(windowLocation){
+        case '/DashBoard':
+            document.querySelector("#home").classList.add("underline");
+            break;
+        case '/donate':
+            document.querySelector("#home").classList.add("underline");
+            break;
+        case '/LiveRequests':
+            document.querySelector("#home").classList.add("underline");
+            break;
+        default:
+            console.log("The lcoation of the window is not foundyy")
+
+    }
 
   
 </script>

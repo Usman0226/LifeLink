@@ -8,15 +8,20 @@
 html {
     scroll-behavior: smooth;
     scrollbar-width: none;
-    overflow-y: mandatory;
+    overflow-y: auto;
     overflow-x: hidden;
 }
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
 
 body,
 html {
     background: radial-gradient(circle, #fddcdc, #f9f9f9);
     min-height: 100vh;
-    padding-top: 3%;
+    padding-top: 1.3%;
 
 }
 

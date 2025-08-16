@@ -1,5 +1,5 @@
-const menuToggle = document.getElementById("menuToggle");
-const navMenu = document.getElementById("navMenu");
+// const menuToggle = document.getElementById("menuToggle");
+// const navMenu = document.getElementById("navMenu");
 const donateFormModal = document.getElementById("donateFormModal");
 const donateFormOverlay = document.getElementById("donateFormOverlay");
 const donateNowBtn = document.getElementById("donateNowBtn");
@@ -58,9 +58,9 @@ closeEmergencyFormBtn.addEventListener("click", closeForm);
 
 // closeDonateFormBtn.addEventListener("click", closeDonateForm);
 
-menuToggle.addEventListener("click", () => {
-  navMenu.classList.toggle("show");
-});
+// menuToggle.addEventListener("click", () => {
+//   navMenu.classList.toggle("show");
+// });
 
 // function loadUserLocation() {
 //   if (navigator.geolocation) {

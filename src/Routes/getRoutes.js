@@ -37,7 +37,7 @@ getRouter.get("/DashBoard",auth,  async(req, res) => {
     };
 
      res.render(path.join(rootDir,'src', "views", "pages", "DashBoard.ejs"), {
-        user: user,
+        user : user,
     jsfile: ["emergencyForm","polling"],
   });
   } catch (error) {
@@ -102,7 +102,7 @@ getRouter.get("/profile", auth, async (req, res) => {
     const user = {
       username: userData.username,
       bloodGroup: userData.bloodGroup,
-      location: userData.Location,
+      location: userData.location,
       phone: userData.phone,
     };
 
@@ -127,11 +127,39 @@ getRouter.get("/api/request/:id/responses", async (req, res) => {
   }
 });
 
-getRouter.get('/', (req,res)=>{
-  res.render(path.join(rootDir,'src',"views", "pages", "DashBoard.ejs"), {
-        user: user,
+getRouter.get('/',auth, async(req,res)=>{
+  try {
+    const userEmail = req.user.email;
+    console.log(" user email:", userEmail);
+
+    const userData = await User.findOne({ email: userEmail });
+
+    if (!userData) {
+      console.log("User not found in DB with email:", userEmail);
+      return res.status(404).send("User not found.").render("/login");
+    }
+
+    const user = {
+      username: userData.username,
+      bloodGroup: userData.bloodGroup,
+      location: userData.Location,
+      phone: userData.phone,
+    };
+
+     res.render(path.join(rootDir,'src', "views", "pages", "DashBoard.ejs"), {
+        user : user,
     jsfile: ["emergencyForm","polling"],
   });
+  } catch (error) {
+    console.log("Check the auth connection !")
+    console.error("Error fetching", error);
+    res.status(500).send("Internal Server Error.");
+  }
+ 
+  // res.render(path.join(rootDir,'src',"views", "pages", "DashBoard.ejs"), {
+  //       user: user,
+  //   jsfile: ["emergencyForm","polling"],
+  // });
 })
 
 
