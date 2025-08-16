@@ -21,9 +21,6 @@ postRouter.use(express.json());
 //Paths
 const rootDir = require("../utils/path");
 const auth = require("../../public/js/auth");
-const { constants } = require("buffer");
-const { send } = require("process");
-// const filePath = path.join(rootDir, "users.json");
 
 postRouter.post("/SignUp", async (req, res) => {
   console.log("Body : ", req.body);
@@ -153,7 +150,7 @@ postRouter.post("/request", async (req, res) => {
 postRouter.post("/register", async (req, res) => {
   const userdata = {
     bloodGroup: req.body.bloodGroup,
-    location: req.body.location,
+    location: req.body.Location,
     contactName: req.body.contactName,
     contactInfo: req.body.contactInfo,
   };

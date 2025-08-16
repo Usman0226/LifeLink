@@ -7,6 +7,7 @@
     <title>LifeLink - Home</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/respond.css">
+      <link rel="stylesheet" href="/css/nav.css">
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -14,10 +15,10 @@
 </head>
 
 <body>
-    <header>
+    <!-- <header>
         <div class="header-container">
-            <!-- <img src="./Assets/logo2.jpg" alt="LifeLink Logo" class="logo-image" /> -->
-            <h1 class="logo">LifeLink</h1>
+           
+            <h1 class="logo"> <img src="./Assets/logo2.jpg" alt="LifeLink Logo" class="logo-image" />LifeLink</h1>
             <button id="menuToggle" class="hamburger">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                     viewBox="0 0 448 512">
@@ -33,10 +34,12 @@
                 <a href="#">Profile</a>
             </nav>
         </div>
-    </header>
+    </header> -->
 
-    <button id="emergencyRequestBtn"><i style="margin-right: 8px;" class="fa-solid fa-truck-droplet"></i><span id="emerg">Emergency
-        Request</span></button>
+    <!-- <button id="emergencyRequestBtn"><i style="margin-right: 8px;" class="fa-solid fa-truck-droplet"></i><span id="emerg">Emergency
+        Request</span></button> -->
+
+       <%- include('../partials/nav', { user: user }) %>
 
     <section class="hero">
         <div class="hero-text">
@@ -134,7 +137,13 @@
                 <script src="/js/<%= e %>.js"></script>
                 <% }) %>
                     <% } %>
+<script>
+    const button = document.getElementById("profileBtn");
+button.addEventListener('click', () => {
+  document.getElementById('profileContainer').classList.toggle('show');
+});
 
+</script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@ const getRouter = express.Router();
 const auth = require("../../public/js/auth")
 const User = require("../models/user");
 const Response = require("../models/response"); 
-const { user } = require("./postRoutes");
+const { user } = require("./postRoutes"); 
 
 const rootDir = require("../../src/utils/path");
 const getRequests = require("../models/request_data");

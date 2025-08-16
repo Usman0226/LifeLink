@@ -4,89 +4,7 @@ const donateFormModal = document.getElementById("donateFormModal");
 const donateFormOverlay = document.getElementById("donateFormOverlay");
 const donateNowBtn = document.getElementById("donateNowBtn");
 
-// const emergencyRequestsData = [
-//   {
-//     id: 1,
-//     bloodType: "O-",
-//     location: "Mumbai",
-//     hospital: "City Hospital",
-//     units: 2,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 2,
-//     bloodType: "A+",
-//     location: "Delhi",
-//     hospital: "Capital Health",
-//     units: 4,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 3,
-//     bloodType: "B-",
-//     location: "Bangalore",
-//     hospital: "Garden City Medical",
-//     units: 1,
-//     status: "Pending",
-//   },
-//   {
-//     id: 4,
-//     bloodType: "AB+",
-//     location: "Mumbai",
-//     hospital: "Sea View Clinic",
-//     units: 3,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 5,
-//     bloodType: "O+",
-//     location: "Chennai",
-//     hospital: "Marina General",
-//     units: 5,
-//     status: "Pending",
-//   },
-//   {
-//     id: 6,
-//     bloodType: "A-",
-//     location: "Hyderabad",
-//     hospital: "Deccan Hospital",
-//     units: 2,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 7,
-//     bloodType: "B+",
-//     location: "Pune",
-//     hospital: "Maharashtra Clinic",
-//     units: 1,
-//     status: "Pending",
-//   },
-//   {
-//     id: 8,
-//     bloodType: "O-",
-//     location: "Kolkata",
-//     hospital: "East End Hospital",
-//     units: 3,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 9,
-//     bloodType: "AB+",
-//     location: "Ahmedabad",
-//     hospital: "Gujarat Medical",
-//     units: 2,
-//     status: "Pending",
-//   },
-//   {
-//     id: 10,
-//     bloodType: "A+",
-//     location: "Lucknow",
-//     hospital: "Nawab Hospital",
-//     units: 4,
-//     status: "Urgent",
-//   },
-// ];
-let emergencyRequestsData;
+let emergencyRequestsData = {};
 let loaddata = async () => {
   const response = await fetch("/api/requestData");
 
@@ -101,15 +19,15 @@ loaddata();
 
 let timer = null;
 
-// emergencyRequestBtn.addEventListener("click", () => {
-//   emergencyFormModal.style.display = "block";
-//   emergencyFormOverlay.style.display = "block";
+emergencyRequestBtn.addEventListener("click", () => {
+  emergencyFormModal.style.display = "block";
+  emergencyFormOverlay.style.display = "block";
 
-//   if(timer != null){
-//     clearTimeout(timer);
-//   }
+  if(timer != null){
+    clearTimeout(timer);
+  }
 
-// });
+});
 
 //Routes
 document.addEventListener("click", (e) => {
@@ -269,19 +187,15 @@ document.addEventListener("click", (e) => {
     }
 });
 
-// New function to handle opening the form and setting data
 function openRespondFormWithData(requestData) {
     const respondFormModal = document.querySelector(".respond-form");
 
-    // Populate the form fields
     document.querySelector('#hos').value = requestData.hospital;
     document.querySelector('#locationOf').value = requestData.location;
     document.getElementById('bloodGroup').value = requestData.bloodGroup;
 
-    // Set the request ID on the modal
     respondFormModal.setAttribute('data-request-id', requestData._id);
 
-    // Show the modal
     respondFormModal.classList.add("show-respond");
 }
 
@@ -296,7 +210,6 @@ function updateEmergencyText() {
 }
 
 updateEmergencyText();
-
 window.addEventListener("resize", updateEmergencyText);
 
 
@@ -322,24 +235,6 @@ async function handleRespond(requestId) {
 }
 
 
-// g
-
-
-// const respondForm = document.querySelector('.respond-form form');
-// respondForm.addEventListener('submit', async (e) => {
-//     e.preventDefault(); 
-
-//     const respondFormModal = document.querySelector(".respond-form");
-//     const requestId = respondFormModal.getAttribute('data-request-id');
-
-//     if (!requestId) {
-//         alert("Could not find emergency request ID.");
-//         return;
-//     }
-
-//     handleRespond(requestId);
-//     alert('The response details  is sent ')
-// });
 
 const respondForm = document.querySelector('.respond-form form');
 respondForm.addEventListener('submit', async (e) => {
@@ -359,11 +254,9 @@ respondForm.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            // Only show success alert and close modal on successful response
             alert('Your response details have been sent to the requester!');
             respondFormModal.classList.remove("show-respond");
         } else {
-            // Handle server-side errors
             const error = await response.json();
             alert(`Failed to send response: ${error.error}`);
         }
@@ -372,3 +265,4 @@ respondForm.addEventListener('submit', async (e) => {
         alert("An error occurred. Please try again.");
     }
 });
+
