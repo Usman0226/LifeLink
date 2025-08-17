@@ -209,8 +209,8 @@ function updateEmergencyText() {
   }
 }
 
-updateEmergencyText();
-window.addEventListener("resize", updateEmergencyText);
+// updateEmergencyText();
+// window.addEventListener("resize", updateEmergencyText);
 
 
 // respond details
@@ -234,35 +234,46 @@ async function handleRespond(requestId) {
     }
 }
 
-
-
 const respondForm = document.querySelector('.respond-form form');
+
 respondForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); 
+  e.preventDefault(); 
 
-    const respondFormModal = document.querySelector(".respond-form");
-    const requestId = respondFormModal.getAttribute('data-request-id');
+  const respondFormModal = document.querySelector(".respond-form");
+  const requestId = respondFormModal.getAttribute('data-request-id');
 
-    if (!requestId) {
-        alert("Could not find emergency request ID.");
-        return;
+  if (!requestId) {
+    alert("Could not find request ID.");
+    return;
+  }
+
+  const formData = {
+    hospitalName: document.getElementById('hos').value,
+    bloodGroup: document.getElementById('bloodGroup').value,
+    location: document.getElementById('locationOf').value,
+    contactName: document.getElementById('requester').value,
+    contactInfo: document.getElementById('number').value,
+  };
+
+  try {
+    const response = await fetch(`http://localhost:3000/request/${requestId}/respond`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData)  
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('Your response details have been sent to the requester!');
+      respondFormModal.classList.remove("show-respond");
+    } else {
+      alert(`Failed to send response: ${data.error}`);
     }
-
-    try {
-        const response = await fetch(`/request/${requestId}/respond`, {
-            method: 'POST',
-        });
-
-        if (response.ok) {
-            alert('Your response details have been sent to the requester!');
-            respondFormModal.classList.remove("show-respond");
-        } else {
-            const error = await response.json();
-            alert(`Failed to send response: ${error.error}`);
-        }
-    } catch (err) {
-        console.error('Error submitting response:', err);
-        alert("An error occurred. Please try again.");
-    }
+  } catch (err) {
+    console.error('Error submitting response:', err);
+    alert("An error occurred. Please try again.");
+  }
 });
-

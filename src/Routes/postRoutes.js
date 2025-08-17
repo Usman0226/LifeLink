@@ -8,6 +8,8 @@ const connectDB = require("../db");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { sendSMS } = require("../services/twilio");
+const nodemailer = require("nodemailer");
+require('dotenv').config()
 
 //models
 const User = require("../models/user");
@@ -25,7 +27,8 @@ const auth = require("../../public/js/auth");
 postRouter.post("/SignUp", async (req, res) => {
   console.log("Body : ", req.body);
 
-  const { username, email, password, bloodGroup, phone, Location, DOB } = req.body;
+  const { username, email, password, bloodGroup, phone, Location, DOB } =
+    req.body;
 
   if (!username || !email) {
     return res.status(400).send("Please provide all required fields.");
@@ -179,14 +182,15 @@ postRouter.post("/logout", auth, async (req, res) => {
   }
 });
 
-
 postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
   try {
     const requestId = req.params.requestId;
-    const responderId = req.user.id; 
+    const responderId = req.user.id;
 
-  
     const responder = await User.findById(responderId);
+    const responderEmail = responder.email;
+    console.log(responderEmail)
+    
     if (!responder) {
       return res.status(404).json({ error: "User not found." });
     }
@@ -204,9 +208,44 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
 
     await newResponse.save();
     console.log(`New response saved ID: ${requestId}`);
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.NODEMAILER_MAIL,
+        pass: process.env.NODEMAILER_PASS,
+      },
+    });
+
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error("Transporter error:", error);
+      } else {
+        console.log("Server is ready");
+      }
+    });
+
+    const mailContent = {
+      from:process.env.NODEMAILER_MAIL,
+      to: "chandanusmangani@gmail.com", 
+      subject: "Donor for your Blood Request ",
+      text: `
+      A donor have been responded to your blood request. 
+      Below are the details of the donor :
+
+        - Name: ${responder.username}
+        - Blood Group: ${responder.bloodGroup}
+        - Location: ${responder.Location}
+        - Phone: ${responder.phone}
+      `,
+    };
+
+    await transporter.sendMail(mailContent);
+    console.log("Mail is successfully sent !");
+
     res.status(201).json({ message: "Response submitted successfully." });
   } catch (err) {
-    console.error("Error submitting response", err);
+    console.error("Error response", err);
     res.status(500).json({ error: "Internal Server Error." });
   }
 });
