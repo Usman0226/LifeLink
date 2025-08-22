@@ -6,10 +6,9 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const connectDB = require("../db");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const { sendSMS } = require("../services/twilio");
 const nodemailer = require("nodemailer");
-require('dotenv').config()
+const mailTo = require("../services/mailer");
+require("dotenv").config();
 
 //models
 const User = require("../models/user");
@@ -189,8 +188,8 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
 
     const responder = await User.findById(responderId);
     const responderEmail = responder.email;
-    console.log(responderEmail)
-    
+    console.log(responderEmail);
+
     if (!responder) {
       return res.status(404).json({ error: "User not found." });
     }
@@ -226,8 +225,8 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
     });
 
     const mailContent = {
-      from:process.env.NODEMAILER_MAIL,
-      to: "chandanusmangani@gmail.com", 
+      from: process.env.NODEMAILER_MAIL,
+      to: "chandanusmangani@gmail.com",
       subject: "Donor for your Blood Request ",
       text: `
       A donor have been responded to your blood request. 
@@ -249,5 +248,31 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error." });
   }
 });
+
+const otp = Math.floor(100000 + Math.random() * 900000);
+  console.log(otp);
+  
+
+postRouter.post("/sendOtp", async (req, res) => {
+  const { email } = req.body;
+
+  const subject = "OTP for SignUp"
+
+  const text = `Your OTP to login into the LifeLink is ${otp}`;
+
+  await mailTo(text, email,subject);
+res.status(200).json({ success: true, message: "OTP sent successfully" });
+
+});
+
+
+postRouter.post("/verifyOtp",(req,res)=>{
+  const {email,InputOTP} = req.body;
+  if(otp == InputOTP ){
+    console.log("OTP verified !")
+  }
+res.status(200).json({ success: true, message: "OTP verified successfully" });
+
+})
 
 module.exports = postRouter;
