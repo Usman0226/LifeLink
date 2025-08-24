@@ -6,6 +6,7 @@ const requestForm = new mongoose.Schema({
   location: String,
   hospital: String,
   contactNumber: Number,
+  email : String,
   contactName:String,
   Reason: String
 });

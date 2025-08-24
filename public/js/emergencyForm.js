@@ -35,6 +35,7 @@ emergencyRequestForm.addEventListener("submit", async (e) => {
     location: formData.get("location"),
     hospital: formData.get("hospitalName"),
     contactNumber: formData.get("contactInfo"),
+    email: formData.get("email"),
     contactName: formData.get("contactName"),
     Reason: formData.get("Reason"),
   };

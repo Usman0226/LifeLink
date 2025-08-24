@@ -23,10 +23,9 @@ emergencyRequestBtn.addEventListener("click", () => {
   emergencyFormModal.style.display = "block";
   emergencyFormOverlay.style.display = "block";
 
-  if(timer != null){
+  if (timer != null) {
     clearTimeout(timer);
   }
-
 });
 
 //Routes
@@ -160,87 +159,87 @@ function filterAndloadEmergencyRequests() {
 // Respond
 
 document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("emergency-table-respond-button")) {
-        const id = e.target.getAttribute("data-id");
-        console.log("clicked ID:", id);
+  if (e.target.classList.contains("emergency-table-respond-button")) {
+    const id = e.target.getAttribute("data-id");
+    console.log("clicked ID:", id);
 
-        const requestData = emergencyRequestsData.find(r => r._id?.toString() === id || r.id === id);
-        console.log("Matched request data:", requestData);
+    const requestData = emergencyRequestsData.find(
+      (r) => r._id?.toString() === id || r.id === id
+    );
+    console.log("Matched request data:", requestData);
 
-        if (!requestData) {
-            alert("Could not find request data!");
-            return;
-        }
-
-        // Call a new function to set the form data and ID
-        openRespondFormWithData(requestData);
+    if (!requestData) {
+      alert("Could not find request data!");
+      return;
     }
-    
-    // Your existing code to close the modal remains the same
-    if (
-        e.target.id === "closeRespondBtn" ||
-        e.target.id === "respondFormOverlay" ||
-        e.target.id === "close" ||
-        e.target.classList.contains("close-path")
-    ) {
-        document.querySelector(".respond-form").classList.remove("show-respond");
-    }
+
+    // Call a new function to set the form data and ID
+    openRespondFormWithData(requestData);
+  }
+
+  // Your existing code to close the modal remains the same
+  if (
+    e.target.id === "closeRespondBtn" ||
+    e.target.id === "respondFormOverlay" ||
+    e.target.id === "close" ||
+    e.target.classList.contains("close-path")
+  ) {
+    document.querySelector(".respond-form").classList.remove("show-respond");
+  }
 });
 
 function openRespondFormWithData(requestData) {
-    const respondFormModal = document.querySelector(".respond-form");
+  const respondFormModal = document.querySelector(".respond-form");
 
-    document.querySelector('#hos').value = requestData.hospital;
-    document.querySelector('#locationOf').value = requestData.location;
-    document.getElementById('bloodGroup').value = requestData.bloodGroup;
+  document.querySelector("#hos").value = requestData.hospital;
+  document.querySelector("#locationOf").value = requestData.location;
+  document.getElementById("bloodGroup").value = requestData.bloodGroup;
 
-    respondFormModal.setAttribute('data-request-id', requestData._id);
+  respondFormModal.setAttribute("data-request-id", requestData._id);
 
-    respondFormModal.classList.add("show-respond");
+  respondFormModal.classList.add("show-respond");
 }
 
 const emerg = document.getElementById("emerg");
 
 function updateEmergencyText() {
   if (window.innerWidth <= 768) {
-    emerg.textContent = ""; 
+    emerg.textContent = "";
   } else {
-    emerg.textContent = "Emergency Request"; 
+    emerg.textContent = "Emergency Request";
   }
 }
 
 // updateEmergencyText();
 // window.addEventListener("resize", updateEmergencyText);
 
-
 // respond details
 
 async function handleRespond(requestId) {
-    try {
-        const response = await fetch(`/request/${requestId}/respond`, {
-            method: 'POST'
-        });
+  try {
+    const response = await fetch(`/request/${requestId}/respond`, {
+      method: "POST",
+    });
 
-        if (response.ok) {
-            alert("Your details are sent to the requester !")
-          
-        } else {
-            const error = await response.json();
-            alert(`Failed to respond: ${error.error}`);
-        }
-    } catch (error) {
-        console.error("Error responding:", error);
-        alert("An unexpected error occurred while trying to respond.");
+    if (response.ok) {
+      alert("Your details are sent to the requester !");
+    } else {
+      const error = await response.json();
+      alert(`Failed to respond: ${error.error}`);
     }
+  } catch (error) {
+    console.error("Error responding:", error);
+    alert("An unexpected error occurred while trying to respond.");
+  }
 }
 
-const respondForm = document.querySelector('.respond-form form');
+const respondForm = document.querySelector(".respond-form form");
 
-respondForm.addEventListener('submit', async (e) => {
-  e.preventDefault(); 
+respondForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
   const respondFormModal = document.querySelector(".respond-form");
-  const requestId = respondFormModal.getAttribute('data-request-id');
+  const requestId = respondFormModal.getAttribute("data-request-id");
 
   if (!requestId) {
     alert("Could not find request ID.");
@@ -248,32 +247,35 @@ respondForm.addEventListener('submit', async (e) => {
   }
 
   const formData = {
-    hospitalName: document.getElementById('hos').value,
-    bloodGroup: document.getElementById('bloodGroup').value,
-    location: document.getElementById('locationOf').value,
-    contactName: document.getElementById('requester').value,
-    contactInfo: document.getElementById('number').value,
+    hospitalName: document.getElementById("hos").value,
+    bloodGroup: document.getElementById("bloodGroup").value,
+    location: document.getElementById("locationOf").value,
+    contactName: document.getElementById("requester").value,
+    contactInfo: document.getElementById("number").value,
   };
 
   try {
-    const response = await fetch(`http://localhost:3000/request/${requestId}/respond`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData)  
-    });
+    const response = await fetch(
+      `https://lifelink-7ucy.onrender.com/request/${requestId}/respond`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
     const data = await response.json();
 
     if (response.ok) {
-      alert('Your response details have been sent to the requester!');
+      alert("Your response details have been sent to the requester!");
       respondFormModal.classList.remove("show-respond");
     } else {
-      alert(`Failed to send response: ${data.error}`);
+      alert(`Failed to send response ${data.error}`);
     }
   } catch (err) {
-    console.error('Error submitting response:', err);
+    console.error("Error submitting response:", err);
     alert("An error occurred. Please try again.");
   }
 });

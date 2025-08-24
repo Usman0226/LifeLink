@@ -1,7 +1,7 @@
 # LifeLink
 
 
-## Weekend Agenda
+## Current Agenda
 - [✔️] A button beside the "Donate Now" for Join as donor
 - [✔️] JWT
 - Emergency request List => OnGoing requests table 
@@ -16,9 +16,9 @@
 # BIG THINGS
 
 - The session (Express-session)
-- The search and request 
+- The search and request btn
 - Users real time notification's
-- Share details on accept
+- ```[Partially Done]``` Share details on accept
 - Emergency Requests smart routing => nearest first 
 - 
 
@@ -28,7 +28,7 @@
 # The Dream
 
 - PWA 
-- Blocked VIEW for a time bound 
+- Blocked VIEW for a time bound (notification) 
 
 
 

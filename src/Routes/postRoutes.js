@@ -128,6 +128,7 @@ postRouter.post("/Login", async (req, res) => {
   return res.redirect("/DashBoard");
 });
 
+// save the requests to DB
 postRouter.post("/request", async (req, res) => {
   console.log("The body of the emergency request", req.body);
   const requestData = {
@@ -136,6 +137,7 @@ postRouter.post("/request", async (req, res) => {
     location: req.body.location,
     hospital: req.body.hospital,
     contactNumber: req.body.contactNumber,
+    email: req.body.email,
     contactName: req.body.contactName,
     Reason: req.body.Reason,
   };
@@ -184,6 +186,14 @@ postRouter.post("/logout", auth, async (req, res) => {
 postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
   try {
     const requestId = req.params.requestId;
+    console.log(requestId)
+    const requestUser = await request.findById(requestId)
+    if(!requestUser){
+      console.log("in the if statement ")
+      return res.status(404);
+    }
+    console.log("the requester is ",requestUser)
+    const requester = requestUser.email;
     const responderId = req.user.id;
 
     const responder = await User.findById(responderId);
@@ -226,7 +236,7 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
 
     const mailContent = {
       from: process.env.NODEMAILER_MAIL,
-      to: "chandanusmangani@gmail.com",
+      to: requester,
       subject: "Donor for your Blood Request ",
       text: `
       A donor have been responded to your blood request. 
@@ -249,11 +259,13 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
   }
 });
 
-const otp = Math.floor(100000 + Math.random() * 900000);
-  console.log(otp);
-  
+
+  otpObj = {};
 
 postRouter.post("/sendOtp", async (req, res) => {
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  console.log(otp);
+  otpObj[email] = otp;
   const { email } = req.body;
 
   const subject = "OTP for SignUp"
@@ -265,11 +277,12 @@ res.status(200).json({ success: true, message: "OTP sent successfully" });
 
 });
 
+console.log(otpObj)
 
 postRouter.post("/verifyOtp",(req,res)=>{
   const {email,InputOTP} = req.body;
-  if(otp == InputOTP ){
-    console.log("OTP verified !")
+  if(otpObj[email] == InputOTP ){
+    console.log("OTP verified ! ")
   }
 res.status(200).json({ success: true, message: "OTP verified successfully" });
 
