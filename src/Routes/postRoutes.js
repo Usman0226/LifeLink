@@ -252,7 +252,7 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
     await transporter.sendMail(mailContent);
     console.log("Mail is successfully sent !");
 
-    res.status(201).json({ message: "Response submitted successfully." });
+    res.status(200).json({message : "Succesfully sent !!!"})
   } catch (err) {
     console.error("Error response", err);
     res.status(500).json({ error: "Internal Server Error." });
@@ -260,7 +260,7 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
 });
 
 
-  otpObj = {};
+otpObj = {};
 
 postRouter.post("/sendOtp", async (req, res) => {
   const otp = Math.floor(100000 + Math.random() * 900000);
@@ -277,7 +277,6 @@ res.status(200).json({ success: true, message: "OTP sent successfully" });
 
 });
 
-console.log(otpObj)
 
 postRouter.post("/verifyOtp",(req,res)=>{
   const {email,InputOTP} = req.body;

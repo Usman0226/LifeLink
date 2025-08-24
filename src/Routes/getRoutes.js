@@ -4,7 +4,6 @@ const getRouter = express.Router();
 const auth = require("../../public/js/auth")
 const User = require("../models/user");
 const Response = require("../models/response"); 
-const { user } = require("./postRoutes"); 
 
 const rootDir = require("../../src/utils/path");
 const getRequests = require("../models/request_data");
@@ -102,7 +101,7 @@ getRouter.get("/profile", auth, async (req, res) => {
     const user = {
       username: userData.username,
       bloodGroup: userData.bloodGroup,
-      location: userData.location,
+      location: userData.Location,
       phone: userData.phone,
     };
 
@@ -156,10 +155,6 @@ getRouter.get('/',auth, async(req,res)=>{
     res.status(500).send("Internal Server Error.");
   }
  
-  // res.render(path.join(rootDir,'src',"views", "pages", "DashBoard.ejs"), {
-  //       user: user,
-  //   jsfile: ["emergencyForm","polling"],
-  // });
 })
 
 
