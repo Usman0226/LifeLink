@@ -33,24 +33,5 @@
     menuToggle.addEventListener("click", () => {
         navMenu.classList.toggle("show");
     });
-
-    const windowLocation = window.location.pathname;
-    console.log(windowLocation,"the location found !");
-
-    switch(windowLocation){
-        case '/DashBoard':
-            document.querySelector("#home").classList.add("underline");
-            break;
-        case '/donate':
-            document.querySelector("#home").classList.add("underline");
-            break;
-        case '/LiveRequests':
-            document.querySelector("#home").classList.add("underline");
-            break;
-        default:
-            console.log("The lcoation of the window is not foundyy")
-
-    }
-
   
 </script>
