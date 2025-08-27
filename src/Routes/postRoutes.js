@@ -116,12 +116,16 @@ postRouter.post("/Login", async (req, res) => {
     "token",
     token,
     { httpOnly: true },
+    { secure: true },
+    { sameSite: "None" },
     { maxAge: tokenExpiresInSeconds }
   );
   res.cookie(
     "refreshToken",
     refreshToken,
     { httpOnly: true },
+    { secure: true },
+    { sameSite: "None" },
     { maxAge: refreshTokenExpiresInSeconds }
   );
 
@@ -129,9 +133,11 @@ postRouter.post("/Login", async (req, res) => {
 });
 
 // save the requests to DB
-postRouter.post("/request", async (req, res) => {
+postRouter.post("/request",auth,async (req, res) => {
   console.log("The body of the emergency request", req.body);
+
   const requestData = {
+    user : req.user._id,
     bloodGroup: req.body.bloodGroup,
     Units: req.body.Units,
     location: req.body.location,
@@ -186,13 +192,13 @@ postRouter.post("/logout", auth, async (req, res) => {
 postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
   try {
     const requestId = req.params.requestId;
-    console.log(requestId)
-    const requestUser = await request.findById(requestId)
-    if(!requestUser){
-      console.log("in the if statement ")
+    console.log(requestId);
+    const requestUser = await request.findById(requestId);
+    if (!requestUser) {
+      console.log("in the if statement ");
       return res.status(404);
     }
-    console.log("the requester is ",requestUser)
+    console.log("the requester is ", requestUser);
     const requester = requestUser.email;
     const responderId = req.user.id;
 
@@ -252,13 +258,12 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
     await transporter.sendMail(mailContent);
     console.log("Mail is successfully sent !");
 
-    res.status(200).json({message : "Succesfully sent !!!"})
+    res.status(200).json({ message: "Succesfully sent !!!" });
   } catch (err) {
     console.error("Error response", err);
     res.status(500).json({ error: "Internal Server Error." });
   }
 });
-
 
 otpObj = {};
 
@@ -268,23 +273,20 @@ postRouter.post("/sendOtp", async (req, res) => {
   otpObj[email] = otp;
   const { email } = req.body;
 
-  const subject = "OTP for SignUp"
+  const subject = "OTP for SignUp";
 
   const text = `Your OTP to login into the LifeLink is ${otp}`;
 
-  await mailTo(text, email,subject);
-res.status(200).json({ success: true, message: "OTP sent successfully" });
-
+  await mailTo(text, email, subject);
+  res.status(200).json({ success: true, message: "OTP sent successfully" });
 });
 
-
-postRouter.post("/verifyOtp",(req,res)=>{
-  const {email,InputOTP} = req.body;
-  if(otpObj[email] == InputOTP ){
-    console.log("OTP verified ! ")
+postRouter.post("/verifyOtp", (req, res) => {
+  const { email, InputOTP } = req.body;
+  if (otpObj[email] == InputOTP) {
+    console.log("OTP verified ! ");
   }
-res.status(200).json({ success: true, message: "OTP verified successfully" });
-
-})
+  res.status(200).json({ success: true, message: "OTP verified successfully" });
+});
 
 module.exports = postRouter;

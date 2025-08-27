@@ -10,7 +10,10 @@ const auth = async function (req, res, next) {
     if (token) {
     try {
       const verify = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = verify;
+
+      const user = await User.findById(verify.id)
+      if(!user) return res.redirect("/login")
+      req.user = user;
       return next();
       console.log(req.user);
     } catch (err) {
