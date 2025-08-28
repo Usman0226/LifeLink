@@ -21,12 +21,12 @@ postRouter.use(express.json());
 
 //Paths
 const rootDir = require("../utils/path");
-const auth = require("../../public/js/auth");
+const auth = require("../middlewares/auth")
 
 postRouter.post("/SignUp", async (req, res) => {
   console.log("Body : ", req.body);
 
-  const { username, email, password, bloodGroup, phone, Location, DOB } =
+  const { username, email, password, bloodGroup, phone, location, DOB } =
     req.body;
 
   if (!username || !email) {
@@ -42,7 +42,7 @@ postRouter.post("/SignUp", async (req, res) => {
       password: hashedPassword,
       bloodGroup: bloodGroup,
       phone: phone,
-      location: Location,
+      location: location,
       dateOfBirth: DOB,
     };
 
@@ -160,7 +160,7 @@ postRouter.post("/request",auth,async (req, res) => {
 postRouter.post("/register", async (req, res) => {
   const userdata = {
     bloodGroup: req.body.bloodGroup,
-    location: req.body.Location,
+    location: req.body.location,
     contactName: req.body.contactName,
     contactInfo: req.body.contactInfo,
   };
@@ -216,7 +216,7 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
       responderDetails: {
         username: responder.username,
         bloodGroup: responder.bloodGroup,
-        location: responder.Location,
+        location: responder.location,
         phone: responder.phone,
       },
     });
@@ -250,7 +250,7 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
 
         - Name: ${responder.username}
         - Blood Group: ${responder.bloodGroup}
-        - Location: ${responder.Location}
+        - Location: ${responder.location}
         - Phone: ${responder.phone}
       `,
     };

@@ -5,8 +5,8 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     bloodGroup: String,
-    phone: Number,
-    Location: String,
+    phone: String,
+    location: String,
     dateOfBirth: String,
     refreshToken: String
 });

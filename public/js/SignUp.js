@@ -59,7 +59,7 @@ form2.addEventListener("submit", async (e) => {
     ...formInput,
     bloodGroup: form2_data.get("bloodGroup"),
     phone: form2_data.get("phone"),
-    Location: form2_data.get("Location"),
+    location: form2_data.get("location"),
   };
   console.log(dbData);
 

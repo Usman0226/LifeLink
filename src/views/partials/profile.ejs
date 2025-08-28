@@ -9,13 +9,13 @@
 
     <div id="details">
         <h3>Blood Group : <strong>
-                <%= user.bloodGroup %>
+                <%= user.bloodGroup || 'Not specified' %>
             </strong></h3>
         <h3>Location : <strong>
-                <%= user.location %>
+                <%= user.location || 'Not specified' %>
             </strong></h3>
         <h3>Mobile No : <strong>
-                <%= user.phone %>
+                <%= user.phone || 'Not specified' %>
             </strong></h3>
     </div>
     <form action="/logout" method="post" >

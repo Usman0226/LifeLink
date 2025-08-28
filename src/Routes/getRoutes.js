@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const getRouter = express.Router();
-const auth = require("../../public/js/auth")
+const auth = require("../middlewares/auth")
 const User = require("../models/user");
 const Response = require("../models/response"); 
 
@@ -31,7 +31,7 @@ getRouter.get("/DashBoard",auth,  async(req, res) => {
     const user = {
       username: userData.username,
       bloodGroup: userData.bloodGroup,
-      location: userData.Location,
+      location: userData.location,
       phone: userData.phone,
     };
 
@@ -62,7 +62,7 @@ getRouter.get("/donate", auth, async (req, res) => {
     const user = {
       username: userData.username,
       bloodGroup: userData.bloodGroup,
-      location: userData.Location,
+      location: userData.location,
       phone: userData.phone,
     };
 
@@ -101,7 +101,7 @@ getRouter.get("/profile", auth, async (req, res) => {
     const user = {
       username: userData.username,
       bloodGroup: userData.bloodGroup,
-      location: userData.Location,
+      location: userData.location,
       phone: userData.phone,
     };
 
@@ -116,7 +116,7 @@ getRouter.get("/api/request/:id/responses", async (req, res) => {
   try {
     const requestId = req.params.id;
     const responses = await Response.find({ requestId: requestId })
-      .populate('responderId', 'username bloodGroup Location phone')
+      .populate('responderId', 'username bloodGroup location phone')
       .sort({ createdAt: 1 }); 
       
     res.json(responses);
@@ -141,7 +141,7 @@ getRouter.get('/',auth, async(req,res)=>{
     const user = {
       username: userData.username,
       bloodGroup: userData.bloodGroup,
-      location: userData.Location,
+      location: userData.location,
       phone: userData.phone,
     };
 

@@ -56,7 +56,7 @@
  ```js
 if request.units_fulfilled >= request.units_required{
     request.status = "fulfilled"
-    lock request
+    end request
     notify(requester, "Your request is complete")
     notify(all_pending_responders, "Request closed - need already fulfilled")
 }
