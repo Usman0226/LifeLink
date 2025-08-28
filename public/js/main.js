@@ -216,8 +216,8 @@ respondForm.addEventListener("submit", async (e) => {
   };
 
   try {
-    // const response = await fetch(`http://localhost:3000/request/${requestId}/respond`,{
-        const response = await fetch(`https://lifelink-7ucy.onrender.com/request/${requestId}/respond`, {
+    const response = await fetch(`http://localhost:3000/request/${requestId}/respond`,{
+        // const response = await fetch(`https://lifelink-7ucy.onrender.com/request/${requestId}/respond`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

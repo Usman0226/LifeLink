@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const getRouter = express.Router();
 const auth = require("../middlewares/auth")
-const User = require("../models/user");
+const donor = require("../models/user");
 const Response = require("../models/response"); 
 
 const rootDir = require("../../src/utils/path");
@@ -21,11 +21,11 @@ getRouter.get("/DashBoard",auth,  async(req, res) => {
     const userEmail = req.user.email;
     console.log(" user email:", userEmail);
 
-    const userData = await User.findOne({ email: userEmail });
+    const userData = await donor.findOne({ email: userEmail });
 
     if (!userData) {
-      console.log("User not found in DB with email:", userEmail);
-      return res.status(404).send("User not found.");
+      console.log("donor not found in DB with email:", userEmail);
+      return res.status(404).send("donor not found.");
     }
 
     const user = {
@@ -52,11 +52,11 @@ getRouter.get("/donate", auth, async (req, res) => {
     const userEmail = req.user.email;
     console.log(" user email:", userEmail);
 
-    const userData = await User.findOne({ email: userEmail });
+    const userData = await donor.findOne({ email: userEmail });
 
     if (!userData) {
-      console.log("User not found in DB with email:", userEmail);
-      return res.send("User not found.").redirect("/login");
+      console.log("donor not found in DB with email:", userEmail);
+      return res.send("donor not found.").redirect("/login");
     }
 
     const user = {
@@ -91,11 +91,11 @@ getRouter.get("/profile", auth, async (req, res) => {
     const userEmail = req.user.email;
     console.log(" user email:", userEmail);
 
-    const userData = await User.findOne({ email: userEmail });
+    const userData = await donor.findOne({ email: userEmail });
 
     if (!userData) {
-      console.log("User not found in DB with email:", userEmail);
-      return res.status(404).send("User not found.");
+      console.log("donor not found in DB with email:", userEmail);
+      return res.status(404).send("donor not found.");
     }
 
     const user = {
@@ -131,11 +131,11 @@ getRouter.get('/',auth, async(req,res)=>{
     const userEmail = req.user.email;
     console.log(" user email:", userEmail);
 
-    const userData = await User.findOne({ email: userEmail });
+    const userData = await donor.findOne({ email: userEmail });
 
     if (!userData) {
-      console.log("User not found in DB with email:", userEmail);
-      return res.status(404).send("User not found.").render("/login");
+      console.log("donor not found in DB with email:", userEmail);
+      return res.status(404).send("donor not found.").render("/login");
     }
 
     const user = {

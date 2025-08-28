@@ -66,14 +66,15 @@ form2.addEventListener("submit", async (e) => {
   try {
     const submission_data = await fetch("/SignUp", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(dbData),
     });
     window.location.href = "/DashBoard";
-    const finalData = await submission_data.json();
-    console.log("After stringify data :", finalData);
+    // const finalData = await submission_data.json();
+    // console.log("After stringify data :", finalData);
   } catch (error) {
     console.error("Error submitting data:", error);
   }

@@ -11,7 +11,7 @@ const mailTo = require("../services/mailer");
 require("dotenv").config();
 
 //models
-const User = require("../models/user");
+const donor = require("../models/user");
 const register = require("../models/register");
 const request = require("../models/request");
 const Response = require("../models/response");
@@ -19,9 +19,15 @@ const Response = require("../models/response");
 connectDB();
 postRouter.use(express.json());
 
-//Paths
+//Utils
 const rootDir = require("../utils/path");
-const auth = require("../middlewares/auth")
+const tokenExpiresInSeconds =
+  parseInt(process.env.JWT_EXPIRES_IN, 10) * 24 * 60 * 60;
+const refreshTokenExpiresInSeconds =
+  parseInt(process.env.JWT_REFRESH_EXPIRES_IN, 10) * 24 * 60 * 60;
+
+//MiddleWare's
+const auth = require("../middlewares/auth");
 
 postRouter.post("/SignUp", async (req, res) => {
   console.log("Body : ", req.body);
@@ -30,7 +36,9 @@ postRouter.post("/SignUp", async (req, res) => {
     req.body;
 
   if (!username || !email) {
-    return res.status(400).send("Please provide all required fields.");
+    return res
+      .status(400)
+      .json({ message: "Please provide all required fields." });
   }
 
   try {
@@ -46,18 +54,47 @@ postRouter.post("/SignUp", async (req, res) => {
       dateOfBirth: DOB,
     };
 
-    const user = new User(userData);
+    const user = new donor(userData);
     await user.save();
-    console.log("Dta sent to DB.");
+    console.log("Data sent to DB.");
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     console.log(`Generated OTP: ${otp}`);
-    await sendSMS(phone, `Your OTP for LifeLink is ${otp}.`);
+
+    //Generate the token and save it
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: tokenExpiresInSeconds*1000,
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: refreshTokenExpiresInSeconds*1000,
+    });
+
+    user.refreshToken = refreshToken;
+    await user.save();
 
     res.redirect("/DashBoard");
   } catch (err) {
     console.error("An error during sign up:", err);
-    return res.status(500).send("Internal Server Error.");
+    return res.status(500).json({ message: `Error in submission ${err} ` });
   }
 });
 
@@ -76,12 +113,12 @@ postRouter.post("/Login", async (req, res) => {
       .redirect("/login");
   }
 
-  const userExist = await User.findOne({ email: userData.email });
+  const userExist = await donor.findOne({ email: userData.email });
   if (!userExist) {
-    console.log("User not found in the DB");
-    return res.send("Invalid User email ! ");
+    console.log("donor not found in the DB");
+    return res.send("Invalid donor email ! ");
   }
-  console.log("User found :", userExist);
+  console.log("donor found :", userExist);
   console.log("checking pass !");
 
   const passveerify = await bcrypt.compare(
@@ -108,36 +145,30 @@ postRouter.post("/Login", async (req, res) => {
 
   userExist.refreshToken = refreshToken;
   await userExist.save();
-  const tokenExpiresInSeconds = parseInt(process.env.JWT_EXPIRES_IN, 10) * 1000;
-  const refreshTokenExpiresInSeconds =
-    parseInt(process.env.JWT_REFRESH_EXPIRES_IN, 10) * 1000;
 
-  res.cookie(
-    "token",
-    token,
-    { httpOnly: true },
-    { secure: true },
-    { sameSite: "None" },
-    { maxAge: tokenExpiresInSeconds }
-  );
-  res.cookie(
-    "refreshToken",
-    refreshToken,
-    { httpOnly: true },
-    { secure: true },
-    { sameSite: "None" },
-    { maxAge: refreshTokenExpiresInSeconds }
-  );
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: tokenExpiresInSeconds*1000,
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: refreshTokenExpiresInSeconds*1000,
+  });
 
   return res.redirect("/DashBoard");
 });
 
 // save the requests to DB
-postRouter.post("/request",auth,async (req, res) => {
+postRouter.post("/request", auth, async (req, res) => {
   console.log("The body of the emergency request", req.body);
 
   const requestData = {
-    user : req.user._id,
+    user: req.user._id,
     bloodGroup: req.body.bloodGroup,
     Units: req.body.Units,
     location: req.body.location,
@@ -174,14 +205,22 @@ postRouter.post("/register", async (req, res) => {
 postRouter.post("/logout", auth, async (req, res) => {
   try {
     if (req.cookies.refreshToken) {
-      await User.updateOne(
+      await donor.updateOne(
         { refreshToken: req.cookies.refreshToken },
         { $unset: { refreshToken: "" } }
       );
     }
 
-    res.clearCookie("token", { httpOnly: true });
-    res.clearCookie("refreshtoken", { httpOnly: true });
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
     return res.redirect("/dashBoard");
   } catch (err) {
     console.log(err);
@@ -193,21 +232,21 @@ postRouter.post("/request/:requestId/respond", auth, async (req, res) => {
   try {
     const requestId = req.params.requestId;
     console.log(requestId);
-    const requestUser = await request.findById(requestId);
-    if (!requestUser) {
+    const requestdonor = await request.findById(requestId);
+    if (!requestdonor) {
       console.log("in the if statement ");
       return res.status(404);
     }
-    console.log("the requester is ", requestUser);
-    const requester = requestUser.email;
+    console.log("the requester is ", requestdonor);
+    const requester = requestdonor.email;
     const responderId = req.user.id;
 
-    const responder = await User.findById(responderId);
+    const responder = await donor.findById(responderId);
     const responderEmail = responder.email;
     console.log(responderEmail);
 
     if (!responder) {
-      return res.status(404).json({ error: "User not found." });
+      return res.status(404).json({ error: "donor not found." });
     }
 
     const newResponse = new Response({
@@ -270,8 +309,8 @@ otpObj = {};
 postRouter.post("/sendOtp", async (req, res) => {
   const otp = Math.floor(100000 + Math.random() * 900000);
   console.log(otp);
-  otpObj[email] = otp;
   const { email } = req.body;
+  otpObj[email] = otp;
 
   const subject = "OTP for SignUp";
 

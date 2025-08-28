@@ -1,52 +1,53 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const User = require("../models/user");
+const donor = require("../models/user");
 
 const auth = async function (req, res, next) {
-
-  const token = req.cookies.token;
-  const refreshToken = req.cookies.refreshToken;
+  try {
+    const token = req.cookies.token;
 
     if (token) {
-    try {
       const verify = jwt.verify(token, process.env.JWT_SECRET);
-
-      const user = await User.findById(verify.id)
-      if(!user) return res.redirect("/login")
-      req.user = user;
-      return next();
-      console.log(req.user);
-    } catch (err) {
-      console.error("Invalid token");
-      return res.redirect("/login");
-    }
-  }
-  
-    if(refreshToken){
-    try {
-      const refreshTokenVerify = jwt.verify(
-        refreshToken,
-        process.env.JWT_REFRESH_SECRET
-      );
-      console.log("token validated !");
-      
-      const user = await User.findOne({ refreshToken });
+      const user = await donor.findById(verify.id);
       if (!user) {
         return res.redirect("/login");
       }
-      req.user = refreshTokenVerify;
+
+      req.user = user;
       return next();
-    } catch (Error) {
-      console.error(Error);
-    }
-    }
-    else{
-        console.log('error');
-        
     }
 
-  return res.redirect("/login");
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      const verify = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+      const user = await donor.findOne({ refreshToken });
+
+      if (!user) {
+        return res.redirect("/login");
+      }
+
+      const newToken = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN }
+      );
+
+      res.cookie("token", newToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: parseInt(process.env.JWT_EXPIRES_IN, 10) * 1000,
+      });
+
+      req.user = user;
+      return next();
+    }
+
+    return res.redirect("/login");
+  } catch (error) {
+    console.error("Auth error:", error);
+    return res.redirect("/login");
+  }
 };
-
 
 module.exports = auth;
