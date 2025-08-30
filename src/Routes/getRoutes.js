@@ -158,4 +158,33 @@ getRouter.get('/',auth, async(req,res)=>{
 })
 
 
+getRouter.get("/userProfile", auth, async (req, res) => {
+  try {
+    const userEmail = req.user.email;
+    console.log(" user email:", userEmail);
+
+    const userData = await donor.findOne({ email: userEmail });
+
+    if (!userData) {
+      console.log("donor not found in DB with email:", userEmail);
+      return res.status(404).send("donor not found.");
+    }
+
+    const user = {
+      username: userData.username,
+      bloodGroup: userData.bloodGroup,
+      location: userData.location,
+      phone: userData.phone,
+    };
+
+    res.render("userProfile", { user: user });
+  } catch (error) {
+    console.error("Error fetching", error);
+    res.status(500).send("Internal Server Error.");
+  }
+});
+
+
+
+
 module.exports = getRouter;

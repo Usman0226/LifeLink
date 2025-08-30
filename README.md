@@ -68,7 +68,7 @@ if request.units_fulfilled >= request.units_required{
 
 Requester creates a blood request
 
-Details: patient condition, blood group, hospital, units required.
+Details: patient condition, blood group, hospital, units  required.
 
 Request enters DB with status = "active".
 
