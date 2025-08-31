@@ -29,7 +29,7 @@ const refreshTokenExpiresInSeconds =
 //MiddleWare's
 const auth = require("../middlewares/auth");
 
-postRouter.post("/SignUp", async (req, res) => {
+postRouter.post("/SignUp", async (req, res) => { 
   console.log("Body : ", req.body);
 
   const { username, email, password, bloodGroup, phone, location, DOB } =
@@ -52,6 +52,7 @@ postRouter.post("/SignUp", async (req, res) => {
       phone: phone,
       location: location,
       dateOfBirth: DOB,
+      role : 'donor',
     };
 
     const user = new donor(userData);
@@ -327,5 +328,13 @@ postRouter.post("/verifyOtp", (req, res) => {
   }
   res.status(200).json({ success: true, message: "OTP verified successfully" });
 });
+
+postRouter.post("/auth/emegencyForm",auth,(req,res)=>{
+  res.status(200)
+})
+
+// postRouter.post("/auth/login",(req,res)=>{
+//   res.render(path.join(rootDir,"src","views","pages","login.ejs"))
+// })
 
 module.exports = postRouter;

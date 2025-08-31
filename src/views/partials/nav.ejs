@@ -16,7 +16,9 @@
             <a id="profileBtn" href="#">Profile</a>
         </nav>
     </div>
+
     <%- include("./profile", {user: user}) %>
+
     
 </header>
 
@@ -32,6 +34,6 @@
 
     menuToggle.addEventListener("click", () => {
         navMenu.classList.toggle("show");
-    });
+    }); 
   
 </script>

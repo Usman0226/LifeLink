@@ -7,6 +7,7 @@ const Response = require("../models/response");
 
 const rootDir = require("../../src/utils/path");
 const getRequests = require("../models/request_data");
+const { getgroups } = require("process");
 
 getRouter.get("/Login", (req, res) => {
   res.render(path.join(rootDir,'src',"views", "pages", "LOGIN.ejs"));
@@ -33,6 +34,7 @@ getRouter.get("/DashBoard",auth,  async(req, res) => {
       bloodGroup: userData.bloodGroup,
       location: userData.location,
       phone: userData.phone,
+      role : userData.role,
     };
 
      res.render(path.join(rootDir,'src', "views", "pages", "DashBoard.ejs"), {
@@ -42,7 +44,7 @@ getRouter.get("/DashBoard",auth,  async(req, res) => {
   } catch (error) {
     console.log("Check the auth connection !")
     console.error("Error fetching", error);
-    res.status(500).send("Internal Server Error.");
+    res.status(500).send(" From getRoutes : Internal Server Error.");
   }
  
 }); 
@@ -94,15 +96,16 @@ getRouter.get("/profile", auth, async (req, res) => {
     const userData = await donor.findOne({ email: userEmail });
 
     if (!userData) {
-      console.log("donor not found in DB with email:", userEmail);
+      console.log("Donor not found in DB with email:", userEmail);
       return res.status(404).send("donor not found.");
     }
 
     const user = {
-      username: userData.username,
+      username: userData.username, 
       bloodGroup: userData.bloodGroup,
       location: userData.location,
       phone: userData.phone,
+      role : userData.role,
     };
 
     res.render("profile", { user: user });
@@ -112,21 +115,21 @@ getRouter.get("/profile", auth, async (req, res) => {
   }
 });
 
-getRouter.get("/api/request/:id/responses", async (req, res) => {
-  try {
-    const requestId = req.params.id;
-    const responses = await Response.find({ requestId: requestId })
-      .populate('responderId', 'username bloodGroup location phone')
-      .sort({ createdAt: 1 }); 
+// getRouter.get("/api/request/:id/responses", async (req, res) => {
+//   try {
+//     const requestId = req.params.id;
+//     const responses = await Response.find({ requestId: requestId })
+//       .populate('responderId', 'username bloodGroup location phone')
+//       .sort({ createdAt: 1 }); // from start 
       
-    res.json(responses);
-  } catch (err) {
-    console.error("Error fetching responses:", err);
-    res.status(500).json({ error: "Internal Server Error." });
-  }
-});
+//     res.json(responses);
+//   } catch (err) {
+//     console.error("Error fetching responses:", err);
+//     res.status(500).json({ error: "Internal Server Error." });
+//   }
+// });
 
-getRouter.get('/',auth, async(req,res)=>{
+getRouter.get('/', async(req,res)=>{
   try {
     const userEmail = req.user.email;
     console.log(" user email:", userEmail);
@@ -168,7 +171,7 @@ getRouter.get("/userProfile", auth, async (req, res) => {
     if (!userData) {
       console.log("donor not found in DB with email:", userEmail);
       return res.status(404).send("donor not found.");
-    }
+    }  
 
     const user = {
       username: userData.username,
@@ -184,7 +187,8 @@ getRouter.get("/userProfile", auth, async (req, res) => {
   }
 });
 
-
-
+getRouter.get("/userLogin",(req,res)=>{
+     res.render(path.join(rootDir,'src', "views", "pages", "userSignUp.ejs"))
+})
 
 module.exports = getRouter;

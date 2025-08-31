@@ -174,7 +174,7 @@ function updateEmergencyText() {
   }
 }
 
-// respond details
+// Handel respond details
 
 async function handleRespond(requestId) {
   try {
@@ -217,20 +217,19 @@ respondForm.addEventListener("submit", async (e) => {
 
   try {
     // const response = await fetch(`http://localhost:3000/request/${requestId}/respond`,{
-        const response = await fetch(`https://lifelink-7ucy.onrender.com/request/${requestId}/respond`, {
+      const response = await fetch(`https://lifelink-7ucy.onrender.com/request/${requestId}/respond`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      }
-    );
+      });
 
     const data = await response.json();
 
     if (response.ok) {
-      alert("Your response details have been sent to the requester!");
       respondFormModal.classList.remove("show-respond");
+      alert("Your response details have been sent to the requester!");
     } else {
       alert(`Failed to send response: ${data.error}`);
     }

@@ -8,7 +8,12 @@ const userSchema = new mongoose.Schema({
     phone: String,
     location: String,
     dateOfBirth: String,
-    refreshToken: String
+    refreshToken: String,
+    role : {
+        type : String,
+        default : 'user',
+        enum : ['user','donor']
+    }
 });
 
 module.exports = mongoose.model('donor',userSchema)

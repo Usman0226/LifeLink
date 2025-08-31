@@ -3,9 +3,23 @@ const emergencyFormOverlay = document.getElementById("emergencyFormOverlay");
 const emergencyRequestBtn = document.getElementById("emergencyRequestBtn");
 const closeEmergencyFormBtn = document.getElementById("closeEmergencyFormBtn");
 
-emergencyRequestBtn.addEventListener("click", () => {
-  emergencyFormModal.style.display = "block";
-  emergencyFormOverlay.style.display = "block";
+
+emergencyRequestBtn.addEventListener("click", async () => {
+  try {
+    const res = await fetch("/auth/emegencyForm", {
+      method: post,
+    });
+    if (res.ok) {
+      emergencyFormModal.style.display = "block";
+      emergencyFormOverlay.style.display = "block";
+    } else {
+      const userSignUp = document.querySelector(".userSignUp");
+      userSignUp.style.display = "block";
+    }
+  } catch (error) {
+    alert("Server timeout , Please try again later !")
+    console.error(error, "Check emergencyForm !")
+  }
 });
 
 function closeForm() {
