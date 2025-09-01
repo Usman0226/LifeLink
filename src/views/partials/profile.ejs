@@ -1,5 +1,6 @@
 <div id="profileContainer">
 
+    <% if(user) {  %>
     <div class="user">
         <img src="/" alt="ProfileImage">
         <h3> <%= user.role == 'donor' ? "Donor" : "User" %> : <strong>
@@ -24,5 +25,11 @@
         </div>
     </form>
 
-
+<% } %>
 </div>
+
+
+
+
+
+

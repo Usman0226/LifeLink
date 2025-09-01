@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/respond.css">
       <link rel="stylesheet" href="/css/nav.css">
+      <link rel="stylesheet" href="/css/userSignUp.css">
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -40,6 +41,7 @@
         Request</span></button> -->
 
        <%- include('../partials/nav', { user: user }) %>
+       <%- include("../partials/userSignUp") %>
 
     <section class="hero">
         <div class="hero-text">
@@ -56,7 +58,12 @@
     </section>
 
 
-    <%- include("../partials/emergencyForm") %>
+        <% if (user) { %>
+            <%- include("../partials/emergencyForm") %>
+        <% } %>  
+
+   
+
         <section class="features">
             <div class="feature">
                 <!-- heart -->
@@ -122,7 +129,9 @@
                 filters.</p>
         </div>
 
-        <%- include("../partials/respond", { username: user.username,phone : user.phone }) %>  
+        <% if (user) { %>
+            <%- include("../partials/respond", { username: user.username,phone : user.phone }) %>
+        <% } %>  
 
 
 
@@ -137,14 +146,14 @@
                 <script src="/js/<%= e %>.js"></script>
                 <% }) %>
                     <% } %>
+<% if (user) { %>
 <script>
-    
     const button = document.getElementById("profileBtn");
     button.addEventListener('click', () => {
         document.getElementById('profileContainer').classList.toggle('show');
     });
-
 </script>
-</body>
+<% } %>
 
+</body>
 </html>

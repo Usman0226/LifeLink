@@ -1,20 +1,21 @@
-const express = require("express");
-const path = require("path");
-const postRouter = express.Router();
-const fs = require("fs");
-const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
-const connectDB = require("../db");
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
-const mailTo = require("../services/mailer");
-require("dotenv").config();
+const express = require("express")
+const path = require("path")
+const postRouter = express.Router()
+const fs = require("fs")
+const bcrypt = require("bcrypt")
+const mongoose = require("mongoose")
+const connectDB = require("../db")
+const jwt = require("jsonwebtoken")
+const nodemailer = require("nodemailer")
+const mailTo = require("../services/mailer")
+require("dotenv").config()
 
 //models
-const donor = require("../models/user");
-const register = require("../models/register");
-const request = require("../models/request");
-const Response = require("../models/response");
+const donor = require("../models/user")
+const register = require("../models/register")
+const request = require("../models/request")
+const Response = require("../models/response")
+const requestUsers = require("../models/requestUser")
 
 connectDB();
 postRouter.use(express.json());
@@ -330,7 +331,22 @@ postRouter.post("/verifyOtp", (req, res) => {
 });
 
 postRouter.post("/auth/emegencyForm",auth,(req,res)=>{
-  res.status(200)
+  console.log("In the postRouter auth verified !");
+  
+  res.sendStatus(200)
+})
+
+postRouter.post("/submit/userInfo",async(req,res)=>{
+  const {name,email,phone} = req.body
+
+  const userInfo = {
+    name : name,
+    email: email,
+    phone : phone,
+  }
+
+  await requestUsers.create(userInfo)
+  res.sendStatus(200)
 })
 
 // postRouter.post("/auth/login",(req,res)=>{

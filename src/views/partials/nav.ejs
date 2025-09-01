@@ -13,7 +13,11 @@
             <a id="home" href="/dashBoard">Home</a>
             <a id="requests" href="#">Live Requests</a>
             <a id="about" href="#">About</a>
-            <a id="profileBtn" href="#">Profile</a>
+            <% if (user) { %>
+                <a id="profileBtn" href="#">Profile</a>
+            <% } else { %>
+                <a href="/Login">Login</a>
+            <% } %>
         </nav>
     </div>
 

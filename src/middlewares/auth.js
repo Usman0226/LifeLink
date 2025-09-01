@@ -35,7 +35,7 @@ const auth = async function (req, res, next) {
       res.cookie("token", newToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "Strict",
         maxAge: parseInt(process.env.JWT_EXPIRES_IN, 10) * 1000,
       });
 
@@ -43,7 +43,7 @@ const auth = async function (req, res, next) {
       return next();
     }
 
-    return res.redirect("/login");
+    return res.sendStatus(401)
   } catch (error) {
     console.error("Auth error:", error);
     return res.redirect("/login");

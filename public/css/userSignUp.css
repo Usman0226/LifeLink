@@ -1,6 +1,19 @@
-
-
+#userSignUpOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 999999;
+}
+    
 .container {
+    justify-self: center;
+    position: fixed;
     display: none;
     width: 90%;
     max-width: 400px;

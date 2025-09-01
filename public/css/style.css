@@ -10,6 +10,7 @@ html {
     scrollbar-width: none;
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 0;
 }
 
 html::-webkit-scrollbar {
@@ -17,13 +18,12 @@ html::-webkit-scrollbar {
 }
 
 
-body,
-html {
+body,html {
     background: radial-gradient(circle, #fddcdc, #f9f9f9);
     min-height: 100vh;
     padding-top: 1.3%;
-
 }
+
 
 /* header {
     width: 90%;

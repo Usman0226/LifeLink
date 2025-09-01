@@ -3,22 +3,32 @@ const emergencyFormOverlay = document.getElementById("emergencyFormOverlay");
 const emergencyRequestBtn = document.getElementById("emergencyRequestBtn");
 const closeEmergencyFormBtn = document.getElementById("closeEmergencyFormBtn");
 
-
 emergencyRequestBtn.addEventListener("click", async () => {
+  console.log("I'm clicked ! ");
+
   try {
+    console.log("at fetching ....");
+
     const res = await fetch("/auth/emegencyForm", {
-      method: post,
+      method: "post",
+      headers: { "Content-Type": "application/json" },
     });
     if (res.ok) {
       emergencyFormModal.style.display = "block";
       emergencyFormOverlay.style.display = "block";
     } else {
-      const userSignUp = document.querySelector(".userSignUp");
+      const userSignUp = document.getElementById("userSignUp");
+      document.getElementById("userSignUpOverlay").style.display = "flex";
       userSignUp.style.display = "block";
+      document.documentElement.style.overflow = "hidden";
+      // document.body.style.overflow = "hidden";
+      userSignUp.style.zIndex = "999999";
+
+      handleUserSubmission();
     }
   } catch (error) {
-    alert("Server timeout , Please try again later !")
-    console.error(error, "Check emergencyForm !")
+    alert("Server timeout in emergencyForm.js , Please try again later !");
+    console.log(error, "Check emergencyForm !");
   }
 });
 
@@ -32,7 +42,6 @@ function closeDonateForm() {
   donateFormOverlay.style.display = "none";
 }
 
-closeEmergencyFormBtn.addEventListener("click", closeForm);
 
 const submissionBtn = document.querySelector("#requestSubmission");
 const emergencyRequestForm = document.querySelector("#emergencyRequestForm");
@@ -70,3 +79,29 @@ emergencyRequestForm.addEventListener("submit", async (e) => {
     closeForm();
   }
 });
+
+const handleUserSubmission = async (e) => {
+  e.preventDefault();
+  const form = document.querySelector(".userForm");
+  const formData = new FormData(form);
+
+  const userData = {
+    name: formData.get("name"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+  };
+
+  form.addEventListener("submit", async () => {
+    try {
+      const submission = await fetch("/submit/userInfo", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+    } catch (error) {
+      alert("Failed to sent user info ! ", error);
+    }
+  });
+};
