@@ -2,20 +2,23 @@ const emergencyFormModal = document.getElementById("emergencyFormModal");
 const emergencyFormOverlay = document.getElementById("emergencyFormOverlay");
 const emergencyRequestBtn = document.getElementById("emergencyRequestBtn");
 const closeEmergencyFormBtn = document.getElementById("closeEmergencyFormBtn");
+const submissionBtn = document.querySelector("#requestSubmission");
+const emergencyRequestForm = document.querySelector("#emergencyRequestForm");
 
 emergencyRequestBtn.addEventListener("click", async () => {
   console.log("I'm clicked ! ");
 
   try {
-    console.log("at fetching ....");
+    console.log("In Emergency Form : at fetching ....");
 
     const res = await fetch("/auth/emegencyForm", {
       method: "post",
       headers: { "Content-Type": "application/json" },
+      body: null,
     });
+
     if (res.ok) {
-      emergencyFormModal.style.display = "block";
-      emergencyFormOverlay.style.display = "block";
+      openForm();
     } else {
       const userSignUp = document.getElementById("userSignUp");
       document.getElementById("userSignUpOverlay").style.display = "flex";
@@ -28,13 +31,26 @@ emergencyRequestBtn.addEventListener("click", async () => {
     }
   } catch (error) {
     alert("Server timeout in emergencyForm.js , Please try again later !");
-    console.log(error, "Check emergencyForm !");
+    console.log("Check emergencyForm !");
+    console.log(error);
   }
 });
+
+function openForm() {
+  emergencyFormModal.style.display = "block";
+  emergencyFormOverlay.style.display = "block";
+}
 
 function closeForm() {
   emergencyFormModal.style.display = "none";
   emergencyFormOverlay.style.display = "none";
+}
+
+function closeIt() {
+  const userSignUp = document.getElementById("userSignUp");
+  document.getElementById("userSignUpOverlay").style.display = "none";
+  userSignUp.style.display = "none";
+  document.documentElement.style.overflow = "auto";
 }
 
 function closeDonateForm() {
@@ -42,43 +58,41 @@ function closeDonateForm() {
   donateFormOverlay.style.display = "none";
 }
 
+function handleEmergencyRequest() {
+  emergencyRequestForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    console.log("clicked");
 
-const submissionBtn = document.querySelector("#requestSubmission");
-const emergencyRequestForm = document.querySelector("#emergencyRequestForm");
+    const formData = new FormData(emergencyRequestForm);
 
-emergencyRequestForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  console.log("clicked");
+    const requestData = {
+      bloodGroup: formData.get("bloodGroup"),
+      Units: formData.get("bloodUnits"),
+      location: formData.get("location"),
+      hospital: formData.get("hospitalName"),
+      contactNumber: formData.get("contactInfo"),
+      email: formData.get("email"),
+      contactName: formData.get("contactName"),
+      Reason: formData.get("Reason"),
+    };
 
-  const formData = new FormData(emergencyRequestForm);
+    try {
+      const submissionData = await fetch("/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
 
-  const requestData = {
-    bloodGroup: formData.get("bloodGroup"),
-    Units: formData.get("bloodUnits"),
-    location: formData.get("location"),
-    hospital: formData.get("hospitalName"),
-    contactNumber: formData.get("contactInfo"),
-    email: formData.get("email"),
-    contactName: formData.get("contactName"),
-    Reason: formData.get("Reason"),
-  };
-
-  try {
-    const submissionData = await fetch("/request", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    });
-
-    alert("Emergency Request Successfully Sent !");
-    closeForm();
-  } catch (err) {
-    alert("Request submission failed !");
-    closeForm();
-  }
-});
+      alert("Emergency Request Successfully Sent !");
+      closeForm();
+    } catch (err) {
+      alert("Request submission failed ! try again later ! ");
+      closeForm();
+    }
+  });
+}
 
 const handleUserSubmission = async (e) => {
   e.preventDefault();
@@ -93,7 +107,7 @@ const handleUserSubmission = async (e) => {
 
   form.addEventListener("submit", async () => {
     try {
-      const submission = await fetch("/submit/userInfo", {
+      const submission = await fetch("/submit/newUser/userInfo", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

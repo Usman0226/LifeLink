@@ -1,21 +1,21 @@
-const express = require("express")
-const path = require("path")
-const postRouter = express.Router()
-const fs = require("fs")
-const bcrypt = require("bcrypt")
-const mongoose = require("mongoose")
-const connectDB = require("../db")
-const jwt = require("jsonwebtoken")
-const nodemailer = require("nodemailer")
-const mailTo = require("../services/mailer")
-require("dotenv").config()
+const express = require("express");
+const path = require("path");
+const postRouter = express.Router();
+const fs = require("fs");
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
+const connectDB = require("../db");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const mailTo = require("../services/mailer");
+require("dotenv").config();
 
 //models
-const donor = require("../models/user")
-const register = require("../models/register")
-const request = require("../models/request")
-const Response = require("../models/response")
-const requestUsers = require("../models/requestUser")
+const donor = require("../models/user");
+const register = require("../models/register");
+const request = require("../models/request");
+const Response = require("../models/response");
+const requestUsers = require("../models/requestUser");
 
 connectDB();
 postRouter.use(express.json());
@@ -30,7 +30,7 @@ const refreshTokenExpiresInSeconds =
 //MiddleWare's
 const auth = require("../middlewares/auth");
 
-postRouter.post("/SignUp", async (req, res) => { 
+postRouter.post("/SignUp", async (req, res) => {
   console.log("Body : ", req.body);
 
   const { username, email, password, bloodGroup, phone, location, DOB } =
@@ -53,7 +53,7 @@ postRouter.post("/SignUp", async (req, res) => {
       phone: phone,
       location: location,
       dateOfBirth: DOB,
-      role : 'donor',
+      role: "donor",
     };
 
     const user = new donor(userData);
@@ -80,14 +80,14 @@ postRouter.post("/SignUp", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: tokenExpiresInSeconds*1000,
+      maxAge: tokenExpiresInSeconds * 1000,
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: refreshTokenExpiresInSeconds*1000,
+      maxAge: refreshTokenExpiresInSeconds * 1000,
     });
 
     user.refreshToken = refreshToken;
@@ -152,14 +152,14 @@ postRouter.post("/Login", async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
-    maxAge: tokenExpiresInSeconds*1000,
+    maxAge: tokenExpiresInSeconds * 1000,
   });
 
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
-    maxAge: refreshTokenExpiresInSeconds*1000,
+    maxAge: refreshTokenExpiresInSeconds * 1000,
   });
 
   return res.redirect("/DashBoard");
@@ -330,24 +330,58 @@ postRouter.post("/verifyOtp", (req, res) => {
   res.status(200).json({ success: true, message: "OTP verified successfully" });
 });
 
-postRouter.post("/auth/emegencyForm",auth,(req,res)=>{
+postRouter.post("/auth/emegencyForm",auth, (req, res) => {
   console.log("In the postRouter auth verified !");
-  
-  res.sendStatus(200)
-})
 
-postRouter.post("/submit/userInfo",async(req,res)=>{
-  const {name,email,phone} = req.body
+  res.sendStatus(200);
+});
+
+postRouter.post("/submit/newUser/userInfo", async (req, res) => {
+  const { name, email, phone } = req.body;
 
   const userInfo = {
-    name : name,
+    name: name,
     email: email,
-    phone : phone,
-  }
+    phone: phone,
+    role: "user",
+  };
 
-  await requestUsers.create(userInfo)
-  res.sendStatus(200)
-})
+  console.log(userInfo);
+  
+  // await requestUsers.create(userInfo)
+  newUser = new requestUsers(userInfo);
+  await newUser.save();
+
+  console.log("New userInfo submiited !");
+  
+  //  payload , expire's in , secret key   
+  const token = jwt.sign(
+        {userId : newUser._id,email : userInfo.email},
+       process.env.JWT_SECRET,
+       { expiresIn: process.env.JWT_EXPIRES_IN }
+  )
+
+  const refreshToken  = jwt.sign(
+    {userId : newUser._id,email : userInfo.email},
+    process.env.JWT_REFRESH_SECRET,
+    {expiresIn : refreshTokenExpiresInSeconds * 1000}
+  )
+
+  res.cookie("token",token,{
+    httpOnly : true,
+    secure : process.env.NODE_ENV === "production" ,
+    sameSite: "strict",
+    maxAge : 7 * 24 * 60 * 60 * 1000
+  })
+  res.cookie("refreshToken",refreshToken,{
+    httpOnly : true,
+    secure : process.env.NODE_ENV === "production" ,
+    sameSite: "strict",
+    maxAge : 7 * 24 * 60 * 60 * 1000
+  })
+
+  res.redirect('/DashBoard')
+});
 
 // postRouter.post("/auth/login",(req,res)=>{
 //   res.render(path.join(rootDir,"src","views","pages","login.ejs"))

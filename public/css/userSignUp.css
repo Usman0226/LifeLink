@@ -10,7 +10,7 @@
   background: rgba(0, 0, 0, 0.5); 
   z-index: 999999;
 }
-    
+
 .container {
     justify-self: center;
     position: fixed;
@@ -42,6 +42,8 @@
     font-weight: bold;
     color: #a23238;
     margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .details {

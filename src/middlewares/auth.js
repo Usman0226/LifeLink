@@ -34,7 +34,7 @@ const auth = async function (req, res, next) {
 
       res.cookie("token", newToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "Strict",
         maxAge: parseInt(process.env.JWT_EXPIRES_IN, 10) * 1000,
       });
@@ -42,7 +42,7 @@ const auth = async function (req, res, next) {
       req.user = user;
       return next();
     }
-
+    console.log("At the auth setting the header as 401 !")
     return res.sendStatus(401)
   } catch (error) {
     console.error("Auth error:", error);

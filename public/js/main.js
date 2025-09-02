@@ -193,6 +193,9 @@ async function handleRespond(requestId) {
   }
 }
 
+
+function respondForm(){
+  
 const respondForm = document.querySelector(".respond-form form");
 
 respondForm.addEventListener("submit", async (e) => {
@@ -237,3 +240,5 @@ respondForm.addEventListener("submit", async (e) => {
     alert("An error occurred. Please try again.");
   }
 });
+
+}

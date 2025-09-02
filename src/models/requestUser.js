@@ -1,11 +1,9 @@
 const mongoose = require('mongoose')
 
-const requestUsers = mongoose.Schema({
+const requestUsers = new mongoose.Schema({
     name : String,
-    email : {
-        type : String,
-    },
+    email : String,
     phone : Number,
-},{Timestamp : true})
+},{timestamps : true})
 
-module.exports = requestUsers
+module.exports =mongoose.model("requestUsers",requestUsers)    
