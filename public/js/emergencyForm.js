@@ -103,6 +103,7 @@ const handleUserSubmission = async (e) => {
     name: formData.get("name"),
     email: formData.get("email"),
     phone: formData.get("phone"),
+    password: formData.get("password"),
   };
 
   form.addEventListener("submit", async () => {

@@ -337,12 +337,15 @@ postRouter.post("/auth/emegencyForm",auth, (req, res) => {
 });
 
 postRouter.post("/submit/newUser/userInfo", async (req, res) => {
-  const { name, email, phone } = req.body;
+  const { name, email,password, phone } = req.body;
+
+  const hashedPassword = await bcrypt.hashedPassword(password,10);
 
   const userInfo = {
     name: name,
     email: email,
     phone: phone,
+    password : hashedPassword,
     role: "user",
   };
 
