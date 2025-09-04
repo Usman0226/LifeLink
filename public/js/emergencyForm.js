@@ -94,19 +94,20 @@ function handleEmergencyRequest() {
   });
 }
 
-const handleUserSubmission = async (e) => {
-  e.preventDefault();
-  const form = document.querySelector(".userForm");
-  const formData = new FormData(form);
+const handleUserSubmission = async () => {
+  const form = document.querySelector(".requestUserForm")
 
-  const userData = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    phone: formData.get("phone"),
-    password: formData.get("password"),
-  };
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
 
-  form.addEventListener("submit", async () => {
+    const userData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      password: formData.get("password"),
+    };
+
     try {
       const submission = await fetch("/submit/newUser/userInfo", {
         method: "post",
@@ -117,6 +118,7 @@ const handleUserSubmission = async (e) => {
       });
     } catch (error) {
       alert("Failed to sent user info ! ", error);
+      console.log(error)
     }
   });
 };

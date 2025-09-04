@@ -339,7 +339,7 @@ postRouter.post("/auth/emegencyForm",auth, (req, res) => {
 postRouter.post("/submit/newUser/userInfo", async (req, res) => {
   const { name, email,password, phone } = req.body;
 
-  const hashedPassword = await bcrypt.hashedPassword(password,10);
+  const hashedPassword = await bcrypt.hash(password,10);
 
   const userInfo = {
     name: name,
@@ -352,7 +352,7 @@ postRouter.post("/submit/newUser/userInfo", async (req, res) => {
   console.log(userInfo);
   
   // await requestUsers.create(userInfo)
-  newUser = new requestUsers(userInfo);
+  const newUser = new requestUsers(userInfo);
   await newUser.save();
 
   console.log("New userInfo submiited !");
