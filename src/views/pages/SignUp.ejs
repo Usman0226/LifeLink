@@ -271,7 +271,7 @@
 
         <div class="container">
             <div id="pic">
-                <img src="Assets/pic.png" alt="Donation">
+                <img src="/Assets/pic.png" alt="Donation">
             </div>
             <div class="form" id="SignUpForm">
                 <h2></h2>
@@ -343,12 +343,11 @@
 
                             <div id="box">
                                 <input name="phone" class="sty1" type="text" id="phone" placeholder="Enter phone">
-                                <button type="button" class="eye" >Send
-                                    OTP</button>
+                                <button  type="button" class="eye"><svg id="sendOTP"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.99974 13.0001L1.9996 11.0002L18.1715 11.0002L14.2218 7.05044L15.636 5.63623L22 12.0002L15.636 18.3642L14.2218 16.9499L18.1716 13.0002L1.99974 13.0001Z"></path></svg></button>
                             </div>
                             <div id="box">
                                 <input name="otp" class="sty1" type="text" id="otp" placeholder="Enter OTP">
-                                <button type="button" class="eye" >Verify OTP</button>
+                                <button id="verifyOTP" type="button" class="eye" >Verify OTP</button>
 
                             </div>
 
@@ -357,8 +356,8 @@
                             <label class="sub_title" for="password1"> <i class="fas fa-map-marked-alt"></i></i>
                                 Location</label>
                             <div id="box">
-                                <input name="Location" placeholder="Current Location" id="password1" class="sty1"
-                                    type="location " autocomplete="current-password" style="border: none;" required>
+                                        <input name="location" placeholder="Current Location" id="password1" class="sty1"
+        type="text" autocomplete="current-password" style="border: none;" required>
                             </div>
                         </div>
                         <div id="btm">
@@ -374,7 +373,7 @@
     </div>
 </body>
 
-<script src="./js/SignUp.js"></script>
+  <script src="/js/SignUp.js"></script>
 <!-- <script src="/auth.js"></script> -->
 
 </html>

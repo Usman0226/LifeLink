@@ -45,7 +45,7 @@
         overflow-y: auto;
         box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
         display: none;
-        z-index: 1000;
+        z-index: 999999;
         transform: translate(-50%, -50%);
         color: #000;
         text-align: left;
@@ -136,41 +136,55 @@
             font-size: 20px;
         }
     }
+
+    .bloodDetails {
+        display: flex;
+        justify-content: space-between;
+    }
 </style>
 <div id="emergencyFormOverlay" class="request-form-overlay"></div>
 <div id="emergencyFormModal" class="request-form">
-    <button type="button" id="closeEmergencyFormBtn" class="close-btn" aria-label="Close Emergency Form"
-        style="background: #1a1110; color: #fff; max-height:50px;font-size:large"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="rgba(0,0,0,1)"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path></svg></button>
+    <button type="button" onclick="closeForm()" id="closeEmergencyFormBtn" class="close-btn" aria-label="Close Emergency Form"
+        style="background: #1a1110; color: #fff; max-height:50px;font-size:large"><svg
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="rgba(0,0,0,1)">
+            <path
+                d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z">
+            </path>
+        </svg></button>
     <h2>Emergency Request Form</h2>
     <form id="emergencyRequestForm" method="post" action="/request">
-        <label for="bloodGroup">Blood Group</label>
-        <select id="bloodGroup" name="bloodGroup" required>
-            <option value="">Select Blood Group</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-        </select>
-        <select id="bloodUnits" name="bloodUnits" required>
-            <option value="">Select Units</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-        </select>
+        <!-- <label for="bloodGroup">Blood Group</label> -->
+        <div class="bloodDetails">
+            <select style="width: 49%" id="bloodGroup" name="bloodGroup" required>
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+            <select style="width: 49%" id="bloodUnits" name="bloodUnits" required>
+                <option value="">Select Units</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+        </div>
+
         <input name="hospitalName" placeholder="Hospital Name">
         <input name="Reason" placeholder="Request Reason...">
         <input type="text" name="location" placeholder="Location (e.g., Madanapalle)" />
         <input type="text" name="contactName" placeholder="Your Full Name" />
+        <input type="email" name="email" placeholder="Enter your email" />
         <input type="number" name="contactInfo" placeholder="Contact (Phone)" />
 
         <label for="checkbox" style="opacity: 0.7;font-size: medium;">

@@ -5,13 +5,27 @@
     font-family: 'Inter', sans-serif;
 }
 
-body {
-    background: radial-gradient(circle, #fddcdc, #f9f9f9);
-    min-height: 100vh;
-    padding-top: 3%;
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
 }
 
-header {
+html::-webkit-scrollbar {
+    display: none;
+}
+
+
+body,html {
+    background: radial-gradient(circle, #fddcdc, #f9f9f9);
+    min-height: 100vh;
+    padding-top: 1.3%;
+}
+
+
+/* header {
     width: 90%;
     background-color: #b91c1c80;
     color: white;
@@ -24,39 +38,43 @@ header {
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-}
+} */
 
-.header-container {
+/* .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
 .logo {
     font-size: 24px;
     font-weight: bold;
 }
+
 .logo-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .logo-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 15px;
-  mix-blend-mode:blend;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    mix-blend-mode: blend;
 }
+
 @media (max-width: 600px) {
-  .logo-image {
-    width: 32px;
-    height: 32px;
-  }
-  .logo {
-    font-size: 2rem;
-  }
+    .logo-image {
+        width: 32px;
+        height: 32px;
+    }
+
+    .logo {
+        font-size: 2rem;
+    }
 }
+
 nav {
     display: flex;
     gap: 20px;
@@ -825,16 +843,17 @@ footer {
     border-color: #a23238;
     box-shadow: 0 0 0 3px rgba(162, 50, 56, 0.2);
 }
+
 .hamburger {
-  background: none;
-  border: none;
-  cursor: pointer;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .icon {
-  width: 32px;
-  height: 32px;
-  fill: #ffffff;
+    width: 32px;
+    height: 32px;
+    fill: #ffffff;
 }
 
 
@@ -930,7 +949,7 @@ footer {
     content: '';
     position: absolute;
     top: -6px;
-    right: 20px; 
+    right: 20px;
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
@@ -960,21 +979,21 @@ footer {
 @media (max-width: 480px) {
     #profileContainer {
         width: 260px;
-        right: -20px; 
+        right: -20px;
         padding: 12px;
     }
-    
+
     #profileContainer .user img {
         width: 36px;
         height: 36px;
     }
-    
+
     #profileContainer #details {
         padding: 8px;
     }
-    
+
     #profileContainer::before {
-        right: 30px; 
+        right: 30px;
     }
 }
 
@@ -989,6 +1008,6 @@ footer {
     outline-offset: 1px;
 }
 
-#navMenu>#profileBtn{
+#navMenu>#profileBtn {
     position: relative;
 }

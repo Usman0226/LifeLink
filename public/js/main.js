@@ -1,115 +1,24 @@
-const menuToggle = document.getElementById("menuToggle");
-const navMenu = document.getElementById("navMenu");
 const donateFormModal = document.getElementById("donateFormModal");
 const donateFormOverlay = document.getElementById("donateFormOverlay");
 const donateNowBtn = document.getElementById("donateNowBtn");
 
-// const emergencyRequestsData = [
-//   {
-//     id: 1,
-//     bloodType: "O-",
-//     location: "Mumbai",
-//     hospital: "City Hospital",
-//     units: 2,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 2,
-//     bloodType: "A+",
-//     location: "Delhi",
-//     hospital: "Capital Health",
-//     units: 4,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 3,
-//     bloodType: "B-",
-//     location: "Bangalore",
-//     hospital: "Garden City Medical",
-//     units: 1,
-//     status: "Pending",
-//   },
-//   {
-//     id: 4,
-//     bloodType: "AB+",
-//     location: "Mumbai",
-//     hospital: "Sea View Clinic",
-//     units: 3,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 5,
-//     bloodType: "O+",
-//     location: "Chennai",
-//     hospital: "Marina General",
-//     units: 5,
-//     status: "Pending",
-//   },
-//   {
-//     id: 6,
-//     bloodType: "A-",
-//     location: "Hyderabad",
-//     hospital: "Deccan Hospital",
-//     units: 2,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 7,
-//     bloodType: "B+",
-//     location: "Pune",
-//     hospital: "Maharashtra Clinic",
-//     units: 1,
-//     status: "Pending",
-//   },
-//   {
-//     id: 8,
-//     bloodType: "O-",
-//     location: "Kolkata",
-//     hospital: "East End Hospital",
-//     units: 3,
-//     status: "Urgent",
-//   },
-//   {
-//     id: 9,
-//     bloodType: "AB+",
-//     location: "Ahmedabad",
-//     hospital: "Gujarat Medical",
-//     units: 2,
-//     status: "Pending",
-//   },
-//   {
-//     id: 10,
-//     bloodType: "A+",
-//     location: "Lucknow",
-//     hospital: "Nawab Hospital",
-//     units: 4,
-//     status: "Urgent",
-//   },
-// ];
-let emergencyRequestsData;
+let emergencyRequestsData = {};
 let loaddata = async () => {
-  const response = await fetch("/api/requestData");
+  try {
+    const response = await fetch("/api/requestData");
+    emergencyRequestsData = await response.json();
+  } catch (err) {
+    console.log("In main.js emergency Requests : ",err);
+  }
 
-  emergencyRequestsData = await response.json();
-  console.log(emergencyRequestsData);
+  // console.log(emergencyRequestsData);
 
   loadEmergencyRequests(emergencyRequestsData);
   filterLocation.addEventListener("input", filterAndloadEmergencyRequests);
+  filterBloodType.addEventListener("change", filterAndloadEmergencyRequests);
 };
 
 loaddata();
-
-let timer = null;
-
-// emergencyRequestBtn.addEventListener("click", () => {
-//   emergencyFormModal.style.display = "block";
-//   emergencyFormOverlay.style.display = "block";
-
-//   if(timer != null){
-//     clearTimeout(timer);
-//   }
-
-// });
 
 //Routes
 document.addEventListener("click", (e) => {
@@ -136,36 +45,7 @@ function closeDonateForm() {
   donateFormOverlay.style.display = "none";
 }
 
-closeEmergencyFormBtn.addEventListener("click", closeForm);
 
-// closeDonateFormBtn.addEventListener("click", closeDonateForm);
-
-menuToggle.addEventListener("click", () => {
-  navMenu.classList.toggle("show");
-});
-
-// function loadUserLocation() {
-//   if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(
-//       (position) => {
-//         const lat = position.coords.latitude;
-//         const lon = position.coords.longitude;
-//         initMap(lat, lon);
-//       },
-//       (error) => {
-//         console.warn("Geolocation error:", error.message);
-//         alert("Couldn't get your location. Showing default location.");
-//         initMap(fallbackLocation[0], fallbackLocation[1]);
-//       }
-//     );
-//   } else {
-//     alert("Geolocation not supported. Showing default location.");
-//     initMap(fallbackLocation[0], fallbackLocation[1]);
-//   }
-// }
-
-// Load map on page load
-// window.onload = loadUserLocation;
 
 const emergencyRequestsContainer = document.getElementById(
   "emergency-requests-container"
@@ -227,7 +107,7 @@ function filterAndloadEmergencyRequests() {
 
   if (bloodType !== "all") {
     filteredRequests = filteredRequests.filter(
-      (req) => req.bloodType === bloodType
+      (req) => req.bloodGroup === bloodType
     );
   }
   if (location) {
@@ -241,48 +121,124 @@ function filterAndloadEmergencyRequests() {
 
 // Respond
 
-  document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("emergency-table-respond-button")) {
-        const id = e.target.getAttribute("data-id");
-        console.log(" clicked ID:", id);
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("emergency-table-respond-button")) {
+    const id = e.target.getAttribute("data-id");
+    console.log("clicked ID:", id);
 
-        const requestData = emergencyRequestsData.find(r => r._id?.toString() === id || r.id === id);
-        console.log("Matched request data:", requestData);
+    const requestData = emergencyRequestsData.find(
+      (r) => r._id?.toString() === id || r.id === id
+    );
+    console.log("Matched request data:", requestData);
 
-        if (!requestData) {
-            alert("Could not find request data!");
-            return;
-        }
-
-        document.querySelector('#hos').value = requestData.hospital;
-        document.querySelector('#locationOf').value = requestData.location;
-        console.log(requestData.bloodGroup);
-        
-        document.getElementById('bloodGroup').value = requestData.bloodGroup;
-      
-        document.querySelector(".respond-form").classList.add("show-respond");
+    if (!requestData) {
+      alert("Could not find request data!");
+      return;
     }
 
-    if (
-        e.target.id === "closeRespondBtn" ||
-        e.target.id === "respondFormOverlay" ||
-        e.target.id === "close" ||
-        e.target.classList.contains("close-path")
-    ) {
-        document.querySelector(".respond-form").classList.remove("show-respond");
-    }
+    // Call a new function to set the form data and ID
+    openRespondFormWithData(requestData);
+  }
+
+  // Your existing code to close the modal remains the same
+  if (
+    e.target.id === "closeRespondBtn" ||
+    e.target.id === "respondFormOverlay" ||
+    e.target.id === "close" ||
+    e.target.classList.contains("close-path")
+  ) {
+    document.querySelector(".respond-form").classList.remove("show-respond");
+  }
 });
+
+function openRespondFormWithData(requestData) {
+  const respondFormModal = document.querySelector(".respond-form");
+
+  document.querySelector("#hos").value = requestData.hospital;
+  document.querySelector("#locationOf").value = requestData.location;
+  document.getElementById("bloodGroup").value = requestData.bloodGroup;
+
+  respondFormModal.setAttribute("data-request-id", requestData._id);
+
+  respondFormModal.classList.add("show-respond");
+}
 
 const emerg = document.getElementById("emerg");
 
 function updateEmergencyText() {
   if (window.innerWidth <= 768) {
-    emerg.textContent = ""; 
+    emerg.textContent = "";
   } else {
-    emerg.textContent = "Emergency Request"; 
+    emerg.textContent = "Emergency Request";
   }
 }
 
-updateEmergencyText();
+// Handel respond details
 
-window.addEventListener("resize", updateEmergencyText);
+async function handleRespond(requestId) {
+  try {
+    const response = await fetch(`/request/${requestId}/respond`, {
+      method: "POST",
+    });
+
+    if (response.ok) {
+      alert("Your details are sent to the requester !");
+    } else {
+      const error = await response.json();
+      alert(`Failed to respond: ${error.error}`);
+    }
+  } catch (error) {
+    console.error("Error responding:", error);
+    alert("An unexpected error occurred while trying to respond.");
+  }
+}
+
+
+function respondForm(){
+  
+const respondForm = document.querySelector(".respond-form form");
+
+respondForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const respondFormModal = document.querySelector(".respond-form");
+  const requestId = respondFormModal.getAttribute("data-request-id");
+
+  if (!requestId) {
+    alert("Could not find request ID.");
+    return;
+  }
+
+  const formData = {
+    hospitalName: document.getElementById("hos").value,
+    bloodGroup: document.getElementById("bloodGroup").value,
+    location: document.getElementById("locationOf").value,
+    contactName: document.getElementById("requester").value,
+    contactInfo: document.getElementById("number").value,
+  };
+
+  try {
+    const response = await fetch(`http://localhost:3000/request/${requestId}/respond`,{
+      // const response = await fetch(`https://lifelink-7ucy.onrender.com/request/${requestId}/respond`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      respondFormModal.classList.remove("show-respond");
+      alert("Your response details have been sent to the requester!");
+    } else {
+      alert(`Failed to send response: ${data.error}`);
+    }
+  } catch (err) {
+    console.error("Error submitting response:", err);
+    alert("An error occurred. Please try again.");
+  }
+});
+
+}

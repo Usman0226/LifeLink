@@ -1,0 +1,43 @@
+<header>
+    <div class="header-container">
+        <h1 class="logo">LifeLink</h1>
+        <button id="menuToggle" class="hamburger">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                viewBox="0 0 448 512">
+                <path
+                    d="M0 96c0-17.7 14.3-32 32-32h384c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zm0 160c0-17.7 14.3-32 32-32h384c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zm448 160c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h384c17.7 0 32 14.3 32 32z" />
+            </svg>
+        </button>
+
+        <nav id="navMenu">
+            <a id="home" href="/dashBoard">Home</a>
+            <a id="requests" href="#">Live Requests</a>
+            <a id="about" href="#">About</a>
+            <% if (user) { %>
+                <a id="profileBtn" href="#">Profile</a>
+            <% } else { %>
+                <a href="/Login">Login</a>
+            <% } %>
+        </nav>
+    </div>
+
+    <%- include("./profile", {user: user}) %>
+
+    
+</header>
+
+<button id="emergencyRequestBtn">
+    <i class="fa-solid fa-truck-droplet" id="ambulance"></i>
+    <span class="button-text">Emergency Request</span>
+</button>
+
+<script>
+
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("show");
+    }); 
+  
+</script>

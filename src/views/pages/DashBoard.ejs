@@ -5,8 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LifeLink - Home</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/respond.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/respond.css">
+      <link rel="stylesheet" href="/css/nav.css">
+      <link rel="stylesheet" href="/css/userSignUp.css">
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -14,10 +16,10 @@
 </head>
 
 <body>
-    <header>
+    <!-- <header>
         <div class="header-container">
-            <!-- <img src="./Assets/logo2.jpg" alt="LifeLink Logo" class="logo-image" /> -->
-            <h1 class="logo">LifeLink</h1>
+           
+            <h1 class="logo"> <img src="./Assets/logo2.jpg" alt="LifeLink Logo" class="logo-image" />LifeLink</h1>
             <button id="menuToggle" class="hamburger">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                     viewBox="0 0 448 512">
@@ -33,11 +35,18 @@
                 <a href="#">Profile</a>
             </nav>
         </div>
-    </header>
+    </header> -->
 
+<<<<<<< HEAD:views/pages/DashBoard.ejs
     <button id="emergencyRequestBtn"><i style="margin-right: 8px;" class="fa-solid fa-truck-droplet"></i><span
-            id="emerg">Emergency
-            Request</span></button>
+            id="emerg">Emergency Request</span></button>
+=======
+    <!-- <button id="emergencyRequestBtn"><i style="margin-right: 8px;" class="fa-solid fa-truck-droplet"></i><span id="emerg">Emergency
+        Request</span></button> -->
+
+       <%- include('../partials/nav', { user: user }) %>
+       <%- include("../partials/userSignUp") %>
+>>>>>>> 26eb9ca3171059026c75e2f8a72c1c563544742a:src/views/pages/DashBoard.ejs
 
     <section class="hero">
         <div class="hero-text">
@@ -50,11 +59,16 @@
                     Donor</button>
             </div>
         </div>
-        <img src="./Assets/Mesh.jpg" alt="LifeLink Hero Section" />
+        <img src="/Assets/Mesh.jpg" alt="LifeLink Hero Section" />
     </section>
 
 
-    <%- include("../partials/emergencyForm") %>
+       
+            <%- include("../partials/emergencyForm") %>
+         
+
+   
+
         <section class="features">
             <div class="feature">
                 <!-- heart -->
@@ -121,7 +135,13 @@
                 filters.</p>
         </div>
 
+<<<<<<< HEAD:views/pages/DashBoard.ejs
         <%- include("../partials/respond") %>
+=======
+        <% if (user) { %>
+            <%- include("../partials/respond", { username: user.username,phone : user.phone }) %>
+        <% } %>  
+>>>>>>> 26eb9ca3171059026c75e2f8a72c1c563544742a:src/views/pages/DashBoard.ejs
 
 
 
@@ -130,13 +150,29 @@
             </footer>
 
 
+<<<<<<< HEAD:views/pages/DashBoard.ejs
             <script src="/js/main.js"></script>
             <% if (jsfile && Array.isArray(jsfile)) { %>
                 <% jsfile.forEach((e)=> { %>
                     <script src="/js/<%= e %>.js"></script>
                     <% }) %>
                         <% } %>
+=======
+        <script src="/js/main.js"></script>
+        <% if (jsfile && Array.isArray(jsfile)) { %>
+            <% jsfile.forEach((e)=> { %>
+                <script src="/js/<%= e %>.js"></script>
+                <% }) %>
+                    <% } %>
+<% if (user) { %>
+<script>
+    const button = document.getElementById("profileBtn");
+    button.addEventListener('click', () => {
+        document.getElementById('profileContainer').classList.toggle('show');
+    });
+</script>
+<% } %>
+>>>>>>> 26eb9ca3171059026c75e2f8a72c1c563544742a:src/views/pages/DashBoard.ejs
 
 </body>
-
 </html>

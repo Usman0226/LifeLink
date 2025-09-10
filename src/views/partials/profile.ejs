@@ -1,21 +1,22 @@
 <div id="profileContainer">
 
+    <% if(user) {  %>
     <div class="user">
         <img src="/" alt="ProfileImage">
-        <h3>User : <strong>
+        <h3> <%= user.role == 'donor' ? "Donor" : "User" %> : <strong>
                 <%= user.username %>
             </strong></h3>
     </div>
 
     <div id="details">
         <h3>Blood Group : <strong>
-                <%= user.bloodGroup %>
+                <%= user.bloodGroup || 'Not specified' %>
             </strong></h3>
         <h3>Location : <strong>
-                <%= user.location %>
+                <%= user.location || 'Not specified' %>
             </strong></h3>
         <h3>Mobile No : <strong>
-                <%= user.phone %>
+                <%= user.phone || 'Not specified' %>
             </strong></h3>
     </div>
     <form action="/logout" method="post" >
@@ -24,5 +25,11 @@
         </div>
     </form>
 
-
+<% } %>
 </div>
+
+
+
+
+
+

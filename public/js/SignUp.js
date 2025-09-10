@@ -31,7 +31,7 @@ let formInput = {};
 signIn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  //manual submission  
+  //manual submission
   let form1_data = new FormData(form1);
   const password = form1_data.get("password");
 
@@ -59,42 +59,31 @@ form2.addEventListener("submit", async (e) => {
     ...formInput,
     bloodGroup: form2_data.get("bloodGroup"),
     phone: form2_data.get("phone"),
-    Location: form2_data.get("Location"),
+    location: form2_data.get("location"),
   };
   console.log(dbData);
 
   try {
     const submission_data = await fetch("/SignUp", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(dbData),
     });
     window.location.href = "/DashBoard";
-    const finalData = await submission_data.json();
-    console.log("After stringify data :", finalData);
+    // const finalData = await submission_data.json();
+    // console.log("After stringify data :", finalData);
   } catch (error) {
     console.error("Error submitting data:", error);
   }
 });
 
-// 1.Extract using new FormData()
-// 2.store as an Object
-// 3.In SignUp endpoint serve the Header as /json
-// 4. stringfy the data => set it to the body so it goes to req.body
-// 5. METHOD : POST
-
-// 1. > 8
-// 2. Lower & Upper
-// 3. Numbers
-// .test => conditon then apply it to the password
-
 function passvalidator(pass) {
   if (pass.length < 8) {
     alert("Password must be greater than 8 characters ");
     return false;
-
   }
   if (!/[A-Z]/.test(pass)) {
     alert("Password must contain lower,case letters ");
@@ -111,3 +100,49 @@ function passvalidator(pass) {
 
   return true;
 }
+
+
+
+async function sendOTP() {
+  const email = document.getElementById("email").value;
+
+  const toBackEnd = await fetch("/sendOtp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await toBackEnd.json();
+  if (data.success) {
+    console.log("OTP sent!");
+    alert("Check your email for the OTP");
+  }
+}
+
+async function verifyOTP() {
+  const email = document.getElementById("email").value;
+  const inputOTP = document.getElementById("otp").value;
+
+  const submission = await fetch("/verifyOtp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email,inputOTP}),
+  });
+
+  const data = await submission.json();
+  if (data.success) {
+    alert("OTP verified !");
+  } else {
+    alert("Invalid OTP ! Try again !");
+  }
+}
+
+
+document.addEventListener('click',(e)=>{
+    if(e.target.id == "sendOTP"){
+      sendOTP()
+    }
+    if(e.target.id == "verifyOTP"){
+      verifyOTP()
+    }
+})

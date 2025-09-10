@@ -6,7 +6,7 @@ export const bloodBanksData = [
     address: "123 Life St, Madanapalle",
     open: "9 AM - 5 PM",
     services: ["Whole Blood", "Platelets"],
-    lat: 13.6333,
+    lat: 13.6333, 
     lon: 78.5,
   },
   {
@@ -60,3 +60,4 @@ export const bloodBanksData = [
     lon: 78.0374,
   },
 ];
+
